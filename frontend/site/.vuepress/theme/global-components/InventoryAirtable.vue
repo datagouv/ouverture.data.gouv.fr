@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h1 class="fr-mt-4w">Inventaire des données à ouvrir</h1>
-
     <ul class="fr-tags-group">
       <li v-for="s in statuses">
         <a
