@@ -1,5 +1,5 @@
 <template>
-  <footer id="footer" class="fr-footer" role="contentinfo">
+  <footer id="footer" class="fr-footer fr-mt-4w" role="contentinfo">
     <div class="fr-container">
       <div class="fr-footer__body">
         <div class="fr-footer__brand fr-enlarge-link">

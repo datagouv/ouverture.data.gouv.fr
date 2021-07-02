@@ -1,5 +1,5 @@
 <template>
-  <header role="banner" class="fr-header">
+  <header role="banner" class="fr-header fr-mb-4w">
     <div class="fr-header__body">
       <div class="fr-container">
         <div class="fr-header__body-row">
