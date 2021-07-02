@@ -46,9 +46,5 @@ module.exports = {
   /**
    * Apply plugins，ref：https://v1.vuepress.vuejs.org/zh/plugin/
    */
-  plugins: [],
-
-  airtable: {
-    key: process.env.AIRTABLES_API_KEY
-  }
+  plugins: []
 }
