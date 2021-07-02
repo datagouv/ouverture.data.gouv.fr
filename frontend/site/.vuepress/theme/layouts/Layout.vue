@@ -1,7 +1,7 @@
 <template>
   <main>
     <Header />
-    <div class='fr-container'>
+    <div class="fr-container">
       <Content />
     </div>
     <Footer />
@@ -10,22 +10,23 @@
 
 <style>
 main {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 main > div {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 </style>
 
 <script>
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export default {
   components: {
-    Header, Footer
+    Header,
+    Footer
   }
 }
 </script>

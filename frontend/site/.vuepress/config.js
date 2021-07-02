@@ -20,7 +20,10 @@ module.exports = {
    */
   head: [
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
-    ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
+    [
+      'meta',
+      { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }
+    ]
   ],
 
   /**
@@ -43,8 +46,7 @@ module.exports = {
   /**
    * Apply plugins，ref：https://v1.vuepress.vuejs.org/zh/plugin/
    */
-  plugins: [
-  ],
+  plugins: [],
 
   airtable: {
     key: process.env.AIRTABLES_API_KEY
