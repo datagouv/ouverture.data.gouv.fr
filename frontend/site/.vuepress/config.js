@@ -1,15 +1,13 @@
-const { description } = require('../../package')
-
 module.exports = {
   dest: '../dist',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
-  title: "Les données de l'économie circulaire",
+  title: "Comité Interministériel de la Transformation Publique",
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
-  description: description,
+  description: "Suivi des ouvertures",
 
   markdown: {
     anchor: { permalink: false }
@@ -23,14 +21,6 @@ module.exports = {
   head: [
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
-    ["link", {
-        rel: "stylesheet",
-        href: "https://unpkg.com/template.data.gouv.fr@1.3.2/dist/main.min.css"
-    }],
-    ["link", {
-        rel: "shortcut icon",
-        href: "https://static.data.gouv.fr/_themes/gouvfr/img/favicon.png"
-    }]
   ],
 
   /**
@@ -40,43 +30,23 @@ module.exports = {
    */
   themeConfig: {
     subdomain: 'economiecirculaire',
-    apiUrl: process.env.VUE_APP_API_URL || 'http://localhost:5000/api',
+    apiUrl: process.env.VUE_APP_API_URL || 'http://localhost:8000/api',
     repo: '',
     editLinks: false,
     docsDir: '',
     editLinkText: '',
     lastUpdated: false,
-    nav: [
-      {
-        text: 'Guide',
-        link: '/guide/',
-      },
-      {
-        text: 'Config',
-        link: '/config/'
-      },
-      {
-        text: 'VuePress',
-        link: 'https://v1.vuepress.vuejs.org'
-      }
-    ],
-    sidebar: {
-      '/guide/': [
-        {
-          title: 'Guide',
-          collapsable: false,
-          children: [
-            '',
-            'using-vue',
-          ]
-        }
-      ],
-    }
+    nav: [],
+    sidebar: {}
   },
 
   /**
    * Apply plugins，ref：https://v1.vuepress.vuejs.org/zh/plugin/
    */
   plugins: [
-  ]
+  ],
+
+  airtable: {
+    key: process.env.AIRTABLES_API_KEY
+  }
 }

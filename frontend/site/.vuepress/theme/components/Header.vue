@@ -1,19 +1,26 @@
 <template>
-  <header
-    class="navbar"
-    role="navigation"
-  >
-    <div class="navbar__container">
-      <a
-        class="navbar__home"
-        href="/"
-      >
-        <img
-          class="navbar__logo"
-          src="/assets/img/logo-marianne.svg"
-          alt="template.data.gouv.fr"
-        ><span class="navbar__domain">{{ $themeConfig.subdomain }}.etalab.studio</span>
-      </a>
-    </div>
+  <header role="banner" class="fr-header">
+      <div class="fr-header__body">
+          <div class="fr-container">
+              <div class="fr-header__body-row">
+                  <div class="fr-header__brand fr-enlarge-link">
+                      <div class="fr-header__brand-top">
+                          <div class="fr-header__logo">
+                              <p class="fr-logo">
+                                  République
+                                  <br>Française
+                              </p>
+                          </div>
+                      </div>
+                      <div class="fr-header__service">
+                          <a href="/">
+                            <p class="fr-header__service-title">{{ $site.title }}</p>
+                          </a>
+                          <p class="fr-header__service-tagline">{{ $site.description }}</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
   </header>
 </template>

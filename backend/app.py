@@ -14,8 +14,9 @@ cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 CACHE_CONFIG = {"CACHE_TYPE": "filesystem", "CACHE_DIR": "/tmp"}
 cache = Cache(app, config=CACHE_CONFIG)
 
-AIRTABLES_URL = "https://api.airtable.com/v0/appXjbMenFXlzxNLp"
-API_KEY = os.getenv("AIRTABLES_API_KEY")
+AIRTABLE_API = "https://api.airtable.com/v0/"
+AIRTABLE_BASE = "appISQqfvRPMg6CH3/Suivi"
+API_KEY = os.getenv("AIRTABLE_API_KEY")
 HEADERS = {"Authorization": f"Bearer {API_KEY}"}
 CACHE_TIMEOUT = 1 if app.config['DEBUG'] else os.getenv('CACHE_TIMEOUT', 600)
 
@@ -23,7 +24,7 @@ CACHE_TIMEOUT = 1 if app.config['DEBUG'] else os.getenv('CACHE_TIMEOUT', 600)
 @app.route("/api/inventaire")
 @cache.cached(timeout=CACHE_TIMEOUT)
 def inventaire():
-    url = f"{AIRTABLES_URL}/Inventaire%20public?view=viwlHW6pyW1NOkF42"
+    url = f"{AIRTABLE_API}{AIRTABLE_BASE}"
     r = requests.get(url, headers=HEADERS)
     return jsonify(r.json())
 
