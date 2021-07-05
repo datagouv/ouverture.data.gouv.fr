@@ -99,7 +99,7 @@ export default {
     filteredDatasets() {
       let datasets = this.datasets;
 
-      datasets = datasets.filter( d => d.status.visible == true )
+      datasets = datasets.filter(d => d.status.visible == true);
 
       if (this.query.length < 3) return datasets;
       return datasets.filter(dataset => {

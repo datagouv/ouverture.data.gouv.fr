@@ -19,11 +19,7 @@
 <script>
 export default {
   name: 'InventoryTable',
-  props: [
-    "datasets",
-    "format",
-    "columns"
-  ],
+  props: ['datasets', 'format', 'columns'],
   methods: {
     display (row, column) {
       if (this.format && this.format[column]) {
