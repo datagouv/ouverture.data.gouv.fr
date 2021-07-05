@@ -25,5 +25,19 @@ FLASK_DEBUG=1 FLASK_APP=app AIRTABLE_API_KEY=[YOUR KEY] flask run
 ```
 
 
+## Deploy
+
+Continuous deployement ✌️
+
+```
+git push
+```
+
+Manual deployement
+
+```
+git push dokku master
+```
+
 ## Licence
 Distributed under the MIT License. See LICENSE for more information.
