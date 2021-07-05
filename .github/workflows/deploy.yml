@@ -15,4 +15,4 @@ jobs:
       env:
         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         HOST: app.etalab.studio
-        PROJECT: economie-circulaire
+        PROJECT: citp
