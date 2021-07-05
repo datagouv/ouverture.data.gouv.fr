@@ -8,5 +8,22 @@ There also is a form, `demande`, that is linked to another Airtable base.
 
 This repo is based on https://github.com/abulte/dokku-simple-python-vue-spa.
 
+## Development env
+
+### Website
+
+```
+cd front
+yarn dev
+```
+
+### API
+
+```
+cd backend
+FLASK_DEBUG=1 FLASK_APP=app AIRTABLE_API_KEY=[YOUR KEY] flask run
+```
+
+
 ## Licence
 Distributed under the MIT License. See LICENSE for more information.
