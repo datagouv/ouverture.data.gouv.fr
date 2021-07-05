@@ -55,7 +55,7 @@ const fields = {
   'Données, API ou code source': 'Type',
   'Données, API, Codes sources concernés': 'Titre',
   Ministère: 'Organisation',
-  "Etat d'avancement": 'Statut d’ouverture',
+  "État d'avancement": 'Statut d’ouverture',
   'Échéance annoncée par les ministères': 'Date estimée de publication'
 }
 
