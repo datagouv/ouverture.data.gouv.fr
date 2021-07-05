@@ -1,46 +1,51 @@
 <template>
-  <div>
-    <ul class="fr-tags-group">
-      <li v-for="s in statuses">
-        <a
-          href="#"
-          class="fr-tag"
-          :class="[!s.visible ? '' : s._class]"
-          @click="toggle(s.key)"
-        >
-          {{ counters[s.key] }} {{ s.labelExtended }}
-        </a>
-      </li>
-    </ul>
+  <div v-if="!loading">
+    <div>
+      <ul class="fr-tags-group">
+        <li v-for="s in statuses">
+          <a
+            href="#"
+            class="fr-tag"
+            :class="[!s.visible ? '' : s._class]"
+            @click="toggle(s.key)"
+          >
+            {{ counters[s.key] }} {{ s.labelExtended }}
+          </a>
+        </li>
+      </ul>
 
-    <label class="fr-label" for="table-filter">Filtrer le tableau</label>
-    <input
-      id="table-filter"
-      v-model="query"
-      name="table-filter"
-      type="text"
-      class="fr-input fr-mb-2w"
-      autocomplete="off"
-      autocorrect="off"
-      autocapitalize="off"
-      spellcheck="false"
-    />
+      <label class="fr-label" for="table-filter">Filtrer le tableau</label>
+      <input
+        id="table-filter"
+        v-model="query"
+        name="table-filter"
+        type="text"
+        class="fr-input fr-mb-2w"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+      />
 
-    <table class="fr-table fr-table--no-caption">
-      <caption>
-        Tableau des jeux de données concernés par le CITP
-      </caption>
-      <thead>
-        <tr>
-          <th v-for="column in columns">{{ column }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="dataset in filteredSortedDatasets">
-          <td v-for="column in columns" v-html="display(dataset, column)" />
-        </tr>
-      </tbody>
-    </table>
+      <table class="fr-table fr-table--no-caption">
+        <caption>
+          Tableau des jeux de données concernés par le CITP
+        </caption>
+        <thead>
+          <tr>
+            <th v-for="column in columns">{{ column }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="dataset in filteredSortedDatasets">
+            <td v-for="column in columns" v-html="display(dataset, column)" />
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div v-else>
+    <em>Données en cours de chargement...</em>
   </div>
 </template>
 
@@ -153,7 +158,8 @@ export default {
     },
     fetchProxy() {
       axios.get(`${this.$themeConfig.apiUrl}/inventaire`).then(res => {
-        this.datasets = this.tranformRecords(res.data.records)
+        this.datasets = this.tranformRecords(res.data.records);
+        this.loading = false;
       });
     },
     tranformRecords(records) {
