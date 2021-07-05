@@ -4,7 +4,7 @@ title: Tableau de suivi des ouvertures du CITP
 
 ## Inventaire
 
-<InventoryAirtable />
+<InventoryBase />
 
 ## Jeu de Données
 

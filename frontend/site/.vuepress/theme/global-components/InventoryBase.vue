@@ -1,41 +1,49 @@
 <template>
-  <div v-if="!loading">
-    <div>
-      <ul class="fr-tags-group">
-        <li v-for="s in statuses">
-          <a
-            href="#"
-            class="fr-tag"
-            :class="[!s.visible ? '' : s._class]"
-            @click="toggle(s.key)"
-          >
-            {{ counters[s.key] }} {{ s.labelExtended }}
-          </a>
-        </li>
-      </ul>
+  <div>
+    <InventoryDataProxy
+      v-model="datasets"
+      :fields="fields"
+      :statuses="statuses"
+    />
 
-      <label class="fr-label" for="table-filter">Filtrer le tableau</label>
-      <input
-        id="table-filter"
-        v-model="query"
-        name="table-filter"
-        type="text"
-        class="fr-input fr-mb-2w"
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="off"
-        spellcheck="false"
-      />
+    <div v-if="datasets.length > 0">
+      <div>
+        <ul class="fr-tags-group">
+          <li v-for="s in statuses">
+            <a
+              href="#"
+              class="fr-tag"
+              :class="[!s.visible ? '' : s._class]"
+              @click="toggle(s.key)"
+            >
+              {{ counters[s.key] }} {{ s.labelExtended }}
+            </a>
+          </li>
+        </ul>
 
-      <InventoryTable
-        :datasets="filteredSortedDatasets"
-        :format="format"
-        :columns="columns"
-      />
+        <label class="fr-label" for="table-filter">Filtrer le tableau</label>
+        <input
+          id="table-filter"
+          v-model="query"
+          name="table-filter"
+          type="text"
+          class="fr-input fr-mb-2w"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+        />
+
+        <InventoryTable
+          :datasets="filteredSortedDatasets"
+          :format="format"
+          :columns="columns"
+        />
+      </div>
     </div>
-  </div>
-  <div v-else>
-    <em>Données en cours de chargement...</em>
+    <div v-else>
+      <em>Données en cours de chargement...</em>
+    </div>
   </div>
 </template>
 
@@ -60,12 +68,9 @@ const format = {
 }
 
 export default {
-  name: 'Inventory',
+  name: 'InventoryBase',
   data () {
     return {
-      api: 'https://api.airtable.com/v0/',
-      base: 'appISQqfvRPMg6CH3/Suivi',
-      key: '',
       statuses: [
         {
           label: "Disponible",
@@ -86,6 +91,7 @@ export default {
       query: '',
       datasets: [],
       columns: Object.values(fields),
+      fields: fields,
       format: format
     }
   },
@@ -133,43 +139,8 @@ export default {
       return count;
     }
   },
-  mounted () {
-    this.fetchProxy()
-  },
+  mounted () {},
   methods: {
-    fetchData() {
-      axios({
-        url: `${this.api}${this.base}`,
-        headers: {
-          Authorization: `Bearer ${this.key}`
-        }
-      }).then(res => {
-        this.datasets = this.tranformRecords(res.data.records)
-      });
-    },
-    fetchProxy() {
-      axios.get(`${this.$themeConfig.apiUrl}/inventaire`).then(res => {
-        this.datasets = this.tranformRecords(res.data.records);
-        this.loading = false;
-      });
-    },
-    tranformRecords(records) {
-      return records.map(record => {
-        const row = {};
-
-        Object.entries(fields).forEach(([field, column]) => {
-          row[column] = record.fields[field]
-        });
-
-        row.raw = record.fields
-        row.status = this.statuses.find(
-          s => s.label == row['Statut d’ouverture']
-        )
-        row.visible = true
-
-        return row
-      });
-    },
     toggle (badge) {
       const status = this.statuses.find(s => s.key == badge)
       status.visible = !status.visible
