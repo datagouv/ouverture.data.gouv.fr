@@ -5,7 +5,7 @@
         <a
           href="#"
           class="fr-tag"
-          :class="[!s.visible ? 'disabled' : '', s._class]"
+          :class="[!s.visible ? '' : s._class]"
           @click="toggle(s.key)"
         >
           {{ counters[s.key] }} {{ s.labelExtended }}
@@ -95,8 +95,12 @@ export default {
   },
   computed: {
     filteredDatasets() {
-      if (this.query.length < 3) return this.datasets;
-      return this.datasets.filter(dataset => {
+      let datasets = this.datasets;
+
+      datasets = datasets.filter( d => d.status.visible == true )
+
+      if (this.query.length < 3) return datasets;
+      return datasets.filter(dataset => {
         return Object.keys(dataset).some(field => {
           if (!dataset[field] || !dataset[field].toLowerCase) return false;
           return dataset[field]
