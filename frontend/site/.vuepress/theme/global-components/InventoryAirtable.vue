@@ -27,21 +27,11 @@
         spellcheck="false"
       />
 
-      <table class="fr-table fr-table--no-caption">
-        <caption>
-          Tableau des jeux de données concernés par le CITP
-        </caption>
-        <thead>
-          <tr>
-            <th v-for="column in columns">{{ column }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="dataset in filteredSortedDatasets">
-            <td v-for="column in columns" v-html="display(dataset, column)" />
-          </tr>
-        </tbody>
-      </table>
+      <InventoryTable
+        :datasets="filteredSortedDatasets"
+        :format="format"
+        :columns="columns"
+      />
     </div>
   </div>
   <div v-else>
@@ -95,7 +85,8 @@ export default {
       loading: true,
       query: '',
       datasets: [],
-      columns: Object.values(fields)
+      columns: Object.values(fields),
+      format: format
     }
   },
   computed: {
@@ -182,13 +173,6 @@ export default {
     toggle (badge) {
       const status = this.statuses.find(s => s.key == badge)
       status.visible = !status.visible
-    },
-    display (row, column) {
-      if (format[column]) {
-        return format[column](row[column], row)
-      } else {
-        return row[column]
-      }
     }
   }
 }
