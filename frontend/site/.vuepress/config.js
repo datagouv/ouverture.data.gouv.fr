@@ -3,11 +3,11 @@ module.exports = {
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
-  title: "Comité Interministériel de la Transformation Publique",
+  title: "Tableau de suivi des ouvertures de données, codes sources et API publics",
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
-  description: "Suivi des ouvertures",
+  description: "",
 
   markdown: {
     anchor: { permalink: false }
