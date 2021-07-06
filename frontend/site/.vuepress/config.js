@@ -10,7 +10,8 @@ module.exports = {
   description: "",
 
   markdown: {
-    anchor: { permalink: false }
+    anchor: { permalink: false },
+    externalLinks: { target: '' }
   },
 
   /**
