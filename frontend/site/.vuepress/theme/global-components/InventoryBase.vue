@@ -21,6 +21,19 @@
           </li>
         </ul>
 
+        <ul class="fr-tags-group">
+          <li v-for="o in organizations">
+            <a
+              href="#"
+              class="fr-tag"
+              :class="[!o.visible ? '' : o._class]"
+              @click="toggle(o.key)"
+            >
+              {{ o.count }} {{ o.label }}
+            </a>
+          </li>
+        </ul>
+
         <label class="fr-label" for="table-filter">Filtrer le tableau</label>
         <input
           id="table-filter"
@@ -137,6 +150,16 @@ export default {
         }
       });
       return count;
+    },
+    organizations () {
+      let orgs = this.datasets.map(dataset => dataset['Organisation'])
+      orgs = [...new Set(orgs)]
+      orgs = orgs.map(o => ({
+        label: o,
+        count: this.filteredDatasets.filter(d => d['Organisation'] == o).length
+      }))
+      orgs.sort((a,b) => b.count - a.count)
+      return orgs
     }
   },
   mounted () {},
