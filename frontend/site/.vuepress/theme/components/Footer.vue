@@ -11,7 +11,7 @@
           </a>
         </div>
         <div class="fr-footer__content">
-          <p class="fr-footer__content-desc">Lorem [...] elit ut.</p>
+          <p class="fr-footer__content-desc"> Le code source est ouvert et les contributions sont bienvenues. <a href="https://github.com/etalab/suivi-citp/">Voir le code source</a></p>
           <ul class="fr-footer__content-list">
             <li class="fr-footer__content-item">
               <a
