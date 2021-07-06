@@ -1,7 +1,7 @@
 <template>
   <div>
     <InventoryDataProxy
-      v-model="datasets"
+      @input="datasets = $event.datasets; lastModified = $event.lastModified; "
       :fields="fields"
       :statuses="statuses"
     />
@@ -39,6 +39,8 @@
           :format="format"
           :columns="columns"
         />
+
+        <p>Dernière modification : {{ formatDate(lastModified) }}</p>
       </div>
     </div>
     <div v-else>
@@ -49,6 +51,7 @@
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
 
 // Les colonnes à afficher ainsi que leur titre
 const fields = {
@@ -90,9 +93,10 @@ export default {
       loading: true,
       query: '',
       datasets: [],
+      lastModified: null,
       columns: Object.values(fields),
-      fields: fields,
-      format: format
+      fields,
+      format
     }
   },
   computed: {
@@ -144,6 +148,9 @@ export default {
     toggle (badge) {
       const status = this.statuses.find(s => s.key == badge)
       status.visible = !status.visible
+    },
+    formatDate (str) {
+      return moment(str).format("DD/MM/YYYY")
     }
   }
 }
