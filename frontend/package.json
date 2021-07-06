@@ -26,6 +26,7 @@
   "dependencies": {
     "@gouvfr/dsfr": "^1.0.0",
     "axios": "^0.19.2",
+    "moment": "^2.29.1",
     "vue-loading-overlay": "^3.3.2"
   }
 }
