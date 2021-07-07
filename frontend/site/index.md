@@ -18,4 +18,4 @@ Ce tableau permet de suivre et de rendre compte de l’ouverture de 63 nouveaux 
 
 ## Données ouvertes sur data.gouv.fr
 
-<DatagouvfrDatasetCard id="tableau-de-suivi-des-ouvertures-de-donnees-codes-sources-et-api-publics" />
+[Jeu de données sur data.gouv.fr](https://www.data.gouv.fr/fr/datasets/tableau-de-suivi-des-ouvertures-de-donnees-codes-sources-et-api-publics)
