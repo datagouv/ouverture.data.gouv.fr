@@ -88,7 +88,7 @@ export default {
       datasets = datasets
         .filter(d => d.status.visible == true)
         .filter(d => !this.filters.status || d["Statut d’ouverture"] == this.filters.status)
-        .filter(d => !this.filters.org || d["Ministère"] == this.filters.org)
+        .filter(d => !this.filters.org || d["Organisation"] == this.filters.org)
         .filter(d => !this.filters.trimester || d["Date estimée de publication"] == this.filters.trimester);
 
       if (this.query.length < 3) return datasets;
