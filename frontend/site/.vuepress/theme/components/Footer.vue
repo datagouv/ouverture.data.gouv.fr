@@ -11,7 +11,7 @@
           </a>
         </div>
         <div class="fr-footer__content">
-          <p class="fr-footer__content-desc"> Le code source est ouvert et les contributions sont bienvenues. <a href="https://github.com/etalab/suivi-citp/">Voir le code source</a></p>
+          <p class="fr-footer__content-desc"> Le code source est ouvert et les contributions sont bienvenues. <a href="https://github.com/etalab/suivi-ouverture/">Voir le code source</a></p>
           <ul class="fr-footer__content-list">
             <li class="fr-footer__content-item">
               <a
@@ -44,7 +44,7 @@
         <ul class="fr-footer__bottom-list">
           <li class="fr-footer__bottom-item">
             <a class="fr-footer__bottom-link" href="/accessibilite"
-              >Accessibilité: non/partiellement/totalement conforme</a
+              >Accessibilité: non conforme</a
             >
           </li>
           <li class="fr-footer__bottom-item">
