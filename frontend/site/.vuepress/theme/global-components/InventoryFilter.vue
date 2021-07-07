@@ -2,10 +2,10 @@
   <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
     <div class="fr-col-3">
       <label class="fr-label" for="select-status">
-        Statut
+        Statut d'ouverture
       </label>
       <select v-model="status" class="fr-select" name="select-status" id="select-status">
-        <option value="" selected disabled hidden>Selectionnez un status</option>
+        <option value="" selected disabled hidden>Selectionnez un statut</option>
         <option v-for="status of statuses" :value="status.label">{{ status.label }}</option>
       </select>
     </div>
@@ -22,10 +22,10 @@
 
     <div class="fr-col-6">
       <label class="fr-label" for="select-org">
-        Organisation
+        Ministère
       </label>
       <select v-model="org" class="fr-select" name="select-org" id="select-org">
-        <option value="" selected disabled hidden>Selectionnez une organisation</option>
+        <option value="" selected disabled hidden>Selectionnez un ministère</option>
         <option v-for="org of organizations" :value="org.label">{{ org.label }}</option>
       </select>
     </div>
