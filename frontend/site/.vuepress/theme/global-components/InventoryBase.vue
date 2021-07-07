@@ -7,52 +7,18 @@
     />
 
     <div v-if="datasets.length > 0">
-      <div>
-        <ul class="fr-tags-group">
-          <li v-for="s in statuses">
-            <a
-              href="#"
-              class="fr-tag"
-              :class="[!s.visible ? '' : s._class]"
-              @click="toggle(s.key)"
-            >
-              {{ counters[s.key] }} {{ s.labelExtended }}
-            </a>
-          </li>
-        </ul>
+      <InventoryFilter
+        v-model="filters"
+        :statuses="statuses"
+        :trimesters="trimesters"
+        :organizations="organizations"
+      />
 
-        <ul class="fr-tags-group">
-          <li v-for="o in organizations">
-            <a
-              href="#"
-              class="fr-tag"
-              :class="[!o.visible ? '' : o._class]"
-              @click="toggle(o.key)"
-            >
-              {{ o.count }} {{ o.label }}
-            </a>
-          </li>
-        </ul>
-
-        <label class="fr-label" for="table-filter">Filtrer le tableau</label>
-        <input
-          id="table-filter"
-          v-model="query"
-          name="table-filter"
-          type="text"
-          class="fr-input fr-mb-2w"
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="off"
-          spellcheck="false"
-        />
-
-        <InventoryTable
-          :datasets="filteredSortedDatasets"
-          :format="format"
-          :columns="columns"
-        />
-      </div>
+      <InventoryTable
+        :datasets="filteredSortedDatasets"
+        :format="format"
+        :columns="columns"
+      />
     </div>
     <div v-else>
       <em>Données en cours de chargement...</em>
@@ -80,60 +46,64 @@ const format = {
     row.raw.URL ? `<a href="${row.raw.URL}">${cell}</a>` : cell
 }
 
+const statuses = [
+  {
+    label: "Disponible",
+    key: "open",
+    visible: true,
+    _class: "green",
+    labelExtended: "disponbiles"
+  },
+  {
+    label: "Planifié",
+    key: "opening",
+    visible: true,
+    _class: "yellow",
+    labelExtended: "planifiés"
+  }
+]
+
 export default {
   name: 'InventoryBase',
   data () {
     return {
-      statuses: [
-        {
-          label: "Disponible",
-          key: "open",
-          visible: true,
-          _class: "green",
-          labelExtended: "disponbiles"
-        },
-        {
-          label: "Planifié",
-          key: "opening",
-          visible: true,
-          _class: "yellow",
-          labelExtended: "planifiés"
-        }
-      ],
+      statuses,
       loading: true,
       query: '',
       datasets: [],
       columns: Object.values(fields),
       fields: fields,
-      format: format
+      format: format,
+      filters: {}
     }
   },
   computed: {
     filteredDatasets() {
       let datasets = this.datasets;
 
-      datasets = datasets.filter(d => d.status.visible == true);
+      datasets = datasets
+        .filter(d => d.status.visible == true)
+        .filter(d => !this.filters.status || d["Statut d’ouverture"] == this.filters.status)
+        .filter(d => !this.filters.org || d["Organisation"] == this.filters.org)
+        .filter(d => !this.filters.trimester || d["Date estimée de publication"] == this.filters.trimester);
 
       if (this.query.length < 3) return datasets;
-      return datasets.filter(dataset => {
+
+      datasets = datasets.filter(dataset => {
         return Object.keys(dataset).some(field => {
+
           if (!dataset[field] || !dataset[field].toLowerCase) return false;
+
           return dataset[field]
             .toLowerCase()
             .includes(this.query.toLowerCase());
         })
       });
+
+      return datasets
     },
     filteredSortedDatasets() {
-      return this.filteredDatasets.sort((a, b) => {
-        const ta =
-          a['Date estimée de publication'].split(' ')[1] +
-          a['Date estimée de publication'].split(' ')[0]
-        const tb =
-          b['Date estimée de publication'].split(' ')[1] +
-          b['Date estimée de publication'].split(' ')[0]
-        return ta.localeCompare(tb);
-      })
+      return this.filteredDatasets.sort(this.compareTrimesters)
     },
     counters() {
       const count = {
@@ -156,14 +126,34 @@ export default {
       orgs = [...new Set(orgs)]
       orgs = orgs.map(o => ({
         label: o,
+        key: o,
         count: this.filteredDatasets.filter(d => d['Organisation'] == o).length
       }))
       orgs.sort((a,b) => b.count - a.count)
       return orgs
+    },
+    trimesters () {
+      let trimesters = [
+        ...new Set(
+          this.datasets
+            .sort(this.compareTrimesters)
+            .map(dataset => dataset["Date estimée de publication"])
+          )
+      ]
+      return trimesters.map(t => ({ label: t, key: t }))
     }
   },
   mounted () {},
   methods: {
+    compareTrimesters(a,b) {
+      const ta =
+        a['Date estimée de publication'].split(' ')[1] +
+        a['Date estimée de publication'].split(' ')[0]
+      const tb =
+        b['Date estimée de publication'].split(' ')[1] +
+        b['Date estimée de publication'].split(' ')[0]
+      return ta.localeCompare(tb);
+    },
     toggle (badge) {
       const status = this.statuses.find(s => s.key == badge)
       status.visible = !status.visible
