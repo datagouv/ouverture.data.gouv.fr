@@ -12,7 +12,7 @@
 
     <div class="fr-col-3">
       <label class="fr-label" for="select-trimester">
-        Statut
+        Trimestre
       </label>
       <select v-model="trimester" class="fr-select" name="select-trimester" id="select-trimester">
         <option value="" selected disabled hidden>Selectionnez un trimestre</option>
