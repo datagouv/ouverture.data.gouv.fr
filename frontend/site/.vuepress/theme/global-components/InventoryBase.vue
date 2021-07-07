@@ -172,6 +172,7 @@ export default {
 <style>
 .fr-tag.green {
   background-color: #00ac8c;
+  color: white;
 }
 .fr-tag.yellow {
   background-color: #ffe800;
