@@ -43,21 +43,18 @@
       <div class="fr-footer__bottom">
         <ul class="fr-footer__bottom-list">
           <li class="fr-footer__bottom-item">
-            <a class="fr-footer__bottom-link" href="#">Plan du site</a>
-          </li>
-          <li class="fr-footer__bottom-item">
-            <a class="fr-footer__bottom-link" href="#"
+            <a class="fr-footer__bottom-link" href="/accessibilite"
               >Accessibilité: non/partiellement/totalement conforme</a
             >
           </li>
           <li class="fr-footer__bottom-item">
-            <a class="fr-footer__bottom-link" href="#">Mentions légales</a>
+            <a class="fr-footer__bottom-link" href="/mentions-legales">Mentions légales</a>
           </li>
           <li class="fr-footer__bottom-item">
-            <a class="fr-footer__bottom-link" href="#">Données personnelles</a>
+            <a class="fr-footer__bottom-link" href="/donnees-personnelles">Données personnelles</a>
           </li>
           <li class="fr-footer__bottom-item">
-            <a class="fr-footer__bottom-link" href="#">Gestion des cookies</a>
+            <a class="fr-footer__bottom-link" href="/cookies">Gestion des cookies</a>
           </li>
         </ul>
         <div class="fr-footer__bottom-copy">
