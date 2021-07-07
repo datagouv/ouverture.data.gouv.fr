@@ -48,5 +48,12 @@ module.exports = {
   /**
    * Apply plugins，ref：https://v1.vuepress.vuejs.org/zh/plugin/
    */
-  plugins: []
+  plugins: [
+    ["vuepress-plugin-matomo",
+      {
+        'siteId': 189,
+        'trackerUrl': "https://stats.data.gouv.fr/"
+      }
+    ]
+  ]
 }
