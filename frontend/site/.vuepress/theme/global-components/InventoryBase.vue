@@ -36,7 +36,7 @@ import moment from 'moment';
 const fields = {
   'Données, API ou code source': 'Type',
   'Données, API, Codes sources concernés': 'Titre',
-  Ministère: 'Organisation',
+  'Ministère': 'Ministère',
   "État d'avancement": 'Statut d’ouverture',
   'Échéance annoncée par les ministères': 'Date estimée de publication'
 }
@@ -126,12 +126,12 @@ export default {
       return count;
     },
     organizations () {
-      let orgs = this.datasets.map(dataset => dataset['Organisation'])
+      let orgs = this.datasets.map(dataset => dataset['Ministère'])
       orgs = [...new Set(orgs)]
       orgs = orgs.map(o => ({
         label: o,
         key: o,
-        count: this.filteredDatasets.filter(d => d['Organisation'] == o).length
+        count: this.filteredDatasets.filter(d => d['Ministère'] == o).length
       }))
       orgs.sort((a,b) => b.count - a.count)
       return orgs
