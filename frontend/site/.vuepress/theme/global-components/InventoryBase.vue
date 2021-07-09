@@ -67,6 +67,13 @@ const statuses = [
     _class: "yellow",
     labelExtended: "planifiés",
   },
+  {
+    label: "Non disponible",
+    key: "notopen",
+    visible: true,
+    _class: "red",
+    labelExtended: "non disponibles",
+  },
 ];
 
 export default {
@@ -126,6 +133,7 @@ export default {
         opening: 0,
         preview: 0,
         open: 0,
+        notopen: 0,
       };
       this.filteredDatasets.forEach((dataset) => {
         const value = dataset["Statut d’ouverture"];
@@ -193,5 +201,8 @@ export default {
 }
 .fr-tag.yellow {
   background-color: #fdcf41;
+}
+.fr-tag.red {
+  background-color: #ff6f4c;
 }
 </style>
