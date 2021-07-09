@@ -1,9 +1,10 @@
 module.exports = {
-  dest: '../dist',
+  dest: "../dist",
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
-  title: "Tableau de suivi des ouvertures de données, codes sources et API publics",
+  title:
+    "Tableau de suivi des ouvertures de données, codes sources et API publics",
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
@@ -11,7 +12,7 @@ module.exports = {
 
   markdown: {
     anchor: { permalink: false },
-    externalLinks: { target: '' }
+    externalLinks: { target: "" },
   },
 
   /**
@@ -20,12 +21,12 @@ module.exports = {
    * ref：https://v1.vuepress.vuejs.org/config/#head
    */
   head: [
-    ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
+    ["meta", { name: "apple-mobile-web-app-capable", content: "yes" }],
     [
-      'meta',
-      { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }
+      "meta",
+      { name: "apple-mobile-web-app-status-bar-style", content: "black" },
     ],
-    ['link', { rel: 'icon', href: '/assets/favicons/favicon.ico' }]
+    ["link", { rel: "icon", href: "/assets/favicons/favicon.ico" }],
   ],
 
   /**
@@ -34,26 +35,27 @@ module.exports = {
    * ref：https://v1.vuepress.vuejs.org/theme/default-theme-config.html
    */
   themeConfig: {
-    subdomain: 'economiecirculaire',
-    apiUrl: process.env.VUE_APP_API_URL || 'http://localhost:5000/api',
-    repo: '',
+    subdomain: "economiecirculaire",
+    apiUrl: process.env.VUE_APP_API_URL || "http://localhost:5000/api",
+    repo: "",
     editLinks: false,
-    docsDir: '',
-    editLinkText: '',
+    docsDir: "",
+    editLinkText: "",
     lastUpdated: false,
     nav: [],
-    sidebar: {}
+    sidebar: {},
   },
 
   /**
    * Apply plugins，ref：https://v1.vuepress.vuejs.org/zh/plugin/
    */
   plugins: [
-    ["vuepress-plugin-matomo",
+    [
+      "vuepress-plugin-matomo",
       {
-        'siteId': 189,
-        'trackerUrl': "https://stats.data.gouv.fr/"
-      }
-    ]
-  ]
-}
+        siteId: 189,
+        trackerUrl: "https://stats.data.gouv.fr/",
+      },
+    ],
+  ],
+};

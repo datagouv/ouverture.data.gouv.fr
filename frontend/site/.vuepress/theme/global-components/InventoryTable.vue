@@ -18,18 +18,18 @@
 
 <script>
 export default {
-  name: 'InventoryTable',
-  props: ['datasets', 'format', 'columns'],
+  name: "InventoryTable",
+  props: ["datasets", "format", "columns"],
   methods: {
-    display (row, column) {
+    display(row, column) {
       if (this.format && this.format[column]) {
-        return this.format[column](row[column], row)
+        return this.format[column](row[column], row);
       } else {
-        return row[column]
+        return row[column];
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>

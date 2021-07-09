@@ -1,7 +1,10 @@
 <template>
   <div>
     <InventoryDataProxy
-      @input="datasets = $event.datasets; lastModified = $event.lastModified; "
+      @input="
+        datasets = $event.datasets;
+        lastModified = $event.lastModified;
+      "
       :fields="fields"
       :statuses="statuses"
     />
@@ -30,25 +33,25 @@
 </template>
 
 <script>
-import axios from 'axios';
-import moment from 'moment';
+import axios from "axios";
+import moment from "moment";
 
 // Les colonnes à afficher ainsi que leur titre
 const fields = {
-  'Données, API ou code source': 'Type',
-  'Données, API, Codes sources concernés': 'Titre',
-  'Ministère': 'Ministère',
-  "État d'avancement": 'Statut d’ouverture',
-  'Échéance annoncée par les ministères': 'Date estimée de publication'
-}
+  "Données, API ou code source": "Type",
+  "Données, API, Codes sources concernés": "Titre",
+  Ministère: "Ministère",
+  "État d'avancement": "Statut d’ouverture",
+  "Échéance annoncée par les ministères": "Date estimée de publication",
+};
 
 // Formattage des cellules
 const format = {
-  'Statut d’ouverture': (cell, row) =>
+  "Statut d’ouverture": (cell, row) =>
     `<span class="fr-tag ${row.status._class}">${cell}</a>`,
   Titre: (cell, row) =>
-    row.raw.URL ? `<a href="${row.raw.URL}">${cell}</a>` : cell
-}
+    row.raw.URL ? `<a href="${row.raw.URL}">${cell}</a>` : cell,
+};
 
 const statuses = [
   {
@@ -56,128 +59,130 @@ const statuses = [
     key: "open",
     visible: true,
     _class: "green",
-    labelExtended: "disponbiles"
+    labelExtended: "disponbiles",
   },
   {
     label: "Planifié",
     key: "opening",
     visible: true,
     _class: "yellow",
-    labelExtended: "planifiés"
-  }
-]
+    labelExtended: "planifiés",
+  },
+];
 
 export default {
-  name: 'InventoryBase',
-  data () {
+  name: "InventoryBase",
+  data() {
     return {
       statuses,
       loading: true,
-      query: '',
+      query: "",
       datasets: [],
       lastModified: null,
       columns: Object.values(fields),
       filters: {},
       fields,
-      format
-    }
+      format,
+    };
   },
   computed: {
     filteredDatasets() {
       let datasets = this.datasets;
 
       datasets = datasets
-        .filter(d => d.status.visible == true)
-        .filter(d => !this.filters.type || d["Type"] == this.filters.type)
-        .filter(d => !this.filters.status || d["Statut d’ouverture"] == this.filters.status)
-        .filter(d => !this.filters.org || d["Ministère"] == this.filters.org)
-        .filter(d => !this.filters.trimester || d["Date estimée de publication"] == this.filters.trimester);
+        .filter((d) => d.status.visible == true)
+        .filter((d) => !this.filters.type || d["Type"] == this.filters.type)
+        .filter(
+          (d) =>
+            !this.filters.status ||
+            d["Statut d’ouverture"] == this.filters.status
+        )
+        .filter((d) => !this.filters.org || d["Ministère"] == this.filters.org)
+        .filter(
+          (d) =>
+            !this.filters.trimester ||
+            d["Date estimée de publication"] == this.filters.trimester
+        );
 
       if (this.query.length < 3) return datasets;
 
-      datasets = datasets.filter(dataset => {
-        return Object.keys(dataset).some(field => {
-
+      datasets = datasets.filter((dataset) => {
+        return Object.keys(dataset).some((field) => {
           if (!dataset[field] || !dataset[field].toLowerCase) return false;
 
           return dataset[field]
             .toLowerCase()
             .includes(this.query.toLowerCase());
-        })
+        });
       });
 
-      return datasets
+      return datasets;
     },
     filteredSortedDatasets() {
-      return this.filteredDatasets.sort(this.compareTrimesters)
+      return this.filteredDatasets.sort(this.compareTrimesters);
     },
     counters() {
       const count = {
         closed: 0,
         opening: 0,
         preview: 0,
-        open: 0
+        open: 0,
       };
-      this.filteredDatasets.forEach(dataset => {
+      this.filteredDatasets.forEach((dataset) => {
         const value = dataset["Statut d’ouverture"];
-        const status = this.statuses.find(s => s.label == value);
+        const status = this.statuses.find((s) => s.label == value);
         if (status) {
           count[status.key] += 1;
         }
       });
       return count;
     },
-    organizations () {
-      let orgs = this.datasets.map(dataset => dataset['Ministère'])
-      orgs = [...new Set(orgs)]
-      orgs = orgs.map(o => ({
+    organizations() {
+      let orgs = this.datasets.map((dataset) => dataset["Ministère"]);
+      orgs = [...new Set(orgs)];
+      orgs = orgs.map((o) => ({
         label: o,
         key: o,
-        count: this.filteredDatasets.filter(d => d['Ministère'] == o).length
-      }))
-      orgs.sort((a,b) => b.count - a.count)
-      return orgs
+        count: this.filteredDatasets.filter((d) => d["Ministère"] == o).length,
+      }));
+      orgs.sort((a, b) => b.count - a.count);
+      return orgs;
     },
-    trimesters () {
+    trimesters() {
       let trimesters = [
         ...new Set(
           this.datasets
             .sort(this.compareTrimesters)
-            .map(dataset => dataset["Date estimée de publication"])
-          )
-      ]
-      return trimesters.map(t => ({ label: t, key: t }))
+            .map((dataset) => dataset["Date estimée de publication"])
+        ),
+      ];
+      return trimesters.map((t) => ({ label: t, key: t }));
     },
-    types () {
-      let types = [
-        ...new Set(
-          this.datasets
-            .map(dataset => dataset["Type"])
-          )
-      ]
-      return types.map(t => ({ label: t, key: t }))
-    }
+    types() {
+      let types = [...new Set(this.datasets.map((dataset) => dataset["Type"]))];
+      return types.map((t) => ({ label: t, key: t }));
+    },
   },
-  mounted () {},
+  mounted() {},
   methods: {
-    compareTrimesters(a,b) {
+    compareTrimesters(a, b) {
       const ta =
-        a['Date estimée de publication'].split(' ')[1] +
-        a['Date estimée de publication'].split(' ')[0]
+        a["Date estimée de publication"].split(" ")[1] +
+        a["Date estimée de publication"].split(" ")[0];
       const tb =
-        b['Date estimée de publication'].split(' ')[1] +
-        b['Date estimée de publication'].split(' ')[0]
+        b["Date estimée de publication"].split(" ")[1] +
+        b["Date estimée de publication"].split(" ")[0];
       return ta.localeCompare(tb);
     },
-    toggle (badge) {
-      const status = this.statuses.find(s => s.key == badge)
-      status.visible = !status.visible
+    toggle(badge) {
+      const status = this.statuses.find((s) => s.key == badge);
+      status.visible = !status.visible;
     },
-    formatDate (str) {
-      return moment(str).format("DD/MM/YYYY")
-    }
-  }
-}
+    formatDate(str) {
+      return moment(str).format("DD/MM/YYYY");
+    },
+  },
+};
 </script>
 
 <style>

@@ -11,7 +11,12 @@
           </a>
         </div>
         <div class="fr-footer__content">
-          <p class="fr-footer__content-desc"> Le code source est ouvert et les contributions sont bienvenues. <a href="https://github.com/etalab/suivi-ouverture/">Voir le code source</a></p>
+          <p class="fr-footer__content-desc">
+            Le code source est ouvert et les contributions sont bienvenues.
+            <a href="https://github.com/etalab/suivi-ouverture/"
+              >Voir le code source</a
+            >
+          </p>
           <ul class="fr-footer__content-list">
             <li class="fr-footer__content-item">
               <a
@@ -48,13 +53,19 @@
             >
           </li>
           <li class="fr-footer__bottom-item">
-            <a class="fr-footer__bottom-link" href="/mentions-legales">Mentions légales</a>
+            <a class="fr-footer__bottom-link" href="/mentions-legales"
+              >Mentions légales</a
+            >
           </li>
           <li class="fr-footer__bottom-item">
-            <a class="fr-footer__bottom-link" href="/donnees-personnelles">Données personnelles</a>
+            <a class="fr-footer__bottom-link" href="/donnees-personnelles"
+              >Données personnelles</a
+            >
           </li>
           <li class="fr-footer__bottom-item">
-            <a class="fr-footer__bottom-link" href="/cookies">Gestion des cookies</a>
+            <a class="fr-footer__bottom-link" href="/cookies"
+              >Gestion des cookies</a
+            >
           </li>
         </ul>
         <div class="fr-footer__bottom-copy">
