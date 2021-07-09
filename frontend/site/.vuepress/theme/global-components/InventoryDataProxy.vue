@@ -18,8 +18,6 @@ export default {
   },
   methods: {
     tranformRecords(records) {
-      const _this = this;
-
       return records.map((record) => {
         const row = {};
 

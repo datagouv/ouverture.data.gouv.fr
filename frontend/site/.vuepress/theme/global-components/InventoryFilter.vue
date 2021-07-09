@@ -83,7 +83,7 @@
 
 <script>
 export default {
-  name: "IventoryFilter",
+  name: "InventoryFilter",
   props: ["statuses", "organizations", "trimesters", "types"],
   data() {
     return {

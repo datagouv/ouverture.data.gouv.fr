@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import moment from "moment";
 
 // Les colonnes à afficher ainsi que leur titre
@@ -149,7 +148,7 @@ export default {
       return orgs;
     },
     trimesters() {
-      let trimesters = [
+      const trimesters = [
         ...new Set(
           this.datasets
             .sort(this.compareTrimesters)
@@ -159,7 +158,9 @@ export default {
       return trimesters.map((t) => ({ label: t, key: t }));
     },
     types() {
-      let types = [...new Set(this.datasets.map((dataset) => dataset["Type"]))];
+      const types = [
+        ...new Set(this.datasets.map((dataset) => dataset["Type"])),
+      ];
       return types.map((t) => ({ label: t, key: t }));
     },
   },
