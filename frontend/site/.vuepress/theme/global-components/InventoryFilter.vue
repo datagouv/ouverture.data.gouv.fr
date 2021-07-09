@@ -1,5 +1,17 @@
 <template>
   <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
+    <div class="fr-col-2">
+      <label class="fr-label" for="select-type">
+        Type
+      </label>
+      <select v-model="type" class="fr-select" name="select-type" id="select-type" @mousedown="onSelect($event, type)">
+        <option value="" selected disabled hidden>Selectionnez un type</option>
+        <option v-for="type of types" :value="type.label">
+          {{ type.label }}
+        </option>
+      </select>
+    </div>
+
     <div class="fr-col-3">
       <label class="fr-label" for="select-status">
         Statut d'ouverture
@@ -24,7 +36,7 @@
       </select>
     </div>
 
-    <div class="fr-col-6">
+    <div class="fr-col-4">
       <label class="fr-label" for="select-org">
         Ministère
       </label>
@@ -41,23 +53,24 @@
 <script>
 export default {
   name: "IventoryFilter",
-  props: ["statuses", "organizations", "trimesters"],
+  props: ["statuses", "organizations", "trimesters", "types"],
   data () {
     return {
       status: "",
       org: "",
-      trimester: ""
+      trimester: "",
+      type: ""
     }
   },
   watch: {
     status(){ this.$emit('input', this.value) },
     org(){ this.$emit('input', this.value) },
-    trimester(){ this.$emit('input', this.value) }
-
+    trimester(){ this.$emit('input', this.value) },
+    type(){ this.$emit('input', this.value) }
   },
   computed: {
     value () {
-      return { status: this.status, trimester: this.trimester, org: this.org }
+      return { status: this.status, trimester: this.trimester, org: this.org, type: this.type }
     }
   },
   methods: {

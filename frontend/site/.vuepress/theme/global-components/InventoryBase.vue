@@ -9,6 +9,7 @@
     <div v-if="datasets.length > 0">
       <InventoryFilter
         v-model="filters"
+        :types="types"
         :statuses="statuses"
         :trimesters="trimesters"
         :organizations="organizations"
@@ -87,6 +88,7 @@ export default {
 
       datasets = datasets
         .filter(d => d.status.visible == true)
+        .filter(d => !this.filters.type || d["Type"] == this.filters.type)
         .filter(d => !this.filters.status || d["Statut d’ouverture"] == this.filters.status)
         .filter(d => !this.filters.org || d["Ministère"] == this.filters.org)
         .filter(d => !this.filters.trimester || d["Date estimée de publication"] == this.filters.trimester);
@@ -145,6 +147,15 @@ export default {
           )
       ]
       return trimesters.map(t => ({ label: t, key: t }))
+    },
+    types () {
+      let types = [
+        ...new Set(
+          this.datasets
+            .map(dataset => dataset["Type"])
+          )
+      ]
+      return types.map(t => ({ label: t, key: t }))
     }
   },
   mounted () {},
