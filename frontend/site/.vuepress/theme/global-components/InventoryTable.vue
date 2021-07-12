@@ -5,7 +5,11 @@
     </caption>
     <thead>
       <tr>
-        <th v-for="column in columns" :key="`col-${column.key}`">
+        <th
+          v-for="column in columns"
+          :key="`col-${column.key}`"
+          :style="column.width ? `width: ${column.width}` : ''"
+        >
           {{ column.label }}
         </th>
       </tr>

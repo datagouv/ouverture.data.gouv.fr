@@ -51,6 +51,7 @@ const mapping = {
     source: "État d'avancement",
     format: (cell, row) =>
       `<span class="fr-tag ${row.status._class}">${cell.label}</a>`,
+    width: "12em",
   },
   date: {
     label: "Date estimée de publication",
