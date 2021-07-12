@@ -5,7 +5,7 @@ import axios from "axios";
 
 export default {
   name: "InventoryDataProxy",
-  props: ["fields", "statuses"],
+  props: ["mapping", "statuses"],
   mounted() {
     axios.get(`${this.$themeConfig.apiUrl}/inventaire`).then((res) => {
       const datasets = this.tranformRecords(res.data.records);
@@ -21,14 +21,12 @@ export default {
       return records.map((record) => {
         const row = {};
 
-        Object.entries(this.fields).forEach(([field, column]) => {
-          row[column] = record.fields[field];
+        Object.entries(this.mapping).forEach(([key, info]) => {
+          row[key] = record.fields[info.source];
         });
 
         row.raw = record.fields;
-        row.status = this.statuses.find(
-          (s) => s.label == row["Statut d’ouverture"]
-        );
+        row.status = this.statuses.find((s) => s.label == row.status);
         row.visible = true;
 
         return row;

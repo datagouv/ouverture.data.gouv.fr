@@ -5,12 +5,18 @@
     </caption>
     <thead>
       <tr>
-        <th v-for="column in columns">{{ column }}</th>
+        <th v-for="column in columns" :key="`col-${column.key}`">
+          {{ column.label }}
+        </th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="dataset in datasets">
-        <td v-for="column in columns" v-html="display(dataset, column)" />
+      <tr v-for="(dataset, index) in datasets" :key="`record-${index}`">
+        <td
+          v-for="column in columns"
+          v-html="display(dataset, column)"
+          :key="`record-${index}-${column.key}`"
+        />
       </tr>
     </tbody>
   </table>
@@ -19,13 +25,14 @@
 <script>
 export default {
   name: "InventoryTable",
-  props: ["datasets", "format", "columns"],
+  props: ["datasets", "columns"],
   methods: {
     display(row, column) {
-      if (this.format && this.format[column]) {
-        return this.format[column](row[column], row);
+      const format = column.format;
+      if (format) {
+        return format(row[column.key], row);
       } else {
-        return row[column];
+        return row[column.key];
       }
     },
   },
