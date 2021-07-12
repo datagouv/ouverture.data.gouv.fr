@@ -5,7 +5,7 @@
         datasets = $event.datasets;
         lastModified = $event.lastModified;
       "
-      :fields="fields"
+      :mapping="mapping"
       :statuses="statuses"
     />
 
@@ -18,11 +18,7 @@
         :organizations="organizations"
       />
 
-      <InventoryTable
-        :datasets="filteredSortedDatasets"
-        :format="format"
-        :columns="columns"
-      />
+      <InventoryTable :datasets="filteredSortedDatasets" :columns="columns" />
 
       <p>Dernière modification : {{ formatDate(lastModified) }}</p>
     </div>
@@ -35,21 +31,31 @@
 <script>
 import moment from "moment";
 
-// Les colonnes à afficher ainsi que leur titre
-const fields = {
-  "Données, API ou code source": "Type",
-  "Données, API, Codes sources concernés": "Titre",
-  Ministère: "Ministère",
-  "État d'avancement": "Statut d’ouverture",
-  "Échéance annoncée par les ministères": "Date estimée de publication",
-};
-
-// Formattage des cellules
-const format = {
-  "Statut d’ouverture": (cell, row) =>
-    `<span class="fr-tag ${row.status._class}">${cell}</a>`,
-  Titre: (cell, row) =>
-    row.raw.URL ? `<a href="${row.raw.URL}">${cell}</a>` : cell,
+const mapping = {
+  type: {
+    label: "Type",
+    source: "Données, API ou code source",
+  },
+  title: {
+    label: "Titre",
+    source: "Données, API, Codes sources concernés",
+    format: (cell, row) =>
+      row.raw.URL ? `<a href="${row.raw.URL}">${cell}</a>` : cell,
+  },
+  organization: {
+    label: "Ministère",
+    source: "Ministère",
+  },
+  status: {
+    label: "Statut d’ouverture",
+    source: "État d'avancement",
+    format: (cell, row) =>
+      `<span class="fr-tag ${row.status._class}">${cell.label}</a>`,
+  },
+  date: {
+    label: "Date estimée de publication",
+    source: "Échéance annoncée par les ministères",
+  },
 };
 
 const statuses = [
@@ -85,10 +91,11 @@ export default {
       query: "",
       datasets: [],
       lastModified: null,
-      columns: Object.values(fields),
+      mapping,
+      columns: Object.values(
+        Object.entries(mapping).map((r) => ({ key: r[0], ...r[1] }))
+      ),
       filters: {},
-      fields,
-      format,
     };
   },
   computed: {
@@ -97,23 +104,17 @@ export default {
 
       datasets = datasets
         .filter((d) => d.status.visible == true)
-        .filter((d) => !this.filters.type || d["Type"] == this.filters.type)
+        .filter((d) => !this.filters.type || d.type == this.filters.type)
+        .filter((d) => !this.filters.status || d.status == this.filters.status)
+        .filter((d) => !this.filters.org || d.organization == this.filters.org)
         .filter(
-          (d) =>
-            !this.filters.status ||
-            d["Statut d’ouverture"] == this.filters.status
-        )
-        .filter((d) => !this.filters.org || d["Ministère"] == this.filters.org)
-        .filter(
-          (d) =>
-            !this.filters.trimester ||
-            d["Date estimée de publication"] == this.filters.trimester
+          (d) => !this.filters.trimester || d.date == this.filters.trimester
         );
 
       if (this.query.length < 3) return datasets;
 
       datasets = datasets.filter((dataset) => {
-        return Object.keys(dataset).some((field) => {
+        return Object.keys(mapping).some((field) => {
           if (!dataset[field] || !dataset[field].toLowerCase) return false;
 
           return dataset[field]
@@ -136,7 +137,7 @@ export default {
         notopen: 0,
       };
       this.filteredDatasets.forEach((dataset) => {
-        const value = dataset["Statut d’ouverture"];
+        const value = dataset.status;
         const status = this.statuses.find((s) => s.label == value);
         if (status) {
           count[status.key] += 1;
@@ -145,12 +146,12 @@ export default {
       return count;
     },
     organizations() {
-      let orgs = this.datasets.map((dataset) => dataset["Ministère"]);
+      let orgs = this.datasets.map((dataset) => dataset.organization);
       orgs = [...new Set(orgs)];
       orgs = orgs.map((o) => ({
         label: o,
         key: o,
-        count: this.filteredDatasets.filter((d) => d["Ministère"] == o).length,
+        count: this.filteredDatasets.filter((d) => d.organization == o).length,
       }));
       orgs.sort((a, b) => b.count - a.count);
       return orgs;
@@ -160,27 +161,21 @@ export default {
         ...new Set(
           this.datasets
             .sort(this.compareTrimesters)
-            .map((dataset) => dataset["Date estimée de publication"])
+            .map((dataset) => dataset.date)
         ),
       ];
       return trimesters.map((t) => ({ label: t, key: t }));
     },
     types() {
-      const types = [
-        ...new Set(this.datasets.map((dataset) => dataset["Type"])),
-      ];
+      const types = [...new Set(this.datasets.map((dataset) => dataset.type))];
       return types.map((t) => ({ label: t, key: t }));
     },
   },
   mounted() {},
   methods: {
     compareTrimesters(a, b) {
-      const ta =
-        a["Date estimée de publication"].split(" ")[1] +
-        a["Date estimée de publication"].split(" ")[0];
-      const tb =
-        b["Date estimée de publication"].split(" ")[1] +
-        b["Date estimée de publication"].split(" ")[0];
+      const ta = a.date.split(" ")[1] + a.date.split(" ")[0];
+      const tb = b.date.split(" ")[1] + b.date.split(" ")[0];
       return ta.localeCompare(tb);
     },
     toggle(badge) {
