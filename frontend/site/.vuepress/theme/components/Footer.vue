@@ -53,20 +53,11 @@
             >
           </li>
           <li class="fr-footer__bottom-item">
-            <a class="fr-footer__bottom-link" href="/mentions-legales"
-              >Mentions légales</a
+            <a class="fr-footer__bottom-link" href="/confidentialite"
+              >Politique de confidentialité</a
             >
           </li>
-          <li class="fr-footer__bottom-item">
-            <a class="fr-footer__bottom-link" href="/donnees-personnelles"
-              >Données personnelles</a
-            >
-          </li>
-          <li class="fr-footer__bottom-item">
-            <a class="fr-footer__bottom-link" href="/cookies"
-              >Gestion des cookies</a
-            >
-          </li>
+
         </ul>
         <div class="fr-footer__bottom-copy">
           <p>
