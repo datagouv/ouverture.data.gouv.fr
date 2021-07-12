@@ -106,7 +106,9 @@ export default {
       datasets = datasets
         .filter((d) => d.status.visible == true)
         .filter((d) => !this.filters.type || d.type == this.filters.type)
-        .filter((d) => !this.filters.status || d.status == this.filters.status)
+        .filter(
+          (d) => !this.filters.status || d.status.label == this.filters.status
+        )
         .filter((d) => !this.filters.org || d.organization == this.filters.org)
         .filter(
           (d) => !this.filters.trimester || d.date == this.filters.trimester
