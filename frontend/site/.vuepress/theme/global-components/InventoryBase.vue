@@ -56,6 +56,21 @@ const mapping = {
   date: {
     label: "Date estimée de publication",
     source: "Échéance annoncée par les ministères",
+    format: (cell, row) => {
+      const date = row.date;
+      const [trimester, year] = date.split(" ");
+      console.log(moment().year(), parseInt(year));
+      console.log(parseInt(trimester[1]), moment().quarter());
+      if (
+        row.status.key != "open" &&
+        moment().year() >= parseInt(year) &&
+        moment().quarter() > parseInt(trimester[1])
+      ) {
+        return `<del>${trimester} ${year}</del> T${moment().quarter()} ${moment().year()}`;
+      } else {
+        return `${trimester} ${year}`;
+      }
+    },
   },
 };
 
