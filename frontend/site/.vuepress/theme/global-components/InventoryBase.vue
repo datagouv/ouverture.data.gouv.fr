@@ -93,7 +93,7 @@ export default {
   },
   computed: {
     filteredDatasets() {
-      let datasets = this.datasets;
+      let datasets = this.datasets.slice();
 
       datasets = datasets
         .filter((d) => d.status.visible == true)
@@ -125,7 +125,7 @@ export default {
       return datasets;
     },
     filteredSortedDatasets() {
-      return this.filteredDatasets.sort(this.compareTrimesters);
+      return this.filteredDatasets.slice().sort(this.compareTrimesters);
     },
     counters() {
       const count = {
