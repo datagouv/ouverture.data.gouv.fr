@@ -59,8 +59,7 @@ const mapping = {
     format: (cell, row) => {
       const date = row.date;
       const [trimester, year] = date.split(" ");
-      console.log(moment().year(), parseInt(year));
-      console.log(parseInt(trimester[1]), moment().quarter());
+
       if (
         row.status.key != "open" &&
         moment().year() >= parseInt(year) &&
