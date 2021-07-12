@@ -65,7 +65,7 @@ const mapping = {
         moment().year() >= parseInt(year) &&
         moment().quarter() > parseInt(trimester[1])
       ) {
-        return `<del>${trimester} ${year}</del> T${moment().quarter()} ${moment().year()}`;
+        return `T${moment().quarter()} ${moment().year()}`;
       } else {
         return `${trimester} ${year}`;
       }
