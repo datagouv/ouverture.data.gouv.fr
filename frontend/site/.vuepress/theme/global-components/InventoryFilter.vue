@@ -4,10 +4,10 @@
       <div class="fr-col-2">
         <label class="fr-label" for="select-type"> Type </label>
         <select
+          id="select-type"
           v-model="type"
           class="fr-select"
           name="select-type"
-          id="select-type"
           @mousedown="onSelect($event, type)"
         >
           <option value="" selected disabled hidden>
@@ -22,10 +22,10 @@
       <div class="fr-col-3">
         <label class="fr-label" for="select-status"> Statut d'ouverture </label>
         <select
+          id="select-status"
           v-model="status"
           class="fr-select"
           name="select-status"
-          id="select-status"
           @mousedown="onSelect($event, status)"
         >
           <option value="" selected disabled hidden>
@@ -40,10 +40,10 @@
       <div class="fr-col-3">
         <label class="fr-label" for="select-trimester"> Trimestre </label>
         <select
+          id="select-trimester"
           v-model="trimester"
           class="fr-select"
           name="select-trimester"
-          id="select-trimester"
           @mousedown="onSelect($event, trimester)"
         >
           <option value="" selected disabled hidden>
@@ -58,10 +58,10 @@
       <div class="fr-col-4">
         <label class="fr-label" for="select-org"> Ministère </label>
         <select
+          id="select-org"
           v-model="org"
           class="fr-select"
           name="select-org"
-          id="select-org"
           @mousedown="onSelect($event, org)"
         >
           <option value="" selected disabled hidden>
@@ -75,7 +75,7 @@
     </div>
     <div class="fr-grid-row fr-grid-row--right fr-text--sm reset">
       <div class="fr-col-2">
-        <a @click="reset($event)" href="#">Ré-initialiser tous les filtres</a>
+        <a href="#" @click="reset($event)">Ré-initialiser tous les filtres</a>
       </div>
     </div>
   </div>
@@ -93,6 +93,16 @@ export default {
       type: "",
     };
   },
+  computed: {
+    value() {
+      return {
+        status: this.status,
+        trimester: this.trimester,
+        org: this.org,
+        type: this.type,
+      };
+    },
+  },
   watch: {
     status() {
       this.$emit("input", this.value);
@@ -105,16 +115,6 @@ export default {
     },
     type() {
       this.$emit("input", this.value);
-    },
-  },
-  computed: {
-    value() {
-      return {
-        status: this.status,
-        trimester: this.trimester,
-        org: this.org,
-        type: this.type,
-      };
     },
   },
   methods: {
