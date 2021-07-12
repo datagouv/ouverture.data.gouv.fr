@@ -4,12 +4,36 @@ title: Accessibilité
 
 # {{ $page.title }}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum pellentesque accumsan nisi, eget varius nulla volutpat at. Aenean laoreet nulla vel turpis elementum posuere. Cras quis ultrices mauris. Nunc porttitor, urna sed tempus fringilla, odio elit rhoncus lacus, quis maximus dolor nunc a erat. Nulla facilisi. Aenean in molestie elit. Curabitur elit eros, gravida ac dignissim eu, consectetur id lectus. Fusce sodales turpis felis, sed molestie nisl sollicitudin eu.
+## Déclaration d’accessibilité
 
-Phasellus hendrerit, justo vitae imperdiet mollis, eros metus tincidunt metus, consequat porttitor velit libero sit amet risus. Vestibulum at nisl nisi. Ut finibus, massa at eleifend blandit, nulla sapien consequat felis, id egestas velit enim a lacus. Etiam malesuada dolor tellus, ac iaculis quam posuere ac. Fusce finibus nunc quam, et porta eros luctus mattis. Quisque orci orci, sagittis dictum finibus eu, imperdiet a turpis. Suspendisse in elit et arcu ultricies porttitor.
+La DINUM s’engage à rendre son service accessible, conformément à l’article 47 de la loi n° 2005-102 du 11 février 2005.
+À cette fin, nous mettons en œuvre la stratégie et les actions suivantes : [Télécharger le schéma pluriannuel de la DINUM au format PDF.](https://www.numerique.gouv.fr/uploads/DINUM_SchemaPluriannuel_2020.pdf)
+Cette déclaration d’accessibilité s’applique à ouverture.data.gouv.fr.
 
-Ut tincidunt urna quis augue viverra, quis ultricies augue tristique. Aenean mattis sapien at libero elementum euismod. Etiam dignissim odio et ante porttitor lacinia. Nam convallis tincidunt purus sit amet volutpat. Praesent ut mauris eget purus tempor efficitur. Proin id dignissim turpis. Nunc iaculis consequat magna, sagittis rhoncus ante pretium quis. Curabitur sodales faucibus tristique.
+## État de conformité
 
-Vestibulum porta volutpat molestie. Donec semper ligula non neque hendrerit commodo. Aliquam nec eros mi. Vivamus et viverra leo. Morbi ac commodo ex. Donec rhoncus lorem eu neque sagittis sodales. Ut convallis rutrum suscipit. Proin sollicitudin augue eu finibus luctus.
+ouverture.data.gouv.fr est non conforme avec le RGAA 4.1.
+Le site n’a pas encore été audité.
 
-Donec a nulla vel nulla iaculis volutpat sed consectetur odio. Morbi fringilla malesuada nisl, non facilisis nisl aliquet quis. Aenean sapien purus, scelerisque et enim nec, ultrices efficitur libero. Quisque consequat nisi et semper feugiat. Integer et hendrerit ex. Integer nisl ipsum, rhoncus at ornare id, fermentum a neque. Ut metus ligula, aliquet quis arcu in, tempor interdum nunc. Proin in odio auctor, euismod lorem vel, malesuada quam. Pellentesque id erat ac massa hendrerit tincidunt et vel tortor. Donec pulvinar risus eget ligula suscipit tempor. Duis rutrum ante ligula, ut dignissim nunc dictum et.
+## Établissement de cette déclaration d’accessibilité
+
+Cette déclaration a été établie le 12 juillet 2021.
+
+## Amélioration et contact
+
+Si vous n’arrivez pas à accéder à un contenu ou à un service, vous pouvez contacter le responsable de ouverture.data.gouv.fr pour être orienté vers une alternative accessible ou obtenir le contenu sous une autre forme.
+
+- [Contactez-nous](https://support.data.gouv.fr/)
+- Adresse : DINUM 20 avenue de Ségur 75007 Paris
+
+Nous essayons de répondre dans les 2 jours ouvrés.
+
+## Voie de recours
+
+Cette procédure est à utiliser dans le cas suivant : vous avez signalé au responsable du site internet un défaut d’accessibilité qui vous empêche d’accéder à un contenu ou à un des services du portail et vous n’avez pas obtenu de réponse satisfaisante.
+
+Vous pouvez :
+
+- Écrire un message au Défenseur des droits
+- Contacter le délégué du Défenseur des droits dans votre région
+- Envoyer un courrier par la poste (gratuit, ne pas mettre de timbre) : Défenseur des droits Libre réponse 71120 75342 Paris CEDEX 07
