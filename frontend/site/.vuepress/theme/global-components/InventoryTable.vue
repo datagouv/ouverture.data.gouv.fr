@@ -14,8 +14,8 @@
       <tr v-for="(dataset, index) in datasets" :key="`record-${index}`">
         <td
           v-for="column in columns"
-          v-html="display(dataset, column)"
           :key="`record-${index}-${column.key}`"
+          v-html="display(dataset, column)"
         />
       </tr>
     </tbody>

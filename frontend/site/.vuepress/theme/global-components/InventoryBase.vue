@@ -1,12 +1,12 @@
 <template>
   <div>
     <InventoryDataProxy
+      :mapping="mapping"
+      :statuses="statuses"
       @input="
         datasets = $event.datasets;
         lastModified = $event.lastModified;
       "
-      :mapping="mapping"
-      :statuses="statuses"
     />
 
     <div v-if="datasets.length > 0">
