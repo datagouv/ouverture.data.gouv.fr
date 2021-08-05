@@ -65,7 +65,7 @@
           @mousedown="onSelect($event, org)"
         >
           <option value="" selected disabled hidden>
-            Selectionnez une ministère
+            Selectionnez un ministère
           </option>
           <option v-for="org of organizations" :value="org.label">
             {{ org.label }}
