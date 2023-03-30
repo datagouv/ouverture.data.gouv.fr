@@ -8,13 +8,12 @@
           v-model="type"
           class="fr-select"
           name="select-type"
-          @mousedown="onSelect($event, type)"
         >
           <option value="" selected disabled hidden>
             Selectionnez un type
           </option>
-          <option v-for="type of types" :value="type.label">
-            {{ type.label }}
+          <option v-for="currentType of types" :value="currentType.label">
+            {{ currentType.label }}
           </option>
         </select>
       </div>
@@ -26,7 +25,6 @@
           v-model="status"
           class="fr-select"
           name="select-status"
-          @mousedown="onSelect($event, status)"
         >
           <option value="" selected disabled hidden>
             Selectionnez un statut
@@ -44,7 +42,6 @@
           v-model="trimester"
           class="fr-select"
           name="select-trimester"
-          @mousedown="onSelect($event, trimester)"
         >
           <option value="" selected disabled hidden>
             Selectionnez un trimestre
@@ -62,7 +59,6 @@
           v-model="org"
           class="fr-select"
           name="select-org"
-          @mousedown="onSelect($event, org)"
         >
           <option value="" selected disabled hidden>
             Selectionnez un ministère
@@ -73,75 +69,92 @@
         </select>
       </div>
     </div>
-    <div class="fr-grid-row fr-grid-row--right fr-text--sm reset">
-      <div class="fr-col-2">
-        <a href="#" @click="reset($event)">Ré-initialiser tous les filtres</a>
+    <div v-if="filtered" class="fr-grid-row fr-grid-row--right fr-mt-1w">
+      <div class="fr-col-auto">
+        <button
+          class="fr-btn fr-btn--tertiary fr-btn--sm"
+          type="button"
+          @click="reset"
+        >
+          Ré-initialiser tous les filtres
+        </button>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: "InventoryFilter",
-  props: ["statuses", "organizations", "trimesters", "types"],
-  data() {
-    return {
-      status: "",
-      org: "",
-      trimester: "",
-      type: "",
-    };
-  },
-  computed: {
-    value() {
-      return {
-        status: this.status,
-        trimester: this.trimester,
-        org: this.org,
-        type: this.type,
-      };
-    },
-  },
-  watch: {
-    status() {
-      this.$emit("input", this.value);
-    },
-    org() {
-      this.$emit("input", this.value);
-    },
-    trimester() {
-      this.$emit("input", this.value);
-    },
-    type() {
-      this.$emit("input", this.value);
-    },
-  },
-  methods: {
-    onSelect(e, item) {
-      const parent = e.target.parentElement;
-      if (e.target.value == item) {
-        parent.value = "";
-        parent.dispatchEvent(new Event("change"));
-      }
-    },
-    reset(e) {
-      e.preventDefault();
+<script setup>
+import { computed, ref, watch } from 'vue';
 
-      const selects = this.$el.getElementsByTagName("select");
-      selects.forEach((select) => {
-        select.value = "";
-        select.dispatchEvent(new Event("change"));
-      });
-    },
+const props = defineProps({
+  organizations: {
+    /** @type {import("vue").PropType<Array<import("./types").Option>>} */
+    type: Array,
+    required: true,
   },
-};
+  statuses: {
+    /** @type {import("vue").PropType<Array<import("./types").Option>>} */
+    type: Array,
+    required: true,
+  },
+  trimesters: {
+    /** @type {import("vue").PropType<Array<import("./types").Option>>} */
+    type: Array,
+    required: true,
+  },
+  types: {
+    /** @type {import("vue").PropType<Array<import("./types").Option>>} */
+    type: Array,
+    required: true,
+  },
+});
+
+const emit = defineEmits(["change"]);
+
+const status = ref("");
+
+const org = ref("");
+
+const trimester = ref("");
+
+const type = ref("");
+
+const value = computed(() => {
+  return {
+    status: status.value,
+    trimester: trimester.value,
+    org: org.value,
+    type: type.value,
+  };
+});
+
+const filtered = computed(() => Object.values(value.value).some(filter => filter !== ""));
+
+watch(status, () => {
+  emit("change", value.value);
+});
+
+watch(org, () => {
+  emit("change", value.value);
+});
+
+watch(trimester, () => {
+  emit("change", value.value);
+});
+
+watch(type, () => {
+  emit("change", value.value);
+});
+
+function reset() {
+  status.value = "";
+  org.value = "";
+  trimester.value = "";
+  type.value = "";
+}
 </script>
 
 <style scoped>
-.reset {
-  text-align: right;
-}
 .reset a {
   color: #9c9c9c;
 }

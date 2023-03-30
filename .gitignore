@@ -1,2 +1,12 @@
 data.db
 dist/
+node_modules/
+venv/
+cache/
+pids
+logs
+npm-debug.log
+coverage/
+dist/
+.DS_Store
+__pycache__/

@@ -2,10 +2,9 @@
   "name": "dokku-simple-python-vue-spa",
   "version": "0.1.0",
   "scripts": {
-    "postinstall": "yarn install --cwd frontend --production false && yarn --cwd frontend run build && yarn install --cwd frontend --production true"
+    "postinstall": "npm ci --prefix frontend --production false && npm --prefix frontend run docs:build && npm install --ci frontend --production true"
   },
   "engines": {
-    "node": "13.x",
-    "yarn": "1.x"
+    "node": "16.x"
   }
 }

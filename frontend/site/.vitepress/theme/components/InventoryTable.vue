@@ -7,7 +7,6 @@
       <tr>
         <th
           v-for="column in columns"
-          :key="`col-${column.key}`"
           :style="column.width ? `width: ${column.width}` : ''"
         >
           {{ column.label }}
@@ -15,32 +14,45 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(dataset, index) in datasets" :key="`record-${index}`">
+      <tr v-for="(dataset, index) in datasets">
         <td
           v-for="column in columns"
           :key="`record-${index}-${column.key}`"
           v-html="display(dataset, column)"
-        />
+        ></td>
       </tr>
     </tbody>
   </table>
 </template>
 
-<script>
-export default {
-  name: "InventoryTable",
-  props: ["datasets", "columns"],
-  methods: {
-    display(row, column) {
-      const format = column.format;
-      if (format) {
-        return format(row[column.key], row);
-      } else {
-        return row[column.key];
-      }
-    },
+<script setup>
+defineProps({
+  datasets: {
+    /** @type {import("vue").PropType<Array<import("./types").Dataset>>} */
+    type: Array,
+    required: true,
   },
-};
+  columns: {
+    /** @type {import("vue").PropType<Array<import("./types").Column>>} */
+    type: Array,
+    required: true,
+  },
+});
+
+/**
+ * 
+ * @param {object} row 
+ * @param {import("./types").Column} column 
+ * @returns {string}
+ */
+function display(row, column) {
+  const format = column.format;
+  if (format) {
+    return format(row[column.key], row);
+  } else {
+    return row[column.key];
+  }
+}
 </script>
 
 <style scoped>

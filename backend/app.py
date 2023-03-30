@@ -15,7 +15,7 @@ CACHE_CONFIG = {"CACHE_TYPE": "filesystem", "CACHE_DIR": "/tmp"}
 cache = Cache(app, config=CACHE_CONFIG)
 
 AIRTABLE_API = "https://api.airtable.com/v0/"
-AIRTABLE_BASE = "appISQqfvRPMg6CH3/Suivi"
+AIRTABLE_BASE = "appckvnUjDc6g881x/Suivi"
 API_KEY = os.getenv("AIRTABLE_API_KEY")
 HEADERS = {"Authorization": f"Bearer {API_KEY}"}
 CACHE_TIMEOUT = 1 if app.config['DEBUG'] else os.getenv('CACHE_TIMEOUT', 600)
