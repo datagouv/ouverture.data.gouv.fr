@@ -1,11 +1,5 @@
 <template>
   <div>
-    <InventoryDataProxy
-      :mapping="mapping"
-      :statuses="statuses"
-      @input="updateDatasets"
-    />
-
     <div v-if="datasets.length > 0">
       <InventoryFilter
         @change="updateFilters"
@@ -14,8 +8,12 @@
         :trimesters="trimesters"
         :types="types"
       />
-
-      <InventoryTable :datasets="filteredSortedDatasets" :columns="mapping" />
+      <div class="fr-table fr-table--no-caption">
+        <InventoryTable :datasets="filteredSortedDatasets" :columns="mapping" />
+        <p v-if="nextCursor" class="fr-mt-2w">
+          <button @click="loadMore" class="fr-btn fr-btn--sm">Charger plus de résultats</button>
+        </p>
+      </div>
 
       <p v-if="lastModified">Dernière modification : {{ formatDate(lastModified) }}</p>
     </div>
@@ -29,14 +27,14 @@
 import dayjs from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import { computed, reactive, ref } from "vue";
-import InventoryDataProxy from "./InventoryDataProxy.vue";
+import useDataProxy from "../composables/dataProxy";
 import InventoryFilter from "./InventoryFilter.vue";
 import InventoryTable from "./InventoryTable.vue";
 
 dayjs.extend(quarterOfYear);
 
 /**
- * @type {Array<import("./types").Column>}
+ * @type {Array<import("../types").Column>}
  */
 const mapping = [
   {
@@ -47,19 +45,21 @@ const mapping = [
   {
     key: "title",
     label: "Titre",
-    source: "Données, API, Codes sources concernés",
+    source: "Jeux de données",
     format: (cell, row) =>
       row.raw.URL ? `<a href="${row.raw.URL}">${cell}</a>` : cell,
+    transform: (cell) => cell[0].plain_text,
   },
   {
     key: "organization",
     label: "Ministère",
-    source: "Ministère",
+    source: "Nom Producteur",
+    transform: (cell) => cell.string,
   },
   {
     key: "status",
     label: "Statut d’ouverture",
-    source: "État d'avancement",
+    source: "Statut",
     format: (cell, row) =>
       `<span class="fr-tag ${row.status._class}">${cell.label}</a>`,
     width: "12em",
@@ -67,10 +67,13 @@ const mapping = [
   {
     key: "date",
     label: "Date estimée de publication",
-    source: "Échéance annoncée par les ministères",
+    source: "Calendrier ouverture",
     format: (cell, row) => {
       const date = row.date;
-      const [trimester, year] = date.split(" ");
+      if(!date) {
+        return "";
+      }
+      const [year, trimester] = date.split(" ");
       const now = dayjs();
 
       if (
@@ -83,13 +86,14 @@ const mapping = [
         return `${trimester} ${year}`;
       }
     },
+    transform: (cell) => cell?.name,
   },
 ];
 
 
 
 /**
- * @type {Array<import("./types").Status>}
+ * @type {Array<import("../types").Status>}
  */
 const statuses = [
   {
@@ -97,32 +101,29 @@ const statuses = [
     key: "open",
     visible: true,
     _class: "green",
-    labelExtended: "disponbiles",
+    source: ["Fait"],
   },
   {
     label: "Planifié",
     key: "opening",
     visible: true,
     _class: "yellow",
-    labelExtended: "planifiés",
+    source: ["En cours", "En attente de réponse", "Bloqué", "À enclencher", "À relancer", "À mettre en valeur 🤩"],
   },
   {
     label: "Non disponible",
     key: "notopen",
     visible: true,
     _class: "red",
-    labelExtended: "non disponibles",
+    source: ["Abandonné"],
   },
 ];
 
-/** @type {import("vue").Ref<Array<import("./types").Dataset>>} */
-const datasets = ref([]);
+const { datasets, lastModified, nextCursor, getData } = useDataProxy(mapping, statuses);
 
-/** @type {import("vue").Ref<string | null>} */
-const lastModified = ref(null);
 const query = ref("");
 
-/** @type {import("vue").UnwrapNestedRefs<import("./types").Filters>} */
+/** @type {import("vue").UnwrapNestedRefs<import("../types").Filters>} */
 const filters = reactive({
   organization: "",
   status: "",
@@ -131,7 +132,7 @@ const filters = reactive({
 });
 
 const filteredDatasets = computed(() => {
-  let filtered = datasets.value
+  let filtered = datasets
     .filter((d) => d.status.visible == true)
     .filter((d) => !filters.type || d.type == filters.type)
     .filter(
@@ -162,7 +163,7 @@ const filteredSortedDatasets = computed(() => {
 });
 
 const counters = computed(() => {
-  /** @type {{[key in import("./types").StatusKey]: number}} */
+  /** @type {{[key in import("../types").StatusKey]: number}} */
   const count = {
     closed: 0,
     opening: 0,
@@ -172,7 +173,7 @@ const counters = computed(() => {
   };
   filteredDatasets.value.forEach((dataset) => {
     const value = dataset.status;
-    const status = statuses.find((s) => s.label == value.label);
+    const status = statuses.find((status) => status.label == value.label);
     if (status) {
       count[status.key] += 1;
     }
@@ -181,7 +182,7 @@ const counters = computed(() => {
 });
 
 const organizations = computed(() => {
-  const organizationNames = datasets.value.map((dataset) => dataset.organization);
+  const organizationNames = datasets.map((dataset) => dataset.organization);
   const orgs = Array.from(new Set(organizationNames))
     .map((name) => ({
       label: name,
@@ -194,28 +195,28 @@ const organizations = computed(() => {
 
 const trimesters = computed(() => {
   const trimesters = Array.from(new Set(
-      datasets.value
+      datasets
         .sort(compareTrimesters)
         .map((dataset) => dataset.date)
     ));
   return trimesters.map((trimester) => ({ label: trimester, key: trimester }));
 });
 
-/** @type {import("vue").ComputedRef<Array<import("./types").Option>>} */
+/** @type {import("vue").ComputedRef<Array<import("../types").Option>>} */
 const types = computed(() => {
-  const types = Array.from(new Set(datasets.value.map((dataset) => dataset.type)));
+  const types = Array.from(new Set(datasets.map((dataset) => dataset.type)));
   return types.map((type) => ({ label: type, key: type }));
 });
 
 /**
  * Format two trimesters for comparison and compare them
- * @param {import("./types").Dataset} a 
- * @param {import("./types").Dataset} b
+ * @param {import("../types").Dataset} a 
+ * @param {import("../types").Dataset} b
  * @returns {number}
  */
 function compareTrimesters(a, b) {
-  const ta = a.date.split(" ")[1] + a.date.split(" ")[0];
-  const tb = b.date.split(" ")[1] + b.date.split(" ")[0];
+  const ta = a.date ? a.date.split(" ")[1] + a.date.split(" ")[0] : "";
+  const tb = b.date ? b.date.split(" ")[1] + b.date.split(" ")[0] : "";
   return ta.localeCompare(tb);
 }
 
@@ -239,17 +240,8 @@ function formatDate(str) {
 }
 
 /**
- * Update Datasets from server request
- * @param {{datasets: Array<import("./types").Dataset>, lastModified: string}} event 
- */
-function updateDatasets(event) {
-  datasets.value = event.datasets;
-  lastModified.value = event.lastModified;
-}
-
-/**
  * Update filters after select event
- * @param {import("./types").Filters} newFilters 
+ * @param {import("../types").Filters} newFilters 
  */
 function updateFilters(newFilters) {
   filters.organization = newFilters.organization;
@@ -258,6 +250,9 @@ function updateFilters(newFilters) {
   filters.type = newFilters.type;
 }
 
+function loadMore() {
+  getData(nextCursor.value);
+}
 </script>
 
 <style>

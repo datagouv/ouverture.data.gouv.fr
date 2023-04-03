@@ -56,15 +56,15 @@
         <label class="fr-label" for="select-org"> Ministère </label>
         <select
           id="select-org"
-          v-model="org"
+          v-model="organization"
           class="fr-select"
           name="select-org"
         >
           <option value="" selected disabled hidden>
             Selectionnez un ministère
           </option>
-          <option v-for="org of organizations" :value="org.label">
-            {{ org.label }}
+          <option v-for="organization of organizations" :value="organization.label">
+            {{ organization.label }}
           </option>
         </select>
       </div>
@@ -88,22 +88,22 @@ import { computed, ref, watch } from 'vue';
 
 const props = defineProps({
   organizations: {
-    /** @type {import("vue").PropType<Array<import("./types").Option>>} */
+    /** @type {import("vue").PropType<Array<import("../types").Option>>} */
     type: Array,
     required: true,
   },
   statuses: {
-    /** @type {import("vue").PropType<Array<import("./types").Option>>} */
+    /** @type {import("vue").PropType<Array<import("../types").Option>>} */
     type: Array,
     required: true,
   },
   trimesters: {
-    /** @type {import("vue").PropType<Array<import("./types").Option>>} */
+    /** @type {import("vue").PropType<Array<import("../types").Option>>} */
     type: Array,
     required: true,
   },
   types: {
-    /** @type {import("vue").PropType<Array<import("./types").Option>>} */
+    /** @type {import("vue").PropType<Array<import("../types").Option>>} */
     type: Array,
     required: true,
   },
@@ -113,7 +113,7 @@ const emit = defineEmits(["change"]);
 
 const status = ref("");
 
-const org = ref("");
+const organization = ref("");
 
 const trimester = ref("");
 
@@ -123,7 +123,7 @@ const value = computed(() => {
   return {
     status: status.value,
     trimester: trimester.value,
-    org: org.value,
+    organization: organization.value,
     type: type.value,
   };
 });
@@ -134,7 +134,7 @@ watch(status, () => {
   emit("change", value.value);
 });
 
-watch(org, () => {
+watch(organization, () => {
   emit("change", value.value);
 });
 
@@ -148,7 +148,7 @@ watch(type, () => {
 
 function reset() {
   status.value = "";
-  org.value = "";
+  organization.value = "";
   trimester.value = "";
   type.value = "";
 }

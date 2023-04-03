@@ -14,18 +14,34 @@ cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 CACHE_CONFIG = {"CACHE_TYPE": "filesystem", "CACHE_DIR": "/tmp"}
 cache = Cache(app, config=CACHE_CONFIG)
 
-AIRTABLE_API = "https://api.airtable.com/v0/"
-AIRTABLE_BASE = "appckvnUjDc6g881x/Suivi"
-API_KEY = os.getenv("AIRTABLE_API_KEY")
-HEADERS = {"Authorization": f"Bearer {API_KEY}"}
+NOTION_API = "https://api.notion.com/v1/databases/"
+NOTION_BASE = "323a4e5283e54dd28c616e34da86b3d9"
+API_KEY = os.getenv("NOTION_API_KEY")
+HEADERS = {
+    "Authorization": f"Bearer {API_KEY}",
+    "Content-Type": "application/json",
+    "Notion-Version": "2022-06-28"
+}
 CACHE_TIMEOUT = 1 if app.config['DEBUG'] else os.getenv('CACHE_TIMEOUT', 600)
 
 
 @app.route("/api/inventaire")
 @cache.cached(timeout=CACHE_TIMEOUT)
 def inventaire():
-    url = f"{AIRTABLE_API}{AIRTABLE_BASE}"
-    r = requests.get(url, headers=HEADERS)
+    url = f"{NOTION_API}{NOTION_BASE}/query"
+    payload = {
+        "page_size": 3,
+        "filter": {
+            "property": "Public",
+            "checkbox": {
+                "equals": True
+            }
+        },
+    }
+    start_cursor = request.args.get("start_cursor")
+    if start_cursor:
+        payload["start_cursor"] = start_cursor
+    r = requests.post(url, json=payload, headers=HEADERS)
     return jsonify(r.json())
 
 
@@ -41,7 +57,7 @@ def demande():
         "reuse": "Réutilisation envisagée",
         "contact": "Contact",
     }
-    url = f"{AIRTABLES_URL}/Demandes%20d'ouverture"
+    url = f"{NOTION_API}/Demandes%20d'ouverture"
     fields_dict = {fields[fkey]: request.json.get(fkey) for fkey in fields.keys()}
     fields_dict["Date"] = date.today().isoformat()
     r = requests.post(url, json={

@@ -1,5 +1,5 @@
 <template>
-  <table class="fr-table fr-table--no-caption">
+  <table>
     <caption>
       Tableau des jeux de données concernés par le CITP
     </caption>
@@ -28,12 +28,12 @@
 <script setup>
 defineProps({
   datasets: {
-    /** @type {import("vue").PropType<Array<import("./types").Dataset>>} */
+    /** @type {import("vue").PropType<Array<import("../types").Dataset>>} */
     type: Array,
     required: true,
   },
   columns: {
-    /** @type {import("vue").PropType<Array<import("./types").Column>>} */
+    /** @type {import("vue").PropType<Array<import("../types").Column>>} */
     type: Array,
     required: true,
   },
@@ -42,7 +42,7 @@ defineProps({
 /**
  * 
  * @param {object} row 
- * @param {import("./types").Column} column 
+ * @param {import("../types").Column} column 
  * @returns {string}
  */
 function display(row, column) {

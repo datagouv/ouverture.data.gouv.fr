@@ -29,7 +29,7 @@ yarn dev
 
 ```
 cd backend
-FLASK_DEBUG=1 FLASK_APP=app AIRTABLE_API_KEY=[YOUR KEY] flask run
+FLASK_DEBUG=1 FLASK_APP=app NOTION_API_KEY=[YOUR KEY] flask run
 ```
 
 ## Deploy
