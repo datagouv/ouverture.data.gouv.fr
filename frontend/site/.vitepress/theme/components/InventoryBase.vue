@@ -7,6 +7,7 @@
         :statuses="statuses"
         :trimesters="trimesters"
         :types="types"
+        ref="filtersComponent"
       />
       <div class="fr-table fr-table--no-caption">
         <InventoryTable :datasets="filteredSortedDatasets" :columns="mapping" />
@@ -122,6 +123,9 @@ const statuses = [
 const { datasets, lastModified, nextCursor, getData } = useDataProxy(mapping, statuses);
 
 const query = ref("");
+
+/** @type {import("vue").Ref<InstanceType<typeof import("./InventoryFilter.vue")> | null>} */
+const filtersComponent = ref(null);
 
 /** @type {import("vue").UnwrapNestedRefs<import("../types").Filters>} */
 const filters = reactive({
@@ -252,6 +256,9 @@ function updateFilters(newFilters) {
 
 function loadMore() {
   getData(nextCursor.value);
+  if(filtersComponent.value) {
+    filtersComponent.value.reset();
+  }
 }
 </script>
 

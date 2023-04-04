@@ -152,6 +152,8 @@ function reset() {
   trimester.value = "";
   type.value = "";
 }
+
+defineExpose({reset});
 </script>
 
 <style scoped>
