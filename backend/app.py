@@ -45,28 +45,6 @@ def inventaire():
     return jsonify(r.json())
 
 
-@app.route("/api/demande", methods=["POST"])
-def demande():
-    # mapping {<form_name>: <airtables_name>}
-    fields = {
-        "description": "Données recherchées",
-        "title": "Titre du jeu de données",
-        "organisation": "Organisation",
-        "geo": "Echelle géographique souhaitée",
-        "update": "Fréquence de mise à jour souhaitée",
-        "reuse": "Réutilisation envisagée",
-        "contact": "Contact",
-    }
-    url = f"{NOTION_API}/Demandes%20d'ouverture"
-    fields_dict = {fields[fkey]: request.json.get(fkey) for fkey in fields.keys()}
-    fields_dict["Date"] = date.today().isoformat()
-    r = requests.post(url, json={
-        "fields": fields_dict
-    }, headers=HEADERS)
-    r.raise_for_status()
-    return "", 201
-
-
 @app.route("/", defaults={"path": ""})
 # allows routing in vuejs
 @app.route("/<path:path>")
