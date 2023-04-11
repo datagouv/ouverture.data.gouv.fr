@@ -47,6 +47,21 @@ cd backend
 FLASK_DEBUG=1 FLASK_APP=app NOTION_BASE=[YOUR BASE] NOTION_API_KEY=[YOUR KEY] flask run
 ```
 
+## Build
+
+Vitepress has a build mode that generate files in `frontend/dist` to be deployed.
+
+```
+cd frontend
+npm run docs:build
+```
+
+This is the step where you can add your env variable.
+
+```
+VUE_APP_API_URL="https://..." npm run docs:build
+```
+
 ## Deploy
 
 Continuous deployement ✌️
