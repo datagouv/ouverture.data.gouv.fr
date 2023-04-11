@@ -30,7 +30,7 @@ CACHE_TIMEOUT = 1 if app.config['DEBUG'] else os.getenv('CACHE_TIMEOUT', 600)
 def inventaire():
     url = f"{NOTION_API}{NOTION_BASE}/query"
     payload = {
-        "page_size": 3,
+        "page_size": 100,
         "filter": {
             "property": "Public",
             "checkbox": {
