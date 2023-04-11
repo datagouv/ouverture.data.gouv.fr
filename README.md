@@ -22,10 +22,23 @@ The data that feeds the table on [ouverture.data.gouv.fr](https://ouverture.data
 
 ```
 cd front
-yarn dev
+npm i
+npm run docs:dev
 ```
 
 ### API
+
+ouverture.data.gouv.fr uses pip to install its dependencies. You can create a
+[virtualenv](https://realpython.com/blog/python/python-virtual-environments-a-primer/),
+activate it and install the requirements with the following commands.
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+Then, you can run the project :
 
 ```
 cd backend
