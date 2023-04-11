@@ -40,9 +40,11 @@ pip install -r requirements.txt
 
 Then, you can run the project :
 
+`NOTION_BASE` is the id in the base URL before the `?`: https://www.notion.so/conciergerie/[YOUR BASE]?v=ac8f34f3b3874ee2aae5a77219ac3f2f&pvs=4.
+
 ```
 cd backend
-FLASK_DEBUG=1 FLASK_APP=app NOTION_API_KEY=[YOUR KEY] flask run
+FLASK_DEBUG=1 FLASK_APP=app NOTION_BASE=[YOUR BASE] NOTION_API_KEY=[YOUR KEY] flask run
 ```
 
 ## Deploy

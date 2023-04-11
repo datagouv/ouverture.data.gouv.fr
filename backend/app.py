@@ -15,7 +15,7 @@ CACHE_CONFIG = {"CACHE_TYPE": "filesystem", "CACHE_DIR": "/tmp"}
 cache = Cache(app, config=CACHE_CONFIG)
 
 NOTION_API = "https://api.notion.com/v1/databases/"
-NOTION_BASE = "323a4e5283e54dd28c616e34da86b3d9"
+NOTION_BASE = os.getenv("NOTION_BASE")
 API_KEY = os.getenv("NOTION_API_KEY")
 HEADERS = {
     "Authorization": f"Bearer {API_KEY}",
