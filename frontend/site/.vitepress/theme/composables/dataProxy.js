@@ -12,8 +12,8 @@ export default function useDataProxy(mapping, statuses) {
     const { theme } = useData();
     const { apiUrl } = theme.value;
 
-    /** @type {import("vue").UnwrapNestedRefs<Array<import("../types").Dataset>>} */
-    const datasets = reactive([]);
+    /** @type {import("vue").UnwrapNestedRefs<Array<import("../types").Row>>} */
+    const rows = reactive([]);
 
     /** @type {import("vue").Ref<string | null>} */
     const lastModified = ref(null);
@@ -24,7 +24,7 @@ export default function useDataProxy(mapping, statuses) {
     /**
      * Transform records from API keys to mapped keys
      * @param {Array} records Records from API
-     * @returns {Array<import("../types").Dataset>}
+     * @returns {Array<import("../types").Row>}
      */
     function tranformRecords(records) {
         return records
@@ -38,26 +38,34 @@ export default function useDataProxy(mapping, statuses) {
                 const row = {};
 
                 mapping.forEach((mapping) => {
-                    const property = record.properties[mapping.source];
+                    const property = record.properties[mapping.label];
+                    console.log(property);
                     row[mapping.key] = mapping.transform ? mapping.transform(property) : property;
                 });
 
-                row.raw = record.properties;
-                row.status = statuses.find((status) => status.source.includes(row.status.name));
-                row.visible = true;
-
-                return /** @type {import("../types").Dataset} */ (row);
+                row.status = statuses.find((status) => status.label === row.status);
+                console.log(row);
+                return /** @type {import("../types").Row} */ (row);
             });
     }
 
     /**
-    * Notion properties are nested in object with a key equals to their type.
-    * @param {Record<string, Object>} property
+    * Notion properties are objects with a key equals to their type 
+    * but they are nested for some types.
+    * @param {Record<string, Object> | string} property
     */
     function getPropertyValue(property) {
+        if (!property || typeof property === "string") {
+            return property;
+        }
         const type = property.type;
         if (property.hasOwnProperty(type)) {
-            return property[type];
+            if(type === "title") {
+                return property[type][0].plain_text;
+            }
+            return getPropertyValue(property[type]);
+        } else if(property.hasOwnProperty("name")) {
+            return property.name;
         } else {
             return property;
         }
@@ -71,7 +79,7 @@ export default function useDataProxy(mapping, statuses) {
         axios.get(`${apiUrl}/inventaire`, {params: {start_cursor: cursor}}).then((res) => {
             /** @type {Array} */
             const records = res.data.results;
-            datasets.push(...tranformRecords(records));
+            rows.push(...tranformRecords(records));
             nextCursor.value = res.data.next_cursor
 
             lastModified.value = records
@@ -85,6 +93,6 @@ export default function useDataProxy(mapping, statuses) {
         getData();
     });
 
-    return { datasets, lastModified, nextCursor, getData };
+    return { rows, lastModified, nextCursor, getData };
 
 }

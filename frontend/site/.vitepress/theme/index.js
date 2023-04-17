@@ -2,6 +2,7 @@
 import Layout from './Layout.vue';
 import "@gouvfr/dsfr/dist/dsfr.min.css";
 
+/** @type {import("vitepress").Theme} */
 export default {
   Layout,
   async enhanceApp({ app, router, siteData }) {

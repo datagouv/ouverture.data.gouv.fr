@@ -14,11 +14,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(dataset, index) in datasets">
+      <tr v-for="(row, index) in rows">
         <td
           v-for="column in columns"
           :key="`record-${index}-${column.key}`"
-          v-html="display(dataset, column)"
+          v-html="display(row, column)"
         ></td>
       </tr>
     </tbody>
@@ -27,8 +27,8 @@
 
 <script setup>
 defineProps({
-  datasets: {
-    /** @type {import("vue").PropType<Array<import("../types").Dataset>>} */
+  rows: {
+    /** @type {import("vue").PropType<Array<import("../types").Row>>} */
     type: Array,
     required: true,
   },
