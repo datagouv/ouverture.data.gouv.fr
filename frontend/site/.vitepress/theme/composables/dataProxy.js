@@ -39,12 +39,10 @@ export default function useDataProxy(mapping, statuses) {
 
                 mapping.forEach((mapping) => {
                     const property = record.properties[mapping.label];
-                    console.log(property);
                     row[mapping.key] = mapping.transform ? mapping.transform(property) : property;
                 });
 
                 row.status = statuses.find((status) => status.label === row.status);
-                console.log(row);
                 return /** @type {import("../types").Row} */ (row);
             });
     }
