@@ -5,6 +5,7 @@
     "postinstall": "npm ci --prefix frontend --production false && npm --prefix frontend run docs:build && npm ci --prefix frontend --production true"
   },
   "engines": {
-    "node": "16.x"
+    "node": "16.x",
+    "npm": "8.x"
   }
 }

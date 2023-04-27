@@ -7,7 +7,7 @@ import { defineConfigWithTheme } from 'vitepress'
 
 /** @type {import("vitepress").UserConfig<OuvertureThemeConfig>} */
 export default defineConfigWithTheme({
-  outDir: "../dist",
+  outDir: "../../dist",
   title: "Ouverture data.gouv.fr",
   description: "Tableau de suivi des ouvertures de données, codes sources et API publics",
   cleanUrls: true,
