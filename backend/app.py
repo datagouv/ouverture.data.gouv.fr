@@ -42,6 +42,7 @@ def inventaire():
     if start_cursor:
         payload["start_cursor"] = start_cursor
     r = requests.post(url, json=payload, headers=HEADERS)
+    r.raise_for_status()
     return jsonify(r.json())
 
 
