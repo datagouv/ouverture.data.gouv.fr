@@ -21,7 +21,7 @@ The data that feeds the table on [ouverture.data.gouv.fr](https://ouverture.data
 ### Website
 
 ```
-cd front
+cd frontend
 npm i
 npm run docs:dev
 ```
