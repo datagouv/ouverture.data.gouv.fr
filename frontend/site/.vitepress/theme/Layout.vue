@@ -14,3 +14,13 @@ const { site, frontmatter } = useData()
   </main>
   <FooterComponent />
 </template>
+
+<style>
+.fr-btn {
+    --background-action-high-blue-france: var(--blue-cumulus-sun-368-moon-732);
+    --background-action-high-blue-france-hover: var(--blue-cumulus-sun-368-moon-732-hover);
+    --background-action-high-blue-france-active: var(--blue-cumulus-sun-368-moon-732-active);
+    border-radius: 3em;
+    font-size: 0.875rem;
+}
+</style>
