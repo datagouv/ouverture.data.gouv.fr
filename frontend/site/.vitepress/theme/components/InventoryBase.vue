@@ -19,7 +19,8 @@
       <p v-if="lastModified">Dernière modification : {{ formatDate(lastModified) }}</p>
     </div>
     <div v-else>
-      <em>Données en cours de chargement...</em>
+      <em v-if="hasError">Impossible de récupérer les données, veuillez réessayer ultérieurement.</em>
+      <em v-else>Données en cours de chargement...</em>
     </div>
   </div>
 </template>
@@ -104,7 +105,7 @@ const statuses = [
   },
 ];
 
-const { rows, lastModified, nextCursor, getData } = useDataProxy(mapping, statuses);
+const { hasError, rows, lastModified, nextCursor, getData } = useDataProxy(mapping, statuses);
 
 const query = ref("");
 

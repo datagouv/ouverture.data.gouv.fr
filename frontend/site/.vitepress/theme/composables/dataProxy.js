@@ -21,6 +21,8 @@ export default function useDataProxy(mapping, statuses) {
     /** @type {import("vue").Ref<string | null>} */
     const nextCursor = ref(null);
 
+    const hasError = ref(false);
+
     /**
      * Transform records from API keys to mapped keys
      * @param {Array} records Records from API
@@ -79,11 +81,13 @@ export default function useDataProxy(mapping, statuses) {
             const records = res.data.results;
             rows.push(...tranformRecords(records));
             nextCursor.value = res.data.next_cursor
-
+            hasError.value = false;
             lastModified.value = records
                 .map((r) => r.last_edited_time)
                 .sort((a, b) => b.localeCompare(a))
                 .pop();
+        }).catch(e => {
+            hasError.value = true;
         });
     }
 
@@ -91,6 +95,6 @@ export default function useDataProxy(mapping, statuses) {
         getData();
     });
 
-    return { rows, lastModified, nextCursor, getData };
+    return { hasError, rows, lastModified, nextCursor, getData };
 
 }
