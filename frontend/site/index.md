@@ -12,7 +12,7 @@ Cette liste non exhaustive, inclut : les engagements ministériels pris lors du 
 
 ## Suggérer une ouverture de données
 
-Vous pouvez nous adresser une suggestion de publication qui nous aideront à prioriser les efforts d’ouverture.
+Vous pouvez nous adresser une suggestion de publication qui nous aidera à prioriser les efforts d’ouverture.
 
 Note : les demandes effectuées ici ne sont pas assimilables à une demande adressée à la [Commission d’Accès aux Documents Administratifs](https://www.cada.fr/).
 
