@@ -32,7 +32,7 @@ def inventaire():
     payload = {
         "page_size": 100,
         "filter": {
-            "property": "Public",
+            "property": "PUBLIC",
             "checkbox": {
                 "equals": True
             }

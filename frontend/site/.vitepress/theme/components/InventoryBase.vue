@@ -1,22 +1,26 @@
 <template>
   <div>
+    <p>
+      <template v-if="lastModified">Dernière modification : {{ formatDate(lastModified) }}. </template>
+      <a href="https://www.data.gouv.fr/fr/datasets/tableau-de-suivi-des-ouvertures-de-donnees-codes-sources-et-api-publics">Voir le jeu de données sur data.gouv.fr</a>.
+    </p>
     <div v-if="rows.length > 0">
       <InventoryFilter
         @change="updateFilters"
+        :categories="categories"
         :organizations="organizations"
         :statuses="statuses"
-        :trimesters="trimesters"
         :types="types"
         ref="filtersComponent"
       />
       <div class="fr-table fr-table--no-caption">
-        <InventoryTable :rows="filteredSortedRows" :columns="mapping" />
+        <InventoryTable :rows="filteredSortedRows" :columns="mappingWithLabels" />
         <p v-if="nextCursor" class="fr-mt-2w">
           <button @click="loadMore" class="fr-btn fr-btn--sm">Charger plus de résultats</button>
         </p>
       </div>
 
-      <p v-if="lastModified">Dernière modification : {{ formatDate(lastModified) }}</p>
+     
     </div>
     <div v-else>
       <em v-if="hasError">Impossible de récupérer les données, veuillez réessayer ultérieurement.</em>
@@ -40,31 +44,38 @@ dayjs.extend(quarterOfYear);
  */
 const mapping = [
   {
-    key: "type",
+    key: "TYPE",
     label: "Type",
   },
   {
-    key: "title",
+    key: "CATEGORIE",
+    label: "Catégorie",
+  },
+  {
+    key: "LIEN",
+  },
+  {
+    key: "TITRE",
     label: "Titre",
     format: (cell, row) =>
-      row.url ? `<a href="${row.url}">${cell}</a>` : cell,
+      row.LIEN ? `<a href="${row.LIEN}">${cell}</a>` : cell,
   },
   {
-    key: "organization",
-    label: "Ministère",
+    key: "PRODUCTEUR",
+    label: "Producteur",
   },
   {
-    key: "status",
-    label: "Statut d’ouverture",
+    key: "STATUT D'OUVERTURE",
+    label: "Statut",
     format: (cell, row) =>
-      `<span class="fr-badge fr-badge--no-icon ${row.status._class}">${cell.label}</a>`,
+      `<span class="fr-badge fr-badge--no-icon ${row.status._class}">${row.status.label}</a>`,
     width: "12em",
   },
   {
-    key: "date",
-    label: "Date estimée de publication",
+    key: "DATE ESTIMÉE",
+    label: "Date estimée",
     format: (cell, row) => {
-      const date = row.date;
+      const date = cell;
       if(!date) {
         return "";
       }
@@ -83,6 +94,8 @@ const mapping = [
     },
   },
 ];
+
+const mappingWithLabels = mapping.filter(column => column.label);
 
 /**
  * @type {Array<import("../types").Status>}
@@ -116,19 +129,19 @@ const filtersComponent = ref(null);
 const filters = reactive({
   organization: "",
   status: "",
-  trimester: "",
+  category: "",
   type: "",
 });
 
 const filteredRows = computed(() => {
   let filtered = rows
-    .filter((d) => !filters.type || d.type == filters.type)
+    .filter((d) => !filters.type || d.TYPE == filters.type)
     .filter(
       (d) => !filters.status || d.status.label == filters.status
     )
-    .filter((d) => !filters.organization || d.organization == filters.organization)
+    .filter((d) => !filters.organization || d.PRODUCTEUR == filters.organization)
     .filter(
-      (d) => !filters.trimester || d.date == filters.trimester
+      (d) => !filters.category || d.CATEGORIE == filters.category
     );
 
   if (query.value.length < 3) return filtered;
@@ -151,29 +164,25 @@ const filteredSortedRows = computed(() => {
 });
 
 const organizations = computed(() => {
-  const organizationNames = rows.map((row) => row.organization);
+  const organizationNames = rows.map((row) => row.PRODUCTEUR);
   const orgs = Array.from(new Set(organizationNames))
     .map((name) => ({
       label: name,
       key: name,
-      count: filteredRows.value.filter((/** @type {import("../types").Row} */ row) => row.organization == name).length,
+      count: filteredRows.value.filter((/** @type {import("../types").Row} */ row) => row.PRODUCTEUR == name).length,
     }));
   orgs.sort((a, b) => b.count - a.count);
   return orgs;
 });
 
-const trimesters = computed(() => {
-  const trimesters = Array.from(new Set(
-      rows
-        .sort(compareTrimesters)
-        .map((/** @type {import("../types").Row} */ row) => row.date)
-    ));
-  return trimesters.map((trimester) => ({ label: trimester, key: trimester }));
+const categories = computed(() => {
+  const categories = Array.from(new Set(rows.map((/** @type {import("../types").Row} */ row) => row.CATEGORIE)));
+  return categories.map((type) => ({ label: type, key: type }));
 });
 
 /** @type {import("vue").ComputedRef<Array<import("../types").Option>>} */
 const types = computed(() => {
-  const types = Array.from(new Set(rows.map((/** @type {import("../types").Row} */ row) => row.type)));
+  const types = Array.from(new Set(rows.map((/** @type {import("../types").Row} */ row) => row.TYPE)));
   return types.map((type) => ({ label: type, key: type }));
 });
 
@@ -184,8 +193,8 @@ const types = computed(() => {
  * @returns {number}
  */
 function compareTrimesters(a, b) {
-  const ta = a.date ? a.date.split(" ")[1] + a.date.split(" ")[0] : "";
-  const tb = b.date ? b.date.split(" ")[1] + b.date.split(" ")[0] : "";
+  const ta = a["DATE ESTIMÉE"] ? a["DATE ESTIMÉE"].split(" ")[1] + a["DATE ESTIMÉE"].split(" ")[0] : "";
+  const tb = b["DATE ESTIMÉE"] ? b["DATE ESTIMÉE"].split(" ")[1] + b["DATE ESTIMÉE"].split(" ")[0] : "";
   return ta.localeCompare(tb);
 }
 
@@ -204,7 +213,7 @@ function formatDate(str) {
 function updateFilters(newFilters) {
   filters.organization = newFilters.organization;
   filters.status = newFilters.status;
-  filters.trimester = newFilters.trimester;
+  filters.category = newFilters.category;
   filters.type = newFilters.type;
 }
 

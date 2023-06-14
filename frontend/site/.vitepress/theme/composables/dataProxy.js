@@ -37,14 +37,15 @@ export default function useDataProxy(mapping, statuses) {
                 return record;
             })
             .map((record) => {
+                console.log(record);
                 const row = {};
 
                 mapping.forEach((mapping) => {
-                    const property = record.properties[mapping.label];
-                    row[mapping.key] = mapping.transform ? mapping.transform(property) : property;
+                    row[mapping.key] = record.properties[mapping.key];
                 });
 
-                row.status = statuses.find((status) => status.label === row.status);
+                row.status = statuses.find((status) => status.label === row["STATUT D'OUVERTURE"]);
+                console.log(row);
                 return /** @type {import("../types").Row} */ (row);
             });
     }
@@ -55,8 +56,11 @@ export default function useDataProxy(mapping, statuses) {
     * @param {Record<string, Object> | string} property
     */
     function getPropertyValue(property) {
-        if (!property || typeof property === "string") {
+        if (!property) {
             return property;
+        }
+        if (typeof property === "string") {
+            return property.trim();
         }
         const type = property.type;
         if (property.hasOwnProperty(type)) {
@@ -65,7 +69,7 @@ export default function useDataProxy(mapping, statuses) {
             }
             return getPropertyValue(property[type]);
         } else if(property.hasOwnProperty("name")) {
-            return property.name;
+            return property.name.trim();
         } else {
             return property;
         }
