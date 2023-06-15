@@ -37,7 +37,6 @@ export default function useDataProxy(mapping, statuses) {
                 return record;
             })
             .map((record) => {
-                console.log(record);
                 const row = {};
 
                 mapping.forEach((mapping) => {
@@ -45,7 +44,6 @@ export default function useDataProxy(mapping, statuses) {
                 });
 
                 row.status = statuses.find((status) => status.label === row["STATUT D'OUVERTURE"]);
-                console.log(row);
                 return /** @type {import("../types").Row} */ (row);
             });
     }
