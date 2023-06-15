@@ -2,7 +2,7 @@
 title: Politique de confidentialité
 ---
 
-# {{ $page.title }}
+# {{ $frontmatter.title }}
 
 ## Cookies déposés
 
@@ -22,11 +22,13 @@ Nous utilisons pour cela [Matomo](https://matomo.org/), un outil [libre](https:/
 
 Pour l'outil Matomo, vous pouvez décider de ne jamais être suivi, y compris anonymement :
 
+<div class="fr-grid-row">
 <iframe
-  className="matomo-optout"
+  className="fr-col-12"
   title="Optout cookie"
   src="https://stats.data.gouv.fr/index.php?module=CoreAdminHome&action=optOut&language=fr&backgroundColor=&fontColor=333&fontSize=16px&fontFamily=sans-serif&overflow=visible"
 ></iframe>
+</div>
 
 ## Je contribue à enrichir vos données, puis-je y accéder ?
 Bien sûr ! Les statistiques d'usage de la majorité de nos produits, sont disponibles en accès libre sur [stats.data.gouv.fr](https://stats.data.gouv.fr).

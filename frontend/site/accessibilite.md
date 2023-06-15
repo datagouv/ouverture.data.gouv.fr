@@ -2,7 +2,7 @@
 title: Accessibilité
 ---
 
-# {{ $page.title }}
+# {{ $frontmatter.title }}
 
 ## Déclaration d’accessibilité
 

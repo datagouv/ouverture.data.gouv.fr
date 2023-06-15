@@ -21,15 +21,45 @@ The data that feeds the table on [ouverture.data.gouv.fr](https://ouverture.data
 ### Website
 
 ```
-cd front
-yarn dev
+cd frontend
+npm i
+npm run docs:dev
 ```
 
 ### API
 
+ouverture.data.gouv.fr uses pip to install its dependencies. You can create a
+[virtualenv](https://realpython.com/blog/python/python-virtual-environments-a-primer/),
+activate it and install the requirements with the following commands.
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+Then, you can run the project :
+
+`NOTION_BASE` is the id in the base URL before the `?`: https://www.notion.so/conciergerie/[YOUR BASE]?v=ac8f34f3b3874ee2aae5a77219ac3f2f&pvs=4.
+
 ```
 cd backend
-FLASK_DEBUG=1 FLASK_APP=app AIRTABLE_API_KEY=[YOUR KEY] flask run
+FLASK_DEBUG=1 FLASK_APP=app NOTION_BASE=[YOUR BASE] NOTION_API_KEY=[YOUR KEY] flask run
+```
+
+## Build
+
+Vitepress has a build mode that generate files in `frontend/dist` to be deployed.
+
+```
+cd frontend
+npm run docs:build
+```
+
+This is the step where you can add your env variable.
+
+```
+VUE_APP_API_URL="https://..." npm run docs:build
 ```
 
 ## Deploy
