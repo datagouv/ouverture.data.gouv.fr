@@ -58,5 +58,11 @@ function display(row, column) {
 <style scoped>
 table {
   width: 100%;
+  background-color: var(--background-contrast-grey);
+  background-image: linear-gradient(0deg,var(--border-plain-grey),var(--border-plain-grey));
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 2px;
+  color: var(--text-title-grey);
 }
 </style>
