@@ -13,7 +13,7 @@
         :types="types"
         ref="filtersComponent"
       />
-      <div class="fr-table fr-table--no-caption">
+      <div class="fr-table fr-table--no-caption" :class="{'fr-table--layout-fixed': !filteredSortedRows.length}">
         <InventoryTable :rows="filteredSortedRows" :columns="mappingWithLabels" />
         <p v-if="nextCursor" class="fr-mt-2w">
           <button @click="loadMore" class="fr-btn fr-btn--sm">Charger plus de résultats</button>
