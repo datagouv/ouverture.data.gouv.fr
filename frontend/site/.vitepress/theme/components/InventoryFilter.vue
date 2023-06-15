@@ -1,7 +1,7 @@
 <template>
   <div class="fr-mb-2w">
     <div class="fr-grid-row fr-grid-row--gutters">
-      <div class="fr-col-3">
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-3">
         <label class="fr-label" for="select-type"> Type </label>
         <select
           id="select-type"
@@ -18,7 +18,7 @@
         </select>
       </div>
 
-      <div class="fr-col-3">
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-3">
         <label class="fr-label" for="select-category"> Catégorie </label>
         <select
           id="select-category"
@@ -35,7 +35,7 @@
         </select>
       </div>
 
-      <div class="fr-col-3">
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-3">
         <label class="fr-label" for="select-org"> Producteur </label>
         <select
           id="select-org"
@@ -51,7 +51,7 @@
           </option>
         </select>
       </div>
-      <div class="fr-col-3">
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-3">
         <label class="fr-label" for="select-status"> Statut </label>
         <select
           id="select-status"
