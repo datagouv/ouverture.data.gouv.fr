@@ -24,6 +24,7 @@ HEADERS = {
 }
 CACHE_TIMEOUT = 1 if app.config['DEBUG'] else os.getenv('CACHE_TIMEOUT', 600)
 
+KEEP_PROPERTIES = ["TYPE", "CATEGORIE", "LIEN", "TITRE", "PRODUCTEUR", "STATUT D'OUVERTURE", "DATE ESTIMÉE"]
 
 @app.route("/api/inventaire")
 @cache.cached(timeout=CACHE_TIMEOUT)
@@ -43,7 +44,14 @@ def inventaire():
         payload["start_cursor"] = start_cursor
     r = requests.post(url, json=payload, headers=HEADERS)
     r.raise_for_status()
-    return jsonify(r.json())
+    response = r.json()
+    inventory = []
+    for result in response["results"]:
+        properties = result["properties"]
+        result["properties"] = {property: properties[property] for property in KEEP_PROPERTIES}
+        inventory.append(result)
+    response["results"] = inventory
+    return jsonify(response)
 
 
 @app.route("/", defaults={"path": ""})
