@@ -116,6 +116,11 @@ const statuses = [
     key: "notopen",
     _class: "fr-badge--error",
   },
+  {
+    label: "À déterminer",
+    key: "todefine",
+    _class: "",
+  },
 ];
 
 const { hasError, rows, lastModified, nextCursor, getData } = useDataProxy(mapping, statuses);
