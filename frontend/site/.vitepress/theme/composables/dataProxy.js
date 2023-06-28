@@ -63,7 +63,10 @@ export default function useDataProxy(mapping, statuses) {
         const type = property.type;
         if (property.hasOwnProperty(type)) {
             if(type === "title") {
-                return property[type][0].plain_text;
+                /** @type {Array<{plain_text: string}>} */
+                const nonEmptyTitles = property[type].filter(title => title.plain_text).map(title => title.plain_text);
+                const titleOrEmpty = nonEmptyTitles.pop() || "";
+                return titleOrEmpty;
             }
             return getPropertyValue(property[type]);
         } else if(property.hasOwnProperty("name")) {
