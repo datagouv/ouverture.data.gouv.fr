@@ -68,7 +68,7 @@ const mapping = [
     key: "STATUT D'OUVERTURE",
     label: "Statut",
     format: (cell, row) =>
-      `<span class="fr-badge fr-badge--no-icon ${row.status._class}">${row.status.label}</a>`,
+      `<span class="fr-badge fr-badge--no-icon ${row.status?._class}">${cell}</a>`,
     width: "12em",
   },
   {
@@ -83,7 +83,7 @@ const mapping = [
       const now = dayjs();
 
       if (
-        row.status.key != "open" &&
+        row.status?.key != "open" &&
         now.year() >= parseInt(year) &&
         now.quarter() > parseInt(trimester[1])
       ) {
@@ -115,6 +115,11 @@ const statuses = [
     label: "Non disponible",
     key: "notopen",
     _class: "fr-badge--error",
+  },
+  {
+    label: "À déterminer",
+    key: "todefine",
+    _class: "",
   },
 ];
 
