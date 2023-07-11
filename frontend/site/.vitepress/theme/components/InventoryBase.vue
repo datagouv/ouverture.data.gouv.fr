@@ -10,6 +10,7 @@
         :categories="categories"
         :organizations="organizations"
         :statuses="statuses"
+        :supervisors="supervisors"
         :types="types"
         ref="filtersComponent"
       />
@@ -63,6 +64,10 @@ const mapping = [
   {
     key: "PRODUCTEUR",
     label: "Producteur",
+  },
+  {
+    key: "MINISTÈRE DE TUTELLE",
+    label: "Ministère de tutelle",
   },
   {
     key: "STATUT D'OUVERTURE",
@@ -133,6 +138,7 @@ const filtersComponent = ref(null);
 /** @type {import("vue").UnwrapNestedRefs<import("../types").Filters>} */
 const filters = reactive({
   organization: "",
+  supervisor: "",
   status: "",
   category: "",
   type: "",
@@ -147,6 +153,9 @@ const filteredRows = computed(() => {
     .filter((d) => !filters.organization || d.PRODUCTEUR == filters.organization)
     .filter(
       (d) => !filters.category || d.CATEGORIE == filters.category
+    )
+    .filter(
+      (d) => !filters.supervisor || d["MINISTÈRE DE TUTELLE"] == filters.supervisor
     );
 
   if (query.value.length < 3) return filtered;
@@ -175,6 +184,18 @@ const organizations = computed(() => {
       label: name,
       key: name,
       count: filteredRows.value.filter((/** @type {import("../types").Row} */ row) => row.PRODUCTEUR == name).length,
+    }));
+  orgs.sort((a, b) => b.count - a.count);
+  return orgs;
+});
+
+const supervisors = computed(() => {
+  const supervisorNames = rows.map((row) => row["MINISTÈRE DE TUTELLE"]);
+  const orgs = Array.from(new Set(supervisorNames))
+    .map((name) => ({
+      label: name,
+      key: name,
+      count: filteredRows.value.filter((/** @type {import("../types").Row} */ row) => row["MINISTÈRE DE TUTELLE"] == name).length,
     }));
   orgs.sort((a, b) => b.count - a.count);
   return orgs;

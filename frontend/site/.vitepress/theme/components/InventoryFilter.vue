@@ -1,7 +1,7 @@
 <template>
   <div class="fr-mb-2w">
     <div class="fr-grid-row fr-grid-row--gutters">
-      <div class="fr-col-12 fr-col-sm-6 fr-col-md-3">
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-col-lg-2">
         <label class="fr-label" for="select-type"> Type </label>
         <select
           id="select-type"
@@ -18,7 +18,7 @@
         </select>
       </div>
 
-      <div class="fr-col-12 fr-col-sm-6 fr-col-md-3">
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-col-lg-2">
         <label class="fr-label" for="select-category"> Catégorie </label>
         <select
           id="select-category"
@@ -35,7 +35,7 @@
         </select>
       </div>
 
-      <div class="fr-col-12 fr-col-sm-6 fr-col-md-3">
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-col-lg-3">
         <label class="fr-label" for="select-org"> Producteur </label>
         <select
           id="select-org"
@@ -51,7 +51,23 @@
           </option>
         </select>
       </div>
-      <div class="fr-col-12 fr-col-sm-6 fr-col-md-3">
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-col-lg-3">
+        <label class="fr-label" for="select-org"> Ministère de tutelle </label>
+        <select
+          id="select-org"
+          v-model="supervisor"
+          class="fr-select"
+          name="select-org"
+        >
+          <option value="" selected disabled hidden>
+            Tous les ministères
+          </option>
+          <option v-for="supervisor of supervisors" :value="supervisor.label">
+            {{ supervisor.label }}
+          </option>
+        </select>
+      </div>
+      <div class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-col-lg-2">
         <label class="fr-label" for="select-status"> Statut </label>
         <select
           id="select-status"
@@ -86,6 +102,11 @@
 import { computed, ref, watch } from 'vue';
 
 const props = defineProps({
+  categories: {
+    /** @type {import("vue").PropType<Array<import("../types").Option>>} */
+    type: Array,
+    required: true,
+  },
   organizations: {
     /** @type {import("vue").PropType<Array<import("../types").Option>>} */
     type: Array,
@@ -96,7 +117,7 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  categories: {
+  supervisors: {
     /** @type {import("vue").PropType<Array<import("../types").Option>>} */
     type: Array,
     required: true,
@@ -114,6 +135,8 @@ const status = ref("");
 
 const organization = ref("");
 
+const supervisor = ref("");
+
 const category = ref("");
 
 const type = ref("");
@@ -123,6 +146,7 @@ const value = computed(() => {
     status: status.value,
     category: category.value,
     organization: organization.value,
+    supervisor: supervisor.value,
     type: type.value,
   };
 });
@@ -141,6 +165,10 @@ watch(category, () => {
   emit("change", value.value);
 });
 
+watch(supervisor, () => {
+  emit("change", value.value);
+});
+
 watch(type, () => {
   emit("change", value.value);
 });
@@ -148,6 +176,7 @@ watch(type, () => {
 function reset() {
   status.value = "";
   organization.value = "";
+  supervisor.value = "";
   category.value = "";
   type.value = "";
 }
