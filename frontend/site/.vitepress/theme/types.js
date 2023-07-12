@@ -5,8 +5,9 @@
  * @typedef {"todefine" | "opening" | "open" | "notopen" } StatusKey
  * @typedef {{label: string, key: StatusKey, _class: string}} Status
 */
-/** @typedef {{TYPE: string, CATEGORIE: string, TITLE: string, LIEN: string, PRODUCTEUR: string, status: Status, "DATE ESTIMÉE": string | null, "MINISTÈRE DE TUTELLE": string}} Row */
+/** @typedef {{id: string, TYPE: string, CATEGORIE: string, TITLE: string, LIEN: string, PRODUCTEUR: string, status: Status, "DATE ESTIMÉE": string | null, "MINISTÈRE DE TUTELLE": string}} Row */
 /** @typedef {{ label: string | null, key: string | null }} Option */
-/** @typedef {{organization: string, status: string, category: string, supervisor: string, type: string}} Filters */
+/** @typedef {"organization" | "status" | "category" | "supervisor" | "type"} Filters */
+/** @typedef {Map<Filters, string>} FiltersMap */
 
 export default {};

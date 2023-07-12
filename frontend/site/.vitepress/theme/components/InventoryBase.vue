@@ -6,13 +6,14 @@
     </p>
     <div v-if="rows.length > 0">
       <InventoryFilter
-        @change="updateFilters"
+        @change="updateFiltersAndUrl"
+        @reset="resetFiltersAndUrl"
         :categories="categories"
+        :filters="filters"
         :organizations="organizations"
         :statuses="statuses"
         :supervisors="supervisors"
         :types="types"
-        ref="filtersComponent"
       />
       <div class="fr-table fr-table--no-caption" :class="{'fr-table--layout-fixed': !filteredSortedRows.length}">
         <InventoryTable :rows="filteredSortedRows" :columns="mappingWithLabels" />
@@ -33,10 +34,12 @@
 <script setup>
 import dayjs from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
-import { computed, reactive, ref } from "vue";
+import { computed, onMounted, watchEffect } from "vue";
 import useDataProxy from "../composables/dataProxy";
 import InventoryFilter from "./InventoryFilter.vue";
 import InventoryTable from "./InventoryTable.vue";
+import useFilters from "../composables/useFilters";
+import useUpdateUrl from "../composables/useUpdateUrl";
 
 dayjs.extend(quarterOfYear);
 
@@ -130,87 +133,26 @@ const statuses = [
 
 const { hasError, rows, lastModified, nextCursor, getData } = useDataProxy(mapping, statuses);
 
-const query = ref("");
+const { filters, filteredRows, resetFilters, updateFilters, updateFiltersFromMap, categories, organizations, supervisors, types } = useFilters(rows);
 
-/** @type {import("vue").Ref<InstanceType<typeof import("./InventoryFilter.vue")> | null>} */
-const filtersComponent = ref(null);
+const { DONT_SAVE_TO_HISTORY, NEXT_CURSOR, getSearchParams, updateUrl } = useUpdateUrl(filters, nextCursor);
 
-/** @type {import("vue").UnwrapNestedRefs<import("../types").Filters>} */
-const filters = reactive({
-  organization: "",
-  supervisor: "",
-  status: "",
-  category: "",
-  type: "",
-});
+/**
+ * Update Filters and save them in URL as query parameters
+ * @param {Record<string, string>} newFilters 
+ */
+function updateFiltersAndUrl(newFilters) {
+  updateFilters(newFilters);
+  updateUrl();
+}
 
-const filteredRows = computed(() => {
-  let filtered = rows
-    .filter((d) => !filters.type || d.TYPE == filters.type)
-    .filter(
-      (d) => !filters.status || d.status.label == filters.status
-    )
-    .filter((d) => !filters.organization || d.PRODUCTEUR == filters.organization)
-    .filter(
-      (d) => !filters.category || d.CATEGORIE == filters.category
-    )
-    .filter(
-      (d) => !filters.supervisor || d["MINISTÈRE DE TUTELLE"] == filters.supervisor
-    );
-
-  if (query.value.length < 3) return filtered;
-
-  filtered = filtered.filter((row) => {
-    return Object.keys(mapping).some((field) => {
-      if (!row[field] || !row[field].toLowerCase) return false;
-
-      return row[field]
-        .toLowerCase()
-        .includes(query.value.toLowerCase());
-    });
-  });
-
-  return filtered;
-});
-
-const filteredSortedRows = computed(() => {
-  return filteredRows.value.slice().sort(compareTrimesters);
-});
-
-const organizations = computed(() => {
-  const organizationNames = rows.map((row) => row.PRODUCTEUR);
-  const orgs = Array.from(new Set(organizationNames))
-    .map((name) => ({
-      label: name,
-      key: name,
-      count: filteredRows.value.filter((/** @type {import("../types").Row} */ row) => row.PRODUCTEUR == name).length,
-    }));
-  orgs.sort((a, b) => b.count - a.count);
-  return orgs;
-});
-
-const supervisors = computed(() => {
-  const supervisorNames = rows.map((row) => row["MINISTÈRE DE TUTELLE"]);
-  const orgs = Array.from(new Set(supervisorNames))
-    .map((name) => ({
-      label: name,
-      key: name,
-      count: filteredRows.value.filter((/** @type {import("../types").Row} */ row) => row["MINISTÈRE DE TUTELLE"] == name).length,
-    }));
-  orgs.sort((a, b) => b.count - a.count);
-  return orgs;
-});
-
-const categories = computed(() => {
-  const categories = Array.from(new Set(rows.map((/** @type {import("../types").Row} */ row) => row.CATEGORIE)));
-  return categories.map((type) => ({ label: type, key: type }));
-});
-
-/** @type {import("vue").ComputedRef<Array<import("../types").Option>>} */
-const types = computed(() => {
-  const types = Array.from(new Set(rows.map((/** @type {import("../types").Row} */ row) => row.TYPE)));
-  return types.map((type) => ({ label: type, key: type }));
-});
+/**
+ * Reset Filters and remove them from URL
+ */
+ function resetFiltersAndUrl() {
+  resetFilters();
+  updateUrl();
+}
 
 /**
  * Format two trimesters for comparison and compare them
@@ -232,21 +174,35 @@ function formatDate(str) {
   return dayjs(str).format("DD/MM/YYYY");
 }
 
-/**
- * Update filters after select event
- * @param {import("../types").Filters} newFilters 
- */
-function updateFilters(newFilters) {
-  filters.organization = newFilters.organization;
-  filters.status = newFilters.status;
-  filters.category = newFilters.category;
-  filters.type = newFilters.type;
+async function loadMore() {
+  await getData(nextCursor.value);
+  resetFiltersAndUrl();
 }
 
-function loadMore() {
-  getData(nextCursor.value);
-  if(filtersComponent.value) {
-    filtersComponent.value.reset();
+const filteredSortedRows = computed(() => {
+  return filteredRows.value.slice().sort(compareTrimesters);
+});
+
+const params = getSearchParams();
+updateFiltersFromMap(params);
+
+watchEffect(() => {
+  const params = getSearchParams();
+  const wantedCursor = params.get(NEXT_CURSOR);
+  if(!wantedCursor || wantedCursor === nextCursor.value) {
+    return;
   }
-}
+  if(filteredSortedRows.value.find(row => row.id === wantedCursor)) {
+    return;
+  }
+  loadMore();
+});
+
+onMounted(() => {
+  addEventListener('popstate', () => {
+    const params = getSearchParams();
+    updateFiltersFromMap(params);
+    updateUrl(DONT_SAVE_TO_HISTORY);
+  });
+}); 
 </script>

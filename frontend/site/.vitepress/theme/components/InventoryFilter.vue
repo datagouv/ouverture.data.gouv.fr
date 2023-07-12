@@ -5,9 +5,10 @@
         <label class="fr-label" for="select-type"> Type </label>
         <select
           id="select-type"
-          v-model="type"
           class="fr-select"
           name="select-type"
+          :value="value.type"
+          @change="(value) => change('type', value)"
         >
           <option value="" selected disabled hidden>
             Tous les types
@@ -22,9 +23,10 @@
         <label class="fr-label" for="select-category"> Catégorie </label>
         <select
           id="select-category"
-          v-model="category"
           class="fr-select"
           name="select-category"
+          :value="value.category"
+          @change="(value) => change('category', value)"
         >
           <option value="" selected disabled hidden>
             Toutes les catégories
@@ -39,9 +41,10 @@
         <label class="fr-label" for="select-org"> Producteur </label>
         <select
           id="select-org"
-          v-model="organization"
           class="fr-select"
           name="select-org"
+          :value="value.organization"
+          @change="(value) => change('organization', value)"
         >
           <option value="" selected disabled hidden>
             Tous les producteurs
@@ -52,12 +55,13 @@
         </select>
       </div>
       <div class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-col-lg-3">
-        <label class="fr-label" for="select-org"> Ministère de tutelle </label>
+        <label class="fr-label" for="select-supervisor"> Ministère de tutelle </label>
         <select
-          id="select-org"
-          v-model="supervisor"
+          id="select-supervisor"
           class="fr-select"
-          name="select-org"
+          name="select-supervisor"
+          :value="value.supervisor"
+          @change="(value) => change('supervisor', value)"
         >
           <option value="" selected disabled hidden>
             Tous les ministères
@@ -71,9 +75,10 @@
         <label class="fr-label" for="select-status"> Statut </label>
         <select
           id="select-status"
-          v-model="status"
           class="fr-select"
           name="select-status"
+          :value="value.status"
+          @change="(value) => change('status', value)"
         >
           <option value="" selected disabled hidden>
             Tous les statuts
@@ -99,12 +104,17 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
   categories: {
     /** @type {import("vue").PropType<Array<import("../types").Option>>} */
     type: Array,
+    required: true,
+  },
+  filters: {
+    /** @type {import("vue").PropType<import("vue").DeepReadonly<import("vue").UnwrapNestedRefs<import("../types").FiltersMap>>>} */
+    type: Map,
     required: true,
   },
   organizations: {
@@ -129,59 +139,35 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["change"]);
+const emit = defineEmits(["change", "reset"]);
 
-const status = ref("");
-
-const organization = ref("");
-
-const supervisor = ref("");
-
-const category = ref("");
-
-const type = ref("");
+const filters = computed(() => /** @type {import("vue").DeepReadonly<import("vue").UnwrapNestedRefs<import("../types").FiltersMap>>} */(props.filters));
 
 const value = computed(() => {
   return {
-    status: status.value,
-    category: category.value,
-    organization: organization.value,
-    supervisor: supervisor.value,
-    type: type.value,
+    status: filters.value.get("status"),
+    category: filters.value.get("category"),
+    organization: filters.value.get("organization"),
+    supervisor: filters.value.get("supervisor"),
+    type: filters.value.get("type"),
   };
 });
 
 const filtered = computed(() => Object.values(value.value).some(filter => filter !== ""));
 
-watch(status, () => {
-  emit("change", value.value);
-});
-
-watch(organization, () => {
-  emit("change", value.value);
-});
-
-watch(category, () => {
-  emit("change", value.value);
-});
-
-watch(supervisor, () => {
-  emit("change", value.value);
-});
-
-watch(type, () => {
-  emit("change", value.value);
-});
-
-function reset() {
-  status.value = "";
-  organization.value = "";
-  supervisor.value = "";
-  category.value = "";
-  type.value = "";
+/**
+ * Change filters
+ * @param {import("../types").Filters} key 
+ * @param {Event} event 
+ */
+function change(key, event) {
+  const target = /** @type {HTMLSelectElement | null} */(event.target);
+  emit("change", {...value.value, [key]: target?.value});
 }
 
-defineExpose({reset});
+function reset() {
+  emit("reset");
+}
 </script>
 
 <style scoped>

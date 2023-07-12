@@ -27,7 +27,7 @@ CACHE_TIMEOUT = 1 if app.config['DEBUG'] else os.getenv('CACHE_TIMEOUT', 600)
 KEEP_PROPERTIES = ["TYPE", "CATEGORIE", "LIEN", "TITRE", "PRODUCTEUR", "STATUT D'OUVERTURE", "DATE ESTIMÉE", "MINISTÈRE DE TUTELLE"]
 
 @app.route("/api/inventaire")
-@cache.cached(timeout=CACHE_TIMEOUT)
+@cache.cached(timeout=CACHE_TIMEOUT, query_string=True)
 def inventaire():
     url = f"{NOTION_API}{NOTION_BASE}/query"
     payload = {
