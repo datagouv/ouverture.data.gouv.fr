@@ -176,7 +176,7 @@ function formatDate(str) {
 
 async function loadMore() {
   await getData(nextCursor.value);
-  resetFiltersAndUrl();
+  updateUrl();
 }
 
 const filteredSortedRows = computed(() => {
