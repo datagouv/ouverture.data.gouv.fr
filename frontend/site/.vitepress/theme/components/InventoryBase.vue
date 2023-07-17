@@ -187,7 +187,7 @@ const params = getSearchParams();
 updateFiltersFromMap(params);
 getData(nextCursor.value);
 
-onMounted(async () => {
+onMounted(() => {
   addEventListener('popstate', () => {
     const params = getSearchParams();
     updateFiltersFromMap(params);
