@@ -1,13 +1,11 @@
 /**
  * 
  * @param {import("vue").DeepReadonly<import("vue").UnwrapNestedRefs<import("../types").FiltersMap>>} filters 
- * @param {import("vue").Ref<string | null>} nextCursor 
  * @returns 
  */
-export default function useUpdateUrl(filters, nextCursor) {
+export default function useUpdateUrl(filters) {
     const SAVE_TO_HISTORY = true;
     const DONT_SAVE_TO_HISTORY = false;
-    const NEXT_CURSOR = "nextCursor";
 
     const updateUrl = (save = SAVE_TO_HISTORY) => {
         /** @type {Record<string, string>} */
@@ -17,9 +15,6 @@ export default function useUpdateUrl(filters, nextCursor) {
             if (value = filters.get(key)) {
                 params[key] = value;
             }
-        }
-        if (nextCursor.value) {
-            params[NEXT_CURSOR] = nextCursor.value;
         }
 
         // Update URL to match current search params value for deep linking
@@ -32,7 +27,6 @@ export default function useUpdateUrl(filters, nextCursor) {
 
     return {
         DONT_SAVE_TO_HISTORY,
-        NEXT_CURSOR,
         SAVE_TO_HISTORY,
         getSearchParams,
         updateUrl,

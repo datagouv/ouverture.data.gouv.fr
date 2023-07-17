@@ -135,7 +135,7 @@ const { hasError, rows, lastModified, nextCursor, getData } = useDataProxy(mappi
 
 const { filters, filteredRows, resetFilters, updateFilters, updateFiltersFromMap, categories, organizations, supervisors, types } = useFilters(rows);
 
-const { DONT_SAVE_TO_HISTORY, NEXT_CURSOR, getSearchParams, updateUrl } = useUpdateUrl(filters, nextCursor);
+const { DONT_SAVE_TO_HISTORY, getSearchParams, updateUrl } = useUpdateUrl(filters);
 
 /**
  * Update Filters and save them in URL as query parameters
@@ -185,20 +185,9 @@ const filteredSortedRows = computed(() => {
 
 const params = getSearchParams();
 updateFiltersFromMap(params);
+getData(nextCursor.value);
 
-watchEffect(() => {
-  const params = getSearchParams();
-  const wantedCursor = params.get(NEXT_CURSOR);
-  if(!wantedCursor || wantedCursor === nextCursor.value) {
-    return;
-  }
-  if(filteredSortedRows.value.find(row => row.id === wantedCursor)) {
-    return;
-  }
-  loadMore();
-});
-
-onMounted(() => {
+onMounted(async () => {
   addEventListener('popstate', () => {
     const params = getSearchParams();
     updateFiltersFromMap(params);
