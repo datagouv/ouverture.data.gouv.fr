@@ -37,7 +37,7 @@ export default function useDataProxy(mapping, statuses) {
                 return record;
             })
             .map((record) => {
-                const row = {};
+                const row = {id: record.id};
 
                 mapping.forEach((mapping) => {
                     row[mapping.key] = record.properties[mapping.key];
@@ -65,7 +65,7 @@ export default function useDataProxy(mapping, statuses) {
             if(type === "title") {
                 /** @type {Array<{plain_text: string}>} */
                 const nonEmptyTitles = property[type].filter(title => title.plain_text).map(title => title.plain_text);
-                const titleOrEmpty = nonEmptyTitles.pop() || "";
+                const titleOrEmpty = nonEmptyTitles.join() || "";
                 return titleOrEmpty;
             }
             return getPropertyValue(property[type]);
@@ -81,7 +81,7 @@ export default function useDataProxy(mapping, statuses) {
      * @param {string | null} [cursor]
      */
     function getData(cursor) {
-        axios.get(`${apiUrl}/inventaire`, {params: {start_cursor: cursor}}).then((res) => {
+        return axios.get(`${apiUrl}/inventaire`, {params: {start_cursor: cursor}}).then((res) => {
             /** @type {Array} */
             const records = res.data.results;
             rows.push(...tranformRecords(records));
@@ -95,10 +95,6 @@ export default function useDataProxy(mapping, statuses) {
             hasError.value = true;
         });
     }
-
-    onMounted(() => {
-        getData();
-    });
 
     return { hasError, rows, lastModified, nextCursor, getData };
 
