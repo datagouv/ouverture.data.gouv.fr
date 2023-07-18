@@ -33,6 +33,7 @@ export default function useFilters(rows) {
     const organizations = computed(() => {
         const organizationNames = rows.map((row) => row.PRODUCTEUR);
         const orgs = Array.from(new Set(organizationNames))
+            .filter(Boolean)
             .map((name) => ({
                 label: name,
                 key: name,
@@ -45,6 +46,7 @@ export default function useFilters(rows) {
     const supervisors = computed(() => {
         const supervisorNames = rows.map((row) => row["MINISTÈRE DE TUTELLE"]);
         const orgs = Array.from(new Set(supervisorNames))
+            .filter(Boolean)
             .map((name) => ({
                 label: name,
                 key: name,
