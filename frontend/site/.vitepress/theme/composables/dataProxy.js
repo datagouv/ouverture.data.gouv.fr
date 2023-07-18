@@ -65,7 +65,7 @@ export default function useDataProxy(mapping, statuses) {
             if(type === "title") {
                 /** @type {Array<{plain_text: string}>} */
                 const nonEmptyTitles = property[type].filter(title => title.plain_text).map(title => title.plain_text);
-                const titleOrEmpty = nonEmptyTitles.join() || "";
+                const titleOrEmpty = nonEmptyTitles.join("") || "";
                 return titleOrEmpty;
             }
             return getPropertyValue(property[type]);
