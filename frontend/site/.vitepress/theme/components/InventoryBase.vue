@@ -183,11 +183,11 @@ const filteredSortedRows = computed(() => {
   return filteredRows.value.slice().sort(compareTrimesters);
 });
 
-const params = getSearchParams();
-updateFiltersFromMap(params);
-getData(nextCursor.value);
-
 onMounted(() => {
+  const params = getSearchParams();
+  updateFiltersFromMap(params);
+  getData(nextCursor.value);
+  
   addEventListener('popstate', () => {
     const params = getSearchParams();
     updateFiltersFromMap(params);
