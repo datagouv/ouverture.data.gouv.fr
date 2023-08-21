@@ -1,3 +1,7 @@
+---
+title: Ouverture data.gouv.fr
+---
+
 <script setup>
 import InventoryBase from './.vitepress/theme/components/InventoryBase.vue';
 </script>
