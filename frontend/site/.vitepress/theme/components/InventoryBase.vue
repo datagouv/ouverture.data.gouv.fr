@@ -182,9 +182,6 @@ watchEffect(() => {
   if(!nextCursor.value) {
     return;
   }
-  if(filteredSortedRows.value.find(row => row.id === nextCursor.value)) {
-    return;
-  }
   loadMore();
 });
 
