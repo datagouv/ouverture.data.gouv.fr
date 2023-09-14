@@ -1,5 +1,6 @@
 ---
-title: Ouverture data.gouv.fr
+title: ""
+titleTemplate: ':title'
 ---
 
 <script setup>

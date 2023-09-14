@@ -17,12 +17,7 @@
       />
       <div class="fr-table fr-table--no-caption" :class="{'fr-table--layout-fixed': !filteredSortedRows.length}">
         <InventoryTable :rows="filteredSortedRows" :columns="mappingWithLabels" />
-        <p v-if="nextCursor" class="fr-mt-2w">
-          <button @click="loadMore" class="fr-btn fr-btn--sm">Charger plus de résultats</button>
-        </p>
       </div>
-
-     
     </div>
     <div v-else>
       <em v-if="hasError">Impossible de récupérer les données, veuillez réessayer ultérieurement.</em>
@@ -181,6 +176,13 @@ async function loadMore() {
 
 const filteredSortedRows = computed(() => {
   return filteredRows.value.slice().sort(compareTrimesters);
+});
+
+watchEffect(() => {
+  if(!nextCursor.value) {
+    return;
+  }
+  loadMore();
 });
 
 onMounted(() => {

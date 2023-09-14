@@ -1,7 +1,7 @@
 <template>
   <table>
     <caption>
-      Tableau des jeux de données concernés par le CITP
+      Ce tableau permet de suivre et de rendre compte de l’ouverture des jeux de données, algorithmes, codes sources et API publics.
     </caption>
     <thead>
       <tr>
