@@ -183,6 +183,16 @@ const filteredSortedRows = computed(() => {
   return filteredRows.value.slice().sort(compareTrimesters);
 });
 
+watchEffect(() => {
+  if(!nextCursor.value) {
+    return;
+  }
+  if(filteredSortedRows.value.find(row => row.id === nextCursor.value)) {
+    return;
+  }
+  loadMore();
+});
+
 onMounted(() => {
   const params = getSearchParams();
   updateFiltersFromMap(params);
