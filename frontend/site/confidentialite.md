@@ -2,7 +2,7 @@
 title: Politique de confidentialité
 ---
 
-# {{ $frontmatter.title }}
+# Politique de confidentialité
 
 ## Cookies déposés
 
