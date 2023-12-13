@@ -54,8 +54,11 @@ def inventaire():
     return jsonify(response)
 
 
-@app.route("/", defaults={"path": ""})
+@app.route("/", defaults={"path": "index"})
 # allows routing in vuejs
 @app.route("/<path:path>")
 def index(path):
-    return render_template("index.html")
+    try:
+        return render_template(path + '.html')
+    except:
+        return render_template('index.html')
