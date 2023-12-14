@@ -271,15 +271,20 @@ Cette page présente les jeux de données associés aux ensembles de données de
 
 | Nom du jeu de données | Producteur      | Ministère de tutelle | Statut    |
 | :-------------------- |:----------      | :--------------------| :---------|
-| A venir               |   A venir       |  A venir             | A venir   |
-| A venir               |   A venir       |  A venir             | A venir   |
+| [Données changement climatique - SIM quotidienne](https://www.data.gouv.fr/fr/datasets/donnees-changement-climatique-sim-quotidienne/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
+| [Données changement climatique - SQR (Séries Quotidiennes de Référence](https://www.data.gouv.fr/fr/datasets/donnees-changement-climatique-sqr-series-quotidiennes-de-reference/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
+| [Données changement climatique - LSH (Longues Séries Homogénéisées](https://www.data.gouv.fr/fr/datasets/donnees-changement-climatique-lsh-longues-series-homogeneisees/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
 
 ### Données climatiques : observations validées
 
 | Nom du jeu de données | Producteur      | Ministère de tutelle | Statut    |
 | :-------------------- |:----------      | :--------------------| :---------|
-| A venir               |   A venir       |  A venir             | A venir   |
-| A venir               |   A venir       |  A venir             | A venir   |
+| [Données climatologiques de base - horaires](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-horaires/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
+| [Données climatologiques de base - quotidienne](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-quotidiennes/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
+| [Données climatologiques de base - 6 minutes](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-6-minutes/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
+| [Données climatologiques de base - mensuelles](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-mensuelles/)              |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
+| [Données climatologiques de base - décadaires](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-decadaires/)             |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
+| [Données climatologiques de base - décadaires agro](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-decadaires-agro/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
 
 ### Alertes météorologiques
 
