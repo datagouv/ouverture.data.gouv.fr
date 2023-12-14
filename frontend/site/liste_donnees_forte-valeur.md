@@ -6,6 +6,7 @@ title: Les jeux de données de forte valeur
 
 La « Directive Open Data » ([Directive 2019/1024](https://eur-lex.europa.eu/legal-content/FR/TXT/HTML/?uri=CELEX:32019L1024)) définit les données de forte valeur comme les « *documents détenus par un organisme du secteur public, **dont la réutilisation est associée à des bénéfices importants pour la société, l’environnement et l’économie*** ». Il s’agit alors de les mettre à disposition avec **un minimum de restrictions légales et techniques** afin d’augmenter leur potentiel de réutilisation et leur impact.
 
+
 Ces ensembles de données de forte valeur se rapportent à six thématiques (dont beaucoup relèvent de thèmes de données INSPIRE) : 
 * Données géospatiales ;
 * Données sur l'observation de la Terre et l'environnement ;
