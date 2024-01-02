@@ -19,6 +19,11 @@ export default defineConfigWithTheme({
   ],
   markdown: {
     externalLinks: { target: "" },
+    config: (md) => {
+      // use more markdown-it plugins!
+      md.renderer.rules.table_open  = function () { return '<div class="fr-table fr-table--no-caption"><table>'; };
+      md.renderer.rules.table_close  = function () { return '</table></div>'; };
+    }
   },
   themeConfig: {
     apiUrl: process.env.VUE_APP_API_URL || "http://localhost:5000/api",
