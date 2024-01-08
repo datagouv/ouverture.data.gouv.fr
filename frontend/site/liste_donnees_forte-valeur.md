@@ -4,19 +4,18 @@ title: Les jeux de données de forte valeur
 
 # Les jeux de données de forte valeur
 
-La « Directive Open Data » ([Directive 2019/1024](https://eur-lex.europa.eu/legal-content/FR/TXT/HTML/?uri=CELEX:32019L1024)) définit les données de forte valeur comme les « *documents détenus par un organisme du secteur public, **dont la réutilisation est associée à des bénéfices importants pour la société, l’environnement et l’économie*** ». Il s’agit alors de les mettre à disposition avec **un minimum de restrictions légales et techniques** afin d’augmenter leur potentiel de réutilisation et leur impact.
+Cette page présente les jeux de données associés aux ensembles de données de haute valeur ([Directive 2019/1024](https://eur-lex.europa.eu/legal-content/FR/TXT/HTML/?uri=CELEX:32019L1024)), ainsi que leur statut d'ouverture.  
 
-Ces ensembles de données de forte valeur se rapportent à six thématiques (dont beaucoup relèvent de thèmes de données INSPIRE) : 
-* Données géospatiales ;
-* Données sur l'observation de la Terre et l'environnement ;
-* Données météorologiques ;
-* Données statistiques ;
-* Données sur les entreprises et les propriétés d’entreprises ;
-* Données de mobilité.
+Ces ensembles de données de forte valeur se rapportent à six thématiques : 
+1. Données géospatiales ;
+2. Données sur l'observation de la Terre et l'environnement ;
+3. Données météorologiques ;
+4. Données statistiques ;
+5. Données sur les entreprises et les propriétés d’entreprises ;
+6. Données de mobilité.
 
-Cette page présente les jeux de données associés aux ensembles de données de haute valeur, ainsi que leur statut d'ouverture.
 
-## Données géospatiales
+## 1. Données géospatiales
 
 ### Unités administratives
 
@@ -67,7 +66,7 @@ Cette page présente les jeux de données associés aux ensembles de données de
 | A venir               |   A venir       |  A venir             | A venir   |
 | A venir               |   A venir       |  A venir             | A venir   |
 
-## Données sur l'observation de la Terre et l'environnement 
+## 2. Données sur l'observation de la Terre et l'environnement 
 
 ### Hydrographie
 
@@ -265,26 +264,28 @@ Cette page présente les jeux de données associés aux ensembles de données de
 | A venir               |   A venir       |  A venir             | A venir   |
 | A venir               |   A venir       |  A venir             | A venir   |
 
-## Données météorologiques
+## 3. Données météorologiques
 
-### Données d'observation mesurées par les stations météorologiques
-
-| Nom du jeu de données | Producteur      | Ministère de tutelle | Statut    |
-| :-------------------- |:----------      | :--------------------| :---------|
-| [Données changement climatique - SIM quotidienne](https://www.data.gouv.fr/fr/datasets/donnees-changement-climatique-sim-quotidienne/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
-| [Données changement climatique - SQR (Séries Quotidiennes de Référence](https://www.data.gouv.fr/fr/datasets/donnees-changement-climatique-sqr-series-quotidiennes-de-reference/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
-| [Données changement climatique - LSH (Longues Séries Homogénéisées](https://www.data.gouv.fr/fr/datasets/donnees-changement-climatique-lsh-longues-series-homogeneisees/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
 
 ### Données climatiques : observations validées
 
 | Nom du jeu de données | Producteur      | Ministère de tutelle | Statut    |
 | :-------------------- |:----------      | :--------------------| :---------|
-| [Données climatologiques de base - horaires](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-horaires/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
-| [Données climatologiques de base - quotidienne](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-quotidiennes/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
-| [Données climatologiques de base - 6 minutes](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-6-minutes/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
-| [Données climatologiques de base - mensuelles](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-mensuelles/)              |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
-| [Données climatologiques de base - décadaires](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-decadaires/)             |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
-| [Données climatologiques de base - décadaires agro](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-decadaires-agro/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Publié   |
+| [Données changement climatique - SIM quotidienne](https://www.data.gouv.fr/fr/datasets/donnees-changement-climatique-sim-quotidienne/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Disponible  |
+| [Données changement climatique - SQR (Séries Quotidiennes de Référence](https://www.data.gouv.fr/fr/datasets/donnees-changement-climatique-sqr-series-quotidiennes-de-reference/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Disponible   |
+| [Données changement climatique - LSH (Longues Séries Homogénéisées](https://www.data.gouv.fr/fr/datasets/donnees-changement-climatique-lsh-longues-series-homogeneisees/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Disponible   |
+
+
+### Données d'observation mesurées par les stations météorologiques
+
+| Nom du jeu de données | Producteur      | Ministère de tutelle | Statut    |
+| :-------------------- |:----------      | :--------------------| :---------|
+| [Données climatologiques de base - horaires](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-horaires/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Disponible   |
+| [Données climatologiques de base - quotidienne](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-quotidiennes/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Disponible   |
+| [Données climatologiques de base - 6 minutes](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-6-minutes/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Disponible   |
+| [Données climatologiques de base - mensuelles](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-mensuelles/)              |   Météo-France       |  Ministère de la Transition Ecologique             | Disponible   |
+| [Données climatologiques de base - décadaires](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-decadaires/)             |   Météo-France       |  Ministère de la Transition Ecologique             | Disponible  |
+| [Données climatologiques de base - décadaires agro](https://www.data.gouv.fr/fr/datasets/donnees-climatologiques-de-base-decadaires-agro/)               |   Météo-France       |  Ministère de la Transition Ecologique             | Disponible   |
 
 ### Alertes météorologiques
 
@@ -307,7 +308,7 @@ Cette page présente les jeux de données associés aux ensembles de données de
 | A venir               |   A venir       |  A venir             | A venir   |
 | A venir               |   A venir       |  A venir             | A venir   |
 
-## Données statistiques 
+## 4. Données statistiques 
 
 ### Production industrielle
 
@@ -463,14 +464,14 @@ Cette page présente les jeux de données associés aux ensembles de données de
 | A venir               |   A venir       |  A venir             | A venir   |
 | A venir               |   A venir       |  A venir             | A venir   |
 
-## Données sur les entreprises et les propriétés d'entreprises 
+## 5. Données sur les entreprises et les propriétés d'entreprises 
 
 ### Informations de base sur l'entreprise : attributs clés 
 
 | Nom du jeu de données | Producteur      | Ministère de tutelle | Statut    |
 | :-------------------- |:----------      | :--------------------| :---------|
-| A venir               |   A venir       |  A venir             | A venir   |
-| A venir               |   A venir       |  A venir             | A venir   |
+| [Base Sirene des entreprises et de leurs établissements (SIREN, SIRET)](https://www.data.gouv.fr/fr/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/) |   INSEE       |  Ministère de l'économie            | Disponible   |
+
 
 ### Documents et comptes de l'entreprise 
 
@@ -479,7 +480,7 @@ Cette page présente les jeux de données associés aux ensembles de données de
 | A venir               |   A venir       |  A venir             | A venir   |
 | A venir               |   A venir       |  A venir             | A venir   |
 
-## Données sur la mobilité
+## 6. Données sur la mobilité
 
 ### Réseaux de transport 
 
