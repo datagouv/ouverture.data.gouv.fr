@@ -71,7 +71,7 @@ const mapping = [
     key: "STATUT D'OUVERTURE",
     label: "Statut",
     format: (cell, row) =>
-      `<span class="fr-badge fr-badge--no-icon ${row.status?._class}">${cell}</a>`,
+      `<span class="fr-badge fr-badge--no-icon ${row.status?._class ?? ""}">${cell}</a>`,
     width: "12em",
   },
   {
@@ -104,10 +104,15 @@ const mappingWithLabels = mapping.filter(column => column.label);
  * @type {Array<import("../types").Status>}
  */
 const statuses = [
+{
+    label: "Disponible sur data.gouv.fr",
+    key: "open-on-site",
+    _class: "fr-badge--success",
+  },
   {
     label: "Disponible",
     key: "open",
-    _class: "fr-badge--success",
+    _class: "fr-badge--info",
   },
   {
     label: "Planifié",
