@@ -16,7 +16,7 @@ const model = defineModel()
             :name="name"
             v-model="model"
         >
-            <option :value="null">
+            <option :value="undefined">
                 {{  placeholder }}
             </option>
             <option v-for="option of options" :value="option">
