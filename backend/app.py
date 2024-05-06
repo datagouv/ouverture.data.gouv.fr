@@ -39,6 +39,8 @@ def get_value(property):
         raise RuntimeError(f"Unknown property type {property['type']}")
     
 def fetch_database(id: str, properties: List[str]) -> List[dict]:
+    # We do not paginate the list, because it should stay below 100 but we could add it
+    # back if we need.
     url = f"{NOTION_API}{id}/query"
     r = requests.post(url, json={ "page_size": 100 }, headers=HEADERS)
     r.raise_for_status()

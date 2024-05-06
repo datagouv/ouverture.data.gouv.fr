@@ -55,28 +55,26 @@ const props = defineProps<{
     }>
 }>()
 
-const defaultFilters = () => Object.fromEntries(props.filters.map((filter) => [filter.slug, undefined]))
-
-const selectedFilters = useUrlSearchParams('history', {
-    initialValue: defaultFilters(),
-})
+// If the selected is not set, the value is undefined (the placeholder inside the `Select` has a `:value="undefined"` too)
+const selectedFilters = useUrlSearchParams<{ string: string | undefined }>('history')
 
 const resetFilters = () => {
-    for (const key in defaultFilters()) {
-        selectedFilters[key] = undefined
+    for (const filter of props.filters) {
+        selectedFilters[filter.slug] = undefined
     }
 }
 
 const hasFilters = computed(() => {
-    for (const key in defaultFilters()) {
-        if (selectedFilters[key] !== undefined) return true
+    for (const filter of props.filters) {
+        if (selectedFilters[filter.slug] !== undefined) return true
     }
     return false
 })
 
-const loading = ref<'loading' | 'failed' | 'done'>('loading')
 const lines = ref<Array<any>>([])
 
+// Build an object associating a filter slug with all the unique 
+// values for this filter sorted by usage in the data.
 const allValues = Object.fromEntries(
     props.filters.map((filter) => [
         filter.slug,
@@ -97,6 +95,7 @@ const allValues = Object.fromEntries(
 )
 
 const filteredLines = computed(() => lines.value.filter((line) => {
+    // If one of the filters doesn't match, reject the line.
     for (let filter of props.filters) {
         if (selectedFilters[filter.slug] && selectedFilters[filter.slug] !== line[filter.key_in_api]) return false
     }
@@ -104,12 +103,11 @@ const filteredLines = computed(() => lines.value.filter((line) => {
     return true
 }))
 
+const loading = ref<'loading' | 'failed' | 'done'>('loading')
 const load = async () => {
     const { theme } = useData();
-    const { apiUrl } = theme.value;
-
     try {
-        const response = await fetch(`${apiUrl}/${props.endpoint}`)
+        const response = await fetch(`${theme.value.apiUrl}/${props.endpoint}`)
         lines.value = await response.json()
         loading.value = 'done'
     } catch (e) {
