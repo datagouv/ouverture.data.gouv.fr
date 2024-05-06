@@ -3,19 +3,36 @@ title: ""
 titleTemplate: ':title'
 ---
 
-<script setup>
-import InventoryBase from './.vitepress/theme/components/InventoryBase.vue';
-</script>
+# Suivre les ouvertures de données publiques
 
-# Bienvenue sur le tableau de suivi des ouvertures
-
-Ce tableau permet de suivre et de rendre compte de l’ouverture des jeux de données, algorithmes, codes sources et API publics.
-
-Cette liste non exhaustive, inclut : les engagements ministériels pris lors du [CITP du 5 février 2021](https://www.legifrance.gouv.fr/circulaire/id/45162?dateSignature=&init=true&page=1&query=*&searchField=ALL&tab_selection=circ), les engagements ministériels prévus dans leurs [feuilles de route](https://www.data.gouv.fr/fr/datasets/feuilles-de-route-ministerielles-sur-la-politique-de-la-donnee-des-algorithmes-et-des-codes-sources/) et les [données de forte valeur définies par la Commission européenne](https://ec.europa.eu/info/law/better-regulation/have-your-say/initiatives/12111-Donnees-ouvertes-disponibilite-des-ensembles-de-donnees-publiques_fr) (à venir).
-
-Pour consulter les demandes d’accès aux documents administratifs communicables ou faire une demande, rendez-vous sur le site de la [Commission d’Accès aux Documents Administratifs](https://www.cada.fr/).
-
-## Explorer les données
-
-<InventoryBase />
+<div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col fr-col-md-6">
+        <div class="fr-card fr-enlarge-link">
+            <div class="fr-card__body">
+                <div class="fr-card__content">
+                    <h3 class="fr-card__title">
+                        <a href="/donnees_de_forte_valeur.html">Données de forte valeurs</a>
+                    </h3>
+                    <p class="fr-card__desc">
+                        Ut et incididunt commodo non veniam veniam occaecat mollit. Amet eiusmod officia culpa aute nisi. Commodo consequat quis esse deserunt. In ut ipsum deserunt est adipisicing officia esse tempor mollit do quis eu aute. Laboris exercitation est excepteur nisi dolore. Ipsum quis consequat voluptate ut pariatur eu dolor. Consequat amet nulla aliquip non non ipsum consectetur esse.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fr-col fr-col-md-6">
+        <div class="fr-card fr-enlarge-link">
+            <div class="fr-card__body">
+                <div class="fr-card__content">
+                    <h3 class="fr-card__title">
+                        <a href="/engagements_ministeriels.html">Engagements ministériels</a>
+                    </h3>
+                    <p class="fr-card__desc">
+                        Ut et incididunt commodo non veniam veniam occaecat mollit. Amet eiusmod officia culpa aute nisi. Commodo consequat quis esse deserunt. In ut ipsum deserunt est adipisicing officia esse tempor mollit do quis eu aute. Laboris exercitation est excepteur nisi dolore. Ipsum quis consequat voluptate ut pariatur eu dolor. Consequat amet nulla aliquip non non ipsum consectetur esse.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
