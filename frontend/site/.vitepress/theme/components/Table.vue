@@ -1,7 +1,20 @@
 <template>
     <div>
-        <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
-            <Select v-for="filter in filters" :key="filter.slug" class="fr-col-12 fr-col-sm-6" :name="`select-${filter.slug}`" :placeholder="filter.placeholder" :label="filter.label" :options="allValues[filter.slug].value" v-model="selectedFilters[filter.slug]"/>
+        <div class="fr-mb-2w">
+            <div class="fr-grid-row fr-grid-row--gutters">
+                <Select v-for="filter in filters" :key="filter.slug" class="fr-col-12 fr-col-sm-6" :name="`select-${filter.slug}`" :placeholder="filter.placeholder" :label="filter.label" :options="allValues[filter.slug].value" v-model="selectedFilters[filter.slug]"/>
+            </div>
+            <div v-show="hasFilters" class="fr-grid-row fr-grid-row--right fr-mt-1w">
+                <div class="fr-col-auto">
+                    <button
+                        class="fr-btn fr-btn--tertiary fr-btn--sm"
+                        type="button"
+                        @click="resetFilters"
+                    >
+                        Ré-initialiser tous les filtres
+                    </button>
+                </div>
+            </div>
         </div>
         <div class="fr-table fr-table--no-caption fr-table fr-table--layout-fixed" v-show="loading == 'done'">
             <table>
@@ -40,8 +53,23 @@ const props = defineProps<{
     }>
 }>()
 
+const defaultFilters = () => Object.fromEntries(props.filters.map((filter) => [filter.slug, null]))
+
 const selectedFilters = useUrlSearchParams('history', {
-    initialValue: Object.fromEntries(props.filters.map((filter) => [filter.slug, null]))
+    initialValue: defaultFilters(),
+})
+
+const resetFilters = () => {
+    for (const key in defaultFilters()) {
+        selectedFilters[key] = null
+    }
+}
+
+const hasFilters = computed(() => {
+    for (const key in defaultFilters()) {
+        if (selectedFilters[key] !== null) return true
+    }
+    return false
 })
 
 const loading = ref<'loading' | 'failed' | 'done'>('loading')
