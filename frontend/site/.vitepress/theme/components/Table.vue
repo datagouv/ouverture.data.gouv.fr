@@ -20,7 +20,7 @@
             <div class="fr-table fr-table--no-caption fr-table fr-table--layout-fixed">
                 <table>
                     <caption>
-                        Ce tableau permet de suivre et de rendre compte de l’ouverture des jeux de données, algorithmes, codes sources et API publics.
+                        <slot name="caption" />
                     </caption>
                     <thead>
                     <tr>
@@ -28,7 +28,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="line in filteredLines">
+                        <tr v-for="(line, index) in filteredLines" :key="index">
                             <slot name="row" :line="line" />
                         </tr>
                     </tbody>
