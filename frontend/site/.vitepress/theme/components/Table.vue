@@ -3,7 +3,7 @@
         <div v-show="loading == 'done'">
             <div class="fr-mb-2w">
                 <div class="fr-grid-row fr-grid-row--gutters">
-                    <Select v-for="filter in filters" :key="filter.slug" class="fr-col-12 fr-col-sm-6" :name="`select-${filter.slug}`" :placeholder="filter.placeholder" :label="filter.label" :options="allValues[filter.slug].value" v-model="selectedFilters[filter.slug]"/>
+                    <Select v-for="filter in filters" :key="filter.slug" class="fr-col-12 fr-col-md-6 fr-col-lg" :name="`select-${filter.slug}`" :placeholder="filter.placeholder" :label="filter.label" :options="allValues[filter.slug].value" v-model="selectedFilters[filter.slug]"/>
                 </div>
                 <div v-show="hasFilters" class="fr-grid-row fr-grid-row--right fr-mt-1w">
                     <div class="fr-col-auto">
