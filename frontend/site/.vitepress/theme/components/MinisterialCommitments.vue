@@ -1,5 +1,5 @@
 <template>
-    <Table :filters="filters" endpoint="ministerial_commitments">
+    <Table :filters endpoint="ministerial_commitments">
         <template #thead>
             <th>Titre</th>
             <th>Ministère</th>

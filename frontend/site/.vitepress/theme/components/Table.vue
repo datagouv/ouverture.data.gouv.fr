@@ -49,7 +49,8 @@ const props = defineProps<{
         key_in_api: string;
         label: string;
         placeholder: string;
-    }>
+    }>;
+    sortFunc?: (value: any) => number;
 }>()
 
 // If the selected is not set, the value is undefined (the placeholder inside the `Select` has a `:value="undefined"` too)
@@ -91,14 +92,23 @@ const allValues = Object.fromEntries(
     ])
 )
 
-const filteredLines = computed(() => lines.value.filter((line) => {
-    // If one of the filters doesn't match, reject the line.
-    for (let filter of props.filters) {
-        if (selectedFilters[filter.slug] && selectedFilters[filter.slug] !== line[filter.key_in_api]) return false
+const filteredLines = computed(() => {
+    const results = lines.value.filter((line) => {
+        // If one of the filters doesn't match, reject the line.
+        for (let filter of props.filters) {
+            if (selectedFilters[filter.slug] && selectedFilters[filter.slug] !== line[filter.key_in_api]) return false
+        }
+
+        return true
+    })
+
+    if (props.sortFunc) {
+        const sortFunc = props.sortFunc // To make TS happy… :-(
+        results.sort((a, b) => sortFunc(a) - sortFunc(b))
     }
 
-    return true
-}))
+    return results
+})
 
 const loading = ref<'loading' | 'failed' | 'done'>('loading')
 const load = async () => {
