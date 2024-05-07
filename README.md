@@ -40,7 +40,7 @@ pip install -r requirements.txt
 
 Then, you can run the project :
 
-`NOTION_BASE_MINISTERIAL_COMMITMENTS` and `NOTION_BASE_HVD` is the id in the base URL before the `?`: https://www.notion.so/conciergerie/[YOUR BASE]?v=ac8f34f3b3874ee2aae5a77219ac3f2f&pvs=4.
+`NOTION_BASE_MINISTERIAL_COMMITMENTS` and `NOTION_BASE_HVD` is the id in the base URL before the `?`: https://www.notion.so/apigouv/[YOUR BASE]?v=ac8f34f3b3874ee2aae5a77219ac3f2f&pvs=4.
 
 ```
 cd backend
