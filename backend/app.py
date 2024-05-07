@@ -39,17 +39,25 @@ def get_value(property):
         raise RuntimeError(f"Unknown property type {property['type']}")
     
 def fetch_database(id: str, properties: List[str]) -> List[dict]:
-    # We do not paginate the list, because it should stay below 100 but we could add it
-    # back if we need.
     url = f"{NOTION_API}{id}/query"
-    r = requests.post(url, json={ "page_size": 100 }, headers=HEADERS)
-    r.raise_for_status()
-    response = r.json()
+    payload = { "page_size": 100 }
     lines = []
-    for result in response["results"]:
-        lines.append({
-            property: get_value(result["properties"][property]) for property in properties
-        })
+
+    while True:
+        r = requests.post(url, json=payload, headers=HEADERS)
+        r.raise_for_status()
+        response = r.json()
+        for result in response["results"]:
+            lines.append({
+                property: get_value(result["properties"][property]) for property in properties
+            })
+
+        if response['next_cursor']:
+            payload['start_cursor'] = response['next_cursor']
+        else:
+            break
+
+
     return jsonify(lines)
 
 @app.route("/api/ministerial_commitments")
