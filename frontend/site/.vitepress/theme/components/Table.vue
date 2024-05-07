@@ -19,9 +19,6 @@
             </div>
             <div class="fr-table fr-table--no-caption fr-table fr-table--layout-fixed">
                 <table>
-                    <caption>
-                        <slot name="caption" />
-                    </caption>
                     <thead>
                     <tr>
                         <slot name="thead" />

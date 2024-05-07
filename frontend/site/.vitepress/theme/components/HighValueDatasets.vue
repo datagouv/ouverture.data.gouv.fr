@@ -1,9 +1,5 @@
 <template>
     <Table :filters="filters" endpoint="high_value_datasets">
-        <template #caption>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur ex itaque soluta velit quisquam quae. Sed suscipit deserunt similique odio, et facere, quibusdam fuga maiores mollitia sunt, eum magni aliquid!
-        </template>
-
         <template #thead>
             <th>Titre</th>
             <th>Ensemble de données</th>

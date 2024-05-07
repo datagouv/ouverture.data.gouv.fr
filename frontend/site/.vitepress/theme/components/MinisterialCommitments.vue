@@ -1,9 +1,5 @@
 <template>
     <Table :filters="filters" endpoint="ministerial_commitments">
-        <template #caption>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur ex itaque soluta velit quisquam quae. Sed suscipit deserunt similique odio, et facere, quibusdam fuga maiores mollitia sunt, eum magni aliquid!
-        </template>
-
         <template #thead>
             <th>Titre</th>
             <th>Ministère</th>

@@ -7,13 +7,13 @@ titleTemplate: ':title'
 import HighValueDatasets from './.vitepress/theme/components/HighValueDatasets.vue';
 </script>
 
-# Bienvenue sur le tableau de suivi des ouvertures
+# Suivi de l’ouverture des données de forte valeur
 
-Ce tableau permet de suivre et de rendre compte de l’ouverture des jeux de données, algorithmes, codes sources et API publics.
+Pour favoriser la diffusion des données ouvertes dans les États membres de l'Union européenne et exploiter davantage leur potentiel, les institutions européennes ont identifié des [ensembles de données à forte valeur](https://ec.europa.eu/info/law/better-regulation/have-your-say/initiatives/12111-Donnees-ouvertes-disponibilite-des-ensembles-de-donnees-publiques_fr).
 
-Cette liste non exhaustive, inclut : les engagements ministériels pris lors du [CITP du 5 février 2021](https://www.legifrance.gouv.fr/circulaire/id/45162?dateSignature=&init=true&page=1&query=*&searchField=ALL&tab_selection=circ), les engagements ministériels prévus dans leurs [feuilles de route](https://www.data.gouv.fr/fr/datasets/feuilles-de-route-ministerielles-sur-la-politique-de-la-donnee-des-algorithmes-et-des-codes-sources/) et les [données de forte valeur définies par la Commission européenne](https://ec.europa.eu/info/law/better-regulation/have-your-say/initiatives/12111-Donnees-ouvertes-disponibilite-des-ensembles-de-donnees-publiques_fr) (à venir).
+Ces ensembles de données, dont la réutilisation peut avoir des retombées importantes pour la société et l’économie, doivent être mis à disposition par l'ensemble des pays membres dans des conditions satisfaisantes (réutilisables gratuitement via des interfaces de programmation d'applications, disponibles dans un format lisible par machine, téléchargeables en masse, dans la mesure du possible).
 
-Pour consulter les demandes d’accès aux documents administratifs communicables ou faire une demande, rendez-vous sur le site de la [Commission d’Accès aux Documents Administratifs](https://www.cada.fr/).
+Vous trouverez ici la liste des jeux de données concernés et l'avancement de leur publication.
 
 <HighValueDatasets />
 
