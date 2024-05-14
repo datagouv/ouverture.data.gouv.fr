@@ -1,4 +1,5 @@
 import os
+from typing import List
 import requests
 
 from datetime import date
@@ -15,7 +16,8 @@ CACHE_CONFIG = {"CACHE_TYPE": "filesystem", "CACHE_DIR": "/tmp"}
 cache = Cache(app, config=CACHE_CONFIG)
 
 NOTION_API = "https://api.notion.com/v1/databases/"
-NOTION_BASE = os.getenv("NOTION_BASE")
+NOTION_BASE_MINISTERIAL_COMMITMENTS = os.getenv("NOTION_BASE_MINISTERIAL_COMMITMENTS")
+NOTION_BASE_HVD = os.getenv("NOTION_BASE_HVD")
 API_KEY = os.getenv("NOTION_API_KEY")
 HEADERS = {
     "Authorization": f"Bearer {API_KEY}",
@@ -24,34 +26,49 @@ HEADERS = {
 }
 CACHE_TIMEOUT = 1 if app.config['DEBUG'] else os.getenv('CACHE_TIMEOUT', 600)
 
-KEEP_PROPERTIES = ["TYPE", "CATEGORIE", "LIEN", "TITRE", "PRODUCTEUR", "STATUT D'OUVERTURE", "DATE ESTIMÉE", "MINISTÈRE DE TUTELLE"]
+def get_value(property):
+    if property['type'] == 'title':
+        return property['title'][0]['plain_text'].strip()
+    if property['type'] == 'rich_text':
+        return property['rich_text'][0]['plain_text'].strip()
+    elif property['type'] == 'url':
+        return property['url'].strip() if property['url'] is not None else None
+    elif property['type'] == 'select':
+        return property['select']['name'].strip()
+    else:
+        raise RuntimeError(f"Unknown property type {property['type']}")
+    
+def fetch_database(id: str, properties: List[str]) -> List[dict]:
+    url = f"{NOTION_API}{id}/query"
+    payload = { "page_size": 100 }
+    lines = []
 
-@app.route("/api/inventaire")
+    while True:
+        r = requests.post(url, json=payload, headers=HEADERS)
+        r.raise_for_status()
+        response = r.json()
+        for result in response["results"]:
+            lines.append({
+                property: get_value(result["properties"][property]) for property in properties
+            })
+
+        if response['next_cursor']:
+            payload['start_cursor'] = response['next_cursor']
+        else:
+            break
+
+
+    return jsonify(lines)
+
+@app.route("/api/ministerial_commitments")
 @cache.cached(timeout=CACHE_TIMEOUT, query_string=True)
-def inventaire():
-    url = f"{NOTION_API}{NOTION_BASE}/query"
-    payload = {
-        "page_size": 100,
-        "filter": {
-            "property": "PUBLIC",
-            "checkbox": {
-                "equals": True
-            }
-        },
-    }
-    start_cursor = request.args.get("start_cursor")
-    if start_cursor:
-        payload["start_cursor"] = start_cursor
-    r = requests.post(url, json=payload, headers=HEADERS)
-    r.raise_for_status()
-    response = r.json()
-    inventory = []
-    for result in response["results"]:
-        properties = result["properties"]
-        result["properties"] = {property: properties[property] for property in KEEP_PROPERTIES}
-        inventory.append(result)
-    response["results"] = inventory
-    return jsonify(response)
+def ministerial_commitments():
+    return fetch_database(NOTION_BASE_MINISTERIAL_COMMITMENTS, ["TITRE", "STATUT", "URL", "PRODUCTEUR", "DATE ESTIMÉE"])
+
+@app.route("/api/high_value_datasets")
+@cache.cached(timeout=CACHE_TIMEOUT, query_string=True)
+def high_value_datasets():
+    return fetch_database(NOTION_BASE_HVD, ["TITRE", "STATUT", "URL", "PRODUCTEUR", "ENSEMBLE DE DONNÉES", "MINISTÈRE DE TUTELLE", "THÉMATIQUE"])
 
 
 @app.route("/", defaults={"path": "index"})
