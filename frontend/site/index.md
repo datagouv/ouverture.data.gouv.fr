@@ -9,7 +9,7 @@ Les données ouvertes (open data) sont des données en accès libre et gratuit e
 
 Ces données sont produites par l’administration (ministères, collectivités locales, etc.) mais aussi par des acteurs privés ou encore des citoyens.
 
-Ce site vise à vous permettre de suivre l’ouverture des données publiques ayant été annoncés notamment les engagements ministériels et les données de forte valeur définies par la Commission européenne.
+Ce site vise à vous permettre de suivre l’ouverture des données publiques ayant été annoncée notamment les engagements ministériels et les données de forte valeur définies par la Commission européenne.
 
 Pour consulter les demandes d’accès aux documents administratifs communicables ou faire une demande, rendez-vous sur le site de la [Commission d’Accès aux Documents Administratifs](https://www.cada.fr/).
 
@@ -19,7 +19,7 @@ Pour consulter les demandes d’accès aux documents administratifs communicable
             <div class="fr-card__body">
                 <div class="fr-card__content">
                     <h3 class="fr-card__title">
-                        <a href="/donnees_de_forte_valeur.html">Données de forte valeurs</a>
+                        <a href="/donnees_de_forte_valeur.html">Données de forte valeur</a>
                     </h3>
                     <p class="fr-card__desc">
                         Suivi de l’ouverture des données de forte valeur identifiées par la Commission européenne. 
