@@ -42,7 +42,7 @@ import Select from './Select.vue'
 import { useData } from 'vitepress';
 import { useUrlSearchParams } from '@vueuse/core'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     endpoint: 'high_value_datasets' | 'ministerial_commitments';
     filters: Array<{
         slug: string;
@@ -50,8 +50,10 @@ const props = defineProps<{
         label: string;
         placeholder: string;
     }>;
-    sortFunc?: (value: any) => number;
-}>()
+    filtersSorts?: { [filterSlug: string] : { [filterValue: string] : number; } ; }
+}>(), {
+    filtersSorts: {}
+})
 
 // If the selected is not set, the value is undefined (the placeholder inside the `Select` has a `:value="undefined"` too)
 const selectedFilters = useUrlSearchParams<{ string: string | undefined }>('history')
@@ -77,17 +79,16 @@ const allValues = Object.fromEntries(
     props.filters.map((filter) => [
         filter.slug,
         computed(() => {
-            const values = lines.value.filter(Boolean).map((line) => line[filter.key_in_api])
+            const values: Array<string> = lines.value.filter(Boolean).map((line) => line[filter.key_in_api])
             const uniqueValues = Array.from(new Set(values))
 
-            const valuesWithCount = uniqueValues
-                .filter(Boolean)
-                .map((value) => ({
-                    value,
-                    count: lines.value.filter((line) => line[filter.key_in_api] == value).length,
-                }));
-            valuesWithCount.sort((a, b) => b.count - a.count);
-            return valuesWithCount.map(({ value }) => value)
+            if (filter.slug in props.filtersSorts) {
+                uniqueValues.sort((a, b) => (props.filtersSorts[filter.slug][a] ?? Infinity) - (props.filtersSorts[filter.slug][b] ?? Infinity));
+            } else {
+                uniqueValues.sort((a, b) => a.localeCompare(b));
+            }
+
+            return uniqueValues
         }),
     ])
 )
@@ -102,10 +103,11 @@ const filteredLines = computed(() => {
         return true
     })
 
-    if (props.sortFunc) {
-        const sortFunc = props.sortFunc // To make TS happy… :-(
-        results.sort((a, b) => sortFunc(a) - sortFunc(b))
-    }
+
+    // Put the undefined title at the end of the table
+    const fixTitle = (title) => title === 'A venir' ? 'zzzz' : title; 
+
+    results.sort((a, b) => fixTitle(a['TITRE']).localeCompare(fixTitle(b['TITRE'])))
 
     return results
 })
