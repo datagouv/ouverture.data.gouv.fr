@@ -8,7 +8,7 @@
         </template>
 
         <template #row="{ line: commitment }">
-            <td><a :href="commitment['URL']">{{ commitment['TITRE'] }}</a></td>
+            <td><a :href="commitment['URL'] || null">{{ commitment['TITRE'] }}</a></td>
             <td>{{ commitment['PRODUCTEUR'] }}</td>
             <td>
                 <p class="fr-badge fr-badge--sm fr-badge--no-icon" :class="{

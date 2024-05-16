@@ -1,5 +1,5 @@
 <template>
-    <Table :filters endpoint="high_value_datasets" :sortFunc>
+    <Table :filters endpoint="high_value_datasets" :filtersSorts>
         <template #thead>
             <th>Titre</th>
             <th>Ensemble de données</th>
@@ -10,7 +10,7 @@
         </template>
 
         <template #row="{ line: dataset }">
-            <td><a :href="dataset['URL']">{{ dataset['TITRE'] }}</a></td>
+            <td><a :href="dataset['URL'] || null">{{ dataset['TITRE'] }}</a></td>
             <td>{{ dataset['ENSEMBLE DE DONNÉES'] }}</td>
             <td>{{ dataset['THÉMATIQUE'] }}</td>
             <td>{{ dataset['MINISTÈRE DE TUTELLE'] }}</td>
@@ -37,24 +37,14 @@ const filters = [
     { slug: 'status', key_in_api: 'STATUT', placeholder: 'Tous les statuts', label: 'Statut' },
 ]
 
-let nextId = 0
-let categoriesIds = {}
-
-// Sort first by theme (with a known list of priorities) then by category (don't have to be ordered, just group together)
-const sortFunc = (line) => {
-    const themeValue = {
+const filtersSorts = {
+    'theme': {
         "Données géospatiales": 1,
         "Observation de la Terre et environnement": 2,
         "Météorologie": 3,
         "Statistiques": 4,
         "Entreprises et propriétés d'entreprises": 5,
         "Mobilité": 6,
-    }[line['THÉMATIQUE']]
-
-    if (! categoriesIds[line['ENSEMBLE DE DONNÉES']]) {
-        categoriesIds[line['ENSEMBLE DE DONNÉES']] = nextId++
-    }
-
-    return themeValue * 100 + categoriesIds[line['ENSEMBLE DE DONNÉES']]
+    },
 }
 </script>
