@@ -83,8 +83,10 @@ const allValues = Object.fromEntries(
             const uniqueValues = Array.from(new Set(values))
 
             if (filter.slug in props.filtersSorts) {
+                // Sort with the value provided, if the value is missing for this filter, put at the end with `Infinity`.
                 uniqueValues.sort((a, b) => (props.filtersSorts[filter.slug][a] ?? Infinity) - (props.filtersSorts[filter.slug][b] ?? Infinity));
             } else {
+                // Default to alphabetical sort
                 uniqueValues.sort((a, b) => a.localeCompare(b));
             }
 
@@ -104,7 +106,7 @@ const filteredLines = computed(() => {
     })
 
 
-    // Put the undefined title at the end of the table
+    // Put the undefined titles at the end of the table
     const fixTitle = (title) => title === 'A venir' ? 'zzzz' : title; 
 
     results.sort((a, b) => fixTitle(a['TITRE']).localeCompare(fixTitle(b['TITRE'])))
