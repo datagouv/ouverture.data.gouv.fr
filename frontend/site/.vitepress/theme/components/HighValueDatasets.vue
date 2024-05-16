@@ -10,7 +10,7 @@
         </template>
 
         <template #row="{ line: dataset }">
-            <td><a :href="dataset['URL']">{{ dataset['TITRE'] }}</a></td>
+            <td><a :href="dataset['URL'] || null">{{ dataset['TITRE'] }}</a></td>
             <td>{{ dataset['ENSEMBLE DE DONNÉES'] }}</td>
             <td>{{ dataset['THÉMATIQUE'] }}</td>
             <td>{{ dataset['MINISTÈRE DE TUTELLE'] }}</td>
