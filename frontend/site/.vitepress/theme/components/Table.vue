@@ -17,7 +17,10 @@
                     </div>
                 </div>
             </div>
-            <div class="fr-table fr-table--no-caption fr-table fr-table--layout-fixed">
+            <div
+                class="fr-table fr-table--no-caption fr-table"
+                :class="{'fr-table--layout-fixed': !filteredLines.length}"
+            >
                 <table>
                     <thead>
                     <tr>
