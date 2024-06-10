@@ -117,12 +117,35 @@ const filteredLines = computed(() => {
     return results
 })
 
+
 const loading = ref<'loading' | 'failed' | 'done'>('loading')
 const load = async () => {
     const { theme } = useData();
     try {
-        const response = await fetch(`${theme.value.apiUrl}/${props.endpoint}`)
-        lines.value = await response.json()
+        let url =""
+        if (props.endpoint === 'high_value_datasets') {
+            url = theme.value.hvdApiUrl
+        }
+        if (props.endpoint === 'ministerial_commitments') {
+            url = theme.value.engagementApiUrl
+        }
+
+        const response = await fetch(url)
+        let results = await response.json()
+        let records = []
+        results.records.forEach((item) => {
+            let obj = {}
+            obj["TITRE"] = item["fields"]["Titre"]
+            obj["PRODUCTEUR"] = item["fields"]["Producteur"]
+            obj["STATUT"] = item["fields"]["Statut"]
+            obj["URL"] = item["fields"]["url"]
+            if ("Thematique" in item["fields"]) obj["THÉMATIQUE"] = item["fields"]["Thematique"]
+            if ("Ministere_de_tutelle" in item["fields"]) obj["MINISTÈRE DE TUTELLE"] = item["fields"]["Ministere_de_tutelle"]
+            if ("Ensemble_de_donnees" in item["fields"]) obj["ENSEMBLE DE DONNÉES"] = item["fields"]["Ensemble_de_donnees"]
+            if ("Date_estimee" in item["fields"]) obj["DATE ESTIMÉE"] = item["fields"]["Date_estimee"]
+            records.push(obj)
+        })
+        lines.value = records
         loading.value = 'done'
     } catch (e) {
         console.error(e)

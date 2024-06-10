@@ -1,4 +1,10 @@
 import { defineConfigWithTheme } from 'vitepress'
+import dotenv from 'dotenv';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: join(__dirname, '.env') });
 
 // https://vitepress.dev/reference/site-config
 /**
@@ -26,6 +32,9 @@ export default defineConfigWithTheme({
     }
   },
   themeConfig: {
-    apiUrl: process.env.VUE_APP_API_URL || "http://localhost:5000/api",
+    yoyo: "tutu",
+    hvdApiUrl: process.env.VUE_APP_HVD_API_URL,
+    engagementApiUrl: process.env.VUE_APP_ENGAGEMENT_API_URL,
+    huhuh: "nubn"
   }
 });
