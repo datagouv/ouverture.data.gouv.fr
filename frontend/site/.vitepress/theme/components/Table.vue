@@ -131,9 +131,8 @@ const load = async () => {
         }
 
         const response = await fetch(url)
-        let results = await response.json()
-        let records = []
-        results.records.forEach((item) => {
+        const results = await response.json()
+        lines.value = results.records.map((item) => {
             let obj = {}
             obj["TITRE"] = item["fields"]["Titre"]
             obj["PRODUCTEUR"] = item["fields"]["Producteur"]
@@ -143,9 +142,8 @@ const load = async () => {
             if ("Ministere_de_tutelle" in item["fields"]) obj["MINISTÈRE DE TUTELLE"] = item["fields"]["Ministere_de_tutelle"]
             if ("Ensemble_de_donnees" in item["fields"]) obj["ENSEMBLE DE DONNÉES"] = item["fields"]["Ensemble_de_donnees"]
             if ("Date_estimee" in item["fields"]) obj["DATE ESTIMÉE"] = item["fields"]["Date_estimee"]
-            records.push(obj)
+            return obj
         })
-        lines.value = records
         loading.value = 'done'
     } catch (e) {
         console.error(e)
