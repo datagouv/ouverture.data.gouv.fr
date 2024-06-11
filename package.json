@@ -2,7 +2,8 @@
   "name": "dokku-simple-python-vue-spa",
   "version": "0.1.0",
   "scripts": {
-    "postinstall": "npm ci --prefix frontend --production false && npm --prefix frontend run docs:build && npm ci --prefix frontend --production true"
+    "postinstall": "npm ci --prefix frontend --production false && npm --prefix frontend run docs:build && npm ci --prefix frontend --production true",
+    "build": "npm ci --prefix frontend --production false && npm --prefix frontend run docs:build && npm ci --prefix frontend --production true"
   },
   "engines": {
     "node": "16.x",

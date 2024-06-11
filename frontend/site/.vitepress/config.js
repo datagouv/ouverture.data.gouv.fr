@@ -1,9 +1,11 @@
-import { defineConfigWithTheme } from 'vitepress'
+import { defineConfigWithTheme, loadEnv } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 /**
- * @typedef {{apiUrl: string}} OuvertureThemeConfig
+ * @typedef {{hvdApiUrl: string, engagementApiUrl:string}} OuvertureThemeConfig
  */
+
+const env = loadEnv('', process.cwd())
 
 /** @type {import("vitepress").UserConfig<OuvertureThemeConfig>} */
 export default defineConfigWithTheme({
@@ -26,6 +28,7 @@ export default defineConfigWithTheme({
     }
   },
   themeConfig: {
-    apiUrl: process.env.VUE_APP_API_URL || "http://localhost:5000/api",
+    hvdApiUrl: env.VITE_HVD_API_URL ?? "",
+    engagementApiUrl: env.VITE_ENGAGEMENT_API_URL ?? "",
   }
-});
+})

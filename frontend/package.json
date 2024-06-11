@@ -14,9 +14,9 @@
   "dependencies": {
     "@conciergerie.dev/vitepress-plugin-matomo": "^1.0.3",
     "@gouvfr/dsfr": "^1.9.0",
+    "@vueuse/core": "^10.9.0",
     "vitepress": "^1.1.4",
     "vue": "^3.4.26",
-    "vue-loading-overlay": "^6.0.3",
-    "@vueuse/core": "^10.9.0"
+    "vue-loading-overlay": "^6.0.3"
   }
 }
