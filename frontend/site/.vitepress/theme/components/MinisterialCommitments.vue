@@ -78,6 +78,7 @@ import Table from './Table.vue'
 
 const filters = [
     { slug: 'department', key_in_api: 'PRODUCTEUR', placeholder: 'Tous les ministères', label: 'Ministère' },
+    { slug: 'type', key_in_api: 'TYPE', placeholder: 'Tous les types de données', label: 'Type de données' },
     { slug: 'status', key_in_api: 'STATUT', placeholder: 'Tous les statuts', label: 'Statut' },
 ]
 </script>
