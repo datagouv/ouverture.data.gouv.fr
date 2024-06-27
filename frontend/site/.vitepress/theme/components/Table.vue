@@ -149,7 +149,7 @@ const load = async () => {
                 obj["TYPE"] = item["fields"]["Type"].slice(1);
                 obj["ENSEMBLE DE DONNÉES"] = item["fields"]["Ensemble_de_donnees"]
 
-                obj["MINISTÈRE DE TUTELLE"] = [item["fields"]["Ministere_de_tutelle_Telechargement"], item["fields"]["Ministere_de_Tutelle_API"]].filter(value => value !== null && value !== "");
+                obj["MINISTÈRE DE TUTELLE"] = [item["fields"]["Ministere_de_tutelle_Telechargement"], item["fields"]["Ministere_de_tutelle_API"]].filter(value => value !== null && value !== "");
                 obj["PRODUCTEUR"] = [item["fields"]["Producteur_Telechargement"], item["fields"]["Producteur_API"]].filter(value => value !== null && value !== "");
                 obj["STATUT"] = [item["fields"]["Statut_Telechargement"], item["fields"]["Statut_API"]].filter(value => value !== null && value !== "");
                 obj["URL"] = [item["fields"]["URL_Telechargement"], item["fields"]["URL_API"]].filter(value => value !== null && value !== "");
