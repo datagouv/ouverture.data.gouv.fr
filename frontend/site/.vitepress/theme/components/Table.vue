@@ -82,8 +82,15 @@ const allValues = Object.fromEntries(
     props.filters.map((filter) => [
         filter.slug,
         computed(() => {
-            const values: Array<string> = lines.value.filter(Boolean).map((line) => line[filter.key_in_api])
-            const uniqueValues = Array.from(new Set(values))
+            const values = lines.value
+                .filter(Boolean)
+                .flatMap(line => {
+                    const value = line[filter.key_in_api];
+                    return Array.isArray(value) ? value : [value];
+                })
+                .filter(value => value !== "" && value !== null);
+            // Supprimez les doublons
+            const uniqueValues = Array.from(new Set(values));
 
             if (filter.slug in props.filtersSorts) {
                 // Sort with the value provided, if the value is missing for this filter, put at the end with `Infinity`.
@@ -102,12 +109,11 @@ const filteredLines = computed(() => {
     const results = lines.value.filter((line) => {
         // If one of the filters doesn't match, reject the line.
         for (let filter of props.filters) {
-            if (selectedFilters[filter.slug] && selectedFilters[filter.slug] !== line[filter.key_in_api]) return false
+            if (selectedFilters[filter.slug] && !line[filter.key_in_api].includes(selectedFilters[filter.slug])) return false
         }
 
         return true
     })
-
 
     // Put the undefined titles at the end of the table
     const fixTitle = (title) => title === 'A venir' ? 'zzzz' : title; 
@@ -135,13 +141,31 @@ const load = async () => {
         lines.value = results.records.map((item) => {
             let obj = {}
             obj["TITRE"] = item["fields"]["Titre"]
-            obj["PRODUCTEUR"] = item["fields"]["Producteur"]
             obj["STATUT"] = item["fields"]["Statut"]
-            obj["URL"] = item["fields"]["url"]
-            if ("Thematique" in item["fields"]) obj["THÉMATIQUE"] = item["fields"]["Thematique"]
-            if ("Ministere_de_tutelle" in item["fields"]) obj["MINISTÈRE DE TUTELLE"] = item["fields"]["Ministere_de_tutelle"]
-            if ("Ensemble_de_donnees" in item["fields"]) obj["ENSEMBLE DE DONNÉES"] = item["fields"]["Ensemble_de_donnees"]
-            if ("Date_estimee" in item["fields"]) obj["DATE ESTIMÉE"] = item["fields"]["Date_estimee"]
+            
+            if (props.endpoint === 'high_value_datasets') {
+                obj["THÉMATIQUE"] = item["fields"]["Thematique"]
+                
+                obj["TYPE"] = item["fields"]["Type"].slice(1);
+                obj["ENSEMBLE DE DONNÉES"] = item["fields"]["Ensemble_de_donnees"]
+
+                obj["MINISTÈRE DE TUTELLE"] = [item["fields"]["Ministere_de_tutelle_Telechargement"], item["fields"]["Ministere_de_Tutelle_API"]].filter(value => value !== null && value !== "");
+                obj["PRODUCTEUR"] = [item["fields"]["Producteur_Telechargement"], item["fields"]["Producteur_API"]].filter(value => value !== null && value !== "");
+                obj["STATUT"] = [item["fields"]["Statut_Telechargement"], item["fields"]["Statut_API"]].filter(value => value !== null && value !== "");
+                obj["URL"] = [item["fields"]["URL_Telechargement"], item["fields"]["URL_API"]].filter(value => value !== null && value !== "");
+            }
+            if (props.endpoint === 'ministerial_commitments') {
+                console.log(item["fields"])
+                obj["PRODUCTEUR"] = item["fields"]["Producteur"]
+                
+                obj["TYPE"] = item["fields"]["Type"].slice(1);
+
+                obj["PRODUCTEUR"] = [item["fields"]["Producteur_Telechargement"], item["fields"]["Producteur_API"], item["fields"]["Producteur_Code_Source"]].filter(value => value !== null && value !== "");
+                obj["STATUT"] = [item["fields"]["Statut_Telechargement"], item["fields"]["Statut_API"], item["fields"]["Statut_Code_Source"]].filter(value => value !== null && value !== "");
+                obj["URL"] = [item["fields"]["URL_Telechargement"], item["fields"]["URL_API"], item["fields"]["URL_Code_Source"]].filter(value => value !== null && value !== "");
+                obj["DATE ESTIMÉE"] = [item["fields"]["Date_estimee_Telechargement"], item["fields"]["Date_estimee_API"], item["fields"]["Date_estimee_Code_Source"]].filter(value => value !== null && value !== "");
+
+            }
             return obj
         })
         loading.value = 'done'

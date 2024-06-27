@@ -2,23 +2,69 @@
     <Table :filters endpoint="ministerial_commitments">
         <template #thead>
             <th>Titre</th>
+            <th>Type</th>
             <th>Ministère</th>
             <th>Statut</th>
             <th>Date estimée</th>
         </template>
 
         <template #row="{ line: commitment }">
-            <td><a :href="commitment['URL'] || null">{{ commitment['TITRE'] }}</a></td>
-            <td>{{ commitment['PRODUCTEUR'] }}</td>
-            <td>
-                <p class="fr-badge fr-badge--sm fr-badge--no-icon" :class="{
-                    'fr-badge--success': commitment['STATUT'] == 'Disponible sur data.gouv.fr',
-                    'fr-badge--info': commitment['STATUT'] == 'Disponible',
-                    'fr-badge--error': commitment['STATUT'] == 'Non disponible',
-                    'fr-badge--warning': commitment['STATUT'] == 'Planifié',
-                }">{{ commitment['STATUT'] }}</p>
+            <td class="cell-padding">{{ commitment['TITRE'] }}</td>
+
+            <td :class="{
+                'cell-no-padding': commitment['TYPE'].length > 1
+            }">
+                <div v-for="(value, index) in commitment['TYPE']" :key="index" :class="{
+                    'half-cell-border': index == 0 && commitment['TYPE'].length > 1,
+                    'half-cell': true
+
+                }">
+                    <span class="fr-badge fr-badge--sm fr-badge--no-icon" :class="{
+                        'fr-badge--green-menthe': value == 'API',
+                        'fr-badge--blue-ecume': value == 'Téléchargement',
+                        'fr-badge--purple-glycine': value == 'Code source',
+                    }">
+                        {{ value }}
+                    </span>
+                </div>
             </td>
-            <td>{{ commitment['DATE ESTIMÉE'] }}</td>
+            <td :class="{
+                'cell-no-padding': commitment['TYPE'].length > 1
+            }">
+                <div v-for="(value, index) in commitment['PRODUCTEUR']" :key="index" :class="{
+                    'half-cell-border': index == 0 && commitment['PRODUCTEUR'].length > 1,
+                    'half-cell': true
+
+                }">{{ value }}</div>
+            </td>
+            <td :class="{
+                'cell-no-padding': commitment['TYPE'].length > 1
+            }">
+                <div v-for="(value, index) in commitment['STATUT']" :key="index" :class="{
+                    'half-cell-border': index == 0 && commitment['STATUT'].length > 1,
+                    'half-cell': true
+
+                }">
+                    <span class="fr-badge fr-badge--sm fr-badge--no-icon" :class="{
+                        'fr-badge--success': value == 'Disponible sur data.gouv.fr',
+                        'fr-badge--info': value == 'Disponible',
+                        'fr-badge--error': value == 'Non disponible',
+                        'fr-badge--warning': value == 'Planifié',
+                    }">
+                        <a :href="commitment['URL'][index] || null">{{ value }}</a>
+                    </span>
+                </div>
+            </td>
+            <td :class="{
+                'cell-no-padding': commitment['TYPE'].length > 1
+            }">
+                <div v-for="(value, index) in commitment['DATE ESTIMÉE']" :key="index" :class="{
+                    'half-cell-border': index == 0 && commitment['DATE ESTIMÉE'].length > 1,
+                    'half-cell': true
+
+                }">{{ value }}</div>
+            </td>
+
         </template>
     </Table>
 </template>
@@ -30,3 +76,51 @@ const filters = [
     { slug: 'status', key_in_api: 'STATUT', placeholder: 'Tous les statuts', label: 'Statut' },
 ]
 </script>
+
+<style scoped>
+
+@media screen and (min-width: 70em) {
+    .cell-no-padding{
+        height: 18rem;
+    }
+}
+
+@media screen and (max-width: 70em) {
+    .cell-no-padding{
+        height: 23rem;
+    }
+}
+
+td{
+    padding: 0px;
+}
+
+.cell-no-padding{
+    padding: 0px;
+}
+.cell-padding{
+    padding: 20px;
+}
+
+.half-cell-border{
+    height: 50%;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #DDDDDD;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    align-items: center;
+}
+.half-cell{
+    height: 50%;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    align-items: center;
+}
+</style>
