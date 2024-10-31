@@ -58,6 +58,7 @@
                 }">
                     <span class="fr-badge fr-badge--sm fr-badge--no-icon" :class="{
                         'fr-badge--success': value == 'Disponible sur data.gouv.fr',
+                        'fr-badge--new': value == 'Partiellement disponible',
                         'fr-badge--info': value == 'Disponible',
                         'fr-badge--error': value == 'Non disponible',
                         'fr-badge--warning': value == 'Planifié',
