@@ -2,7 +2,7 @@ import { defineConfigWithTheme, loadEnv } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 /**
- * @typedef {{hvdApiUrl: string, engagementApiUrl:string}} OuvertureThemeConfig
+ * @typedef {{hvdApiUrl: string, engagementApiUrl:string, ouvertureCrmApiUrl:string, ouvertureCrmApiUrlProducers:string}} OuvertureThemeConfig
  */
 
 const env = loadEnv('', process.cwd())
@@ -30,5 +30,7 @@ export default defineConfigWithTheme({
   themeConfig: {
     hvdApiUrl: env.VITE_HVD_API_URL ?? "",
     engagementApiUrl: env.VITE_ENGAGEMENT_API_URL ?? "",
+    ouvertureCrmApiUrl: env.VITE_OUVERTURE_CRM_API_URL ?? "",
+    ouvertureCrmApiUrlProducers: env.VITE_OUVERTURE_CRM_API_URL_PRODUCERS ?? "",
   }
 })
