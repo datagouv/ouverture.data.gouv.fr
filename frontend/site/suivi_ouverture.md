@@ -9,7 +9,9 @@ import SuiviOuverture from './.vitepress/theme/components/SuiviOuverture.vue';
 
 # Suivi des ouverture de données
 
-Le suivi des ouvertures des données de l'équipe data.gouv.fr est un outil permettant de recenser les demandes de données de la communauté open data et fait état des avancées des contacts entre la DINUM et les ministères sur celles-ci.
+L'équipe data.gouv.fr a pour mission de suivre l'ouverture des données des administrations. Celles-ci sont priorisées en fonction des obligations légales mais aussi des demandes provenant des citoyens, des administrations et des entreprises. 
+
+Ce tableau public expose l'ensemble des jeux de données identifiés et suivis par l'équipe. [Vous souhaitez nous faire part de nouvelles demandes de jeux de données ?](https://forum.data.gouv.fr/)
 
 <SuiviOuverture />
 

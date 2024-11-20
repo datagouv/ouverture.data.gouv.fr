@@ -22,7 +22,7 @@
 import Table from './Table.vue'
 
 const filters = [
-    { slug: 'producteur', key_in_api: 'producteur', placeholder: 'Toutes les administrations', label: 'Administration' },
+    { slug: 'producteur', key_in_api: 'producteur', placeholder: 'Toutes les organisations', label: 'Organisations' },
     { slug: 'thematique', key_in_api: 'thematique', placeholder: 'Toutes les thématiques de données', label: 'Thématique de données' },
     { slug: 'statut', key_in_api: 'statut', placeholder: 'Tous les statuts', label: 'Statut' },
 ]
