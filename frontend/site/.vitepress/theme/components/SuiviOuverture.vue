@@ -12,8 +12,26 @@
             <td class="cell-padding">{{ ouverture['TITRE'] }}</td>
             <td class="cell-padding">{{ ouverture['producteur'] }}</td>
             <td class="cell-padding">{{ ouverture['source_demande'] }}</td>
-            <td class="cell-padding">{{ ouverture['thematique'] }}</td>
-            <td class="cell-padding">{{ ouverture['statut'] }}</td>
+            <td class="cell-padding">
+                <div v-bind:key="item" v-for="item in ouverture['thematique']">
+                    <div class="themes fr-badge--new">
+                        {{  String(item).toUpperCase() }}
+                    </div>
+                </div>
+            </td>
+            <td class="cell-padding">
+
+                <span class="fr-badge fr-badge--sm fr-badge--no-icon" :class="{
+                    'fr-badge--success':  ouverture['statut'] == 'Déjà réalisé' || ouverture['statut'] == 'Réalisé',
+                    'fr-badge--info':  ouverture['statut'] == 'En cours' || ouverture['statut'] == 'Correction à apporter',
+                    'fr-badge--new':  ouverture['statut'] == 'MAJ à demander' || ouverture['statut'] == 'En attente de réponse',
+                    'fr-badge--error':  ouverture['statut'] == 'À l\'arrêt' || ouverture['statut'] == 'Abandonné',
+                    'fr-badge--warning':  ouverture['statut'] == 'À relancer' || ouverture['statut'] == 'À enclencher',
+                }">
+                    <span v-if="ouverture['url'] != '' && (ouverture['statut'].includes('Déjà réalisé') || ouverture['statut'].includes('Réalisé'))"><a :href="ouverture['url']">{{ ouverture["statut"] }}</a></span>
+                    <span v-else>{{ ouverture['statut'] }}</span>
+                </span> 
+            </td>
 
         </template>
     </Table>
@@ -73,5 +91,14 @@ td{
     padding-right: 20px;
     display: flex;
     align-items: center;
+}
+.themes{
+    margin-bottom: 5px;
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: bold;
+    font-size: 12px;
+    
 }
 </style>

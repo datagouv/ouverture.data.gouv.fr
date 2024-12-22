@@ -7,11 +7,13 @@ titleTemplate: ':title'
 import SuiviOuverture from './.vitepress/theme/components/SuiviOuverture.vue';
 </script>
 
-# Suivi des ouverture de données
+# Suivre les ouvertures de données publiques
 
-L'équipe data.gouv.fr a pour mission de suivre l'ouverture des données des administrations. Celles-ci sont priorisées en fonction des obligations légales mais aussi des demandes provenant des citoyens, des administrations et des entreprises. 
+L'équipe data.gouv.fr a pour mission de suivre l'ouverture des données des administrations. Celles-ci sont priorisées en fonction des demandes provenant des citoyens, des administrations et des entreprises. 
 
-Ce tableau public expose l'ensemble des jeux de données identifiés et suivis par l'équipe. [Vous souhaitez nous faire part de nouvelles demandes de jeux de données ?](https://forum.data.gouv.fr/)
+Ce tableau public expose l'ensemble des jeux de données identifiés et suivis par l'équipe. 
+
+Rendez-vous [sur ce lien](https://forum.data.gouv.fr) si vous souhaitez nous faire part de nouvelles demandes de jeux de données ?
 
 <SuiviOuverture />
 

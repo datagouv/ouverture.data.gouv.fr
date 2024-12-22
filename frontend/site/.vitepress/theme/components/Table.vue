@@ -176,15 +176,20 @@ const load = async () => {
                     obj["producteur"] = ""
                 }
                 obj["TITRE"] = item["fields"]["nom_donnee"]
+                obj["url"] = item["fields"]["url"]
                 if(item["fields"]["source_demande"]){
                     obj["source_demande"] = item["fields"]["source_demande"][1].toString()
                 } else {
                     obj["source_demande"] = ""
                 }
                 if(item["fields"]["thematique"]){
-                    obj["thematique"] = item["fields"]["thematique"][1].toString()
+                    obj["thematique"] = item["fields"]["thematique"]
+                    if (obj["thematique"].length > 1){
+                        obj["thematique"].shift()
+                    }
+
                 } else {
-                    obj["thematique"] = ""
+                    obj["thematique"] = []
                 }
                 obj["statut"] = item["fields"]["statut"]
             }
