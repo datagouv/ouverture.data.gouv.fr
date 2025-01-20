@@ -44,6 +44,7 @@ import { computed, onMounted, ref } from 'vue'
 import Select from './Select.vue'
 import { useData } from 'vitepress';
 import { useUrlSearchParams } from '@vueuse/core'
+import { renderToString } from 'vue/server-renderer';
 
 const props = withDefaults(defineProps<{
     endpoint: 'high_value_datasets' | 'ministerial_commitments';
@@ -74,7 +75,7 @@ const hasFilters = computed(() => {
     return false
 })
 
-const lines = ref<Array<any>>([])
+let lines = ref<Array<any>>([])
 
 // Build an object associating a filter slug with all the unique 
 // values for this filter sorted by usage in the data.
@@ -128,51 +129,92 @@ const loading = ref<'loading' | 'failed' | 'done'>('loading')
 const load = async () => {
     const { theme } = useData();
     try {
-        let url = ""
-        let url2 = ""
-        if (props.endpoint === 'high_value_datasets') {
-            url = theme.value.hvdApiUrl
+        if (props.endpoint === 'ministerial_commitments') {
+            let url = theme.value.engagementApiUrl
+            const response = await fetch(url)
+            const results = await response.json()
+            lines.value = results.records.map((item) => {
+                let obj = {}
+                obj["TITRE"] = item["fields"]["Titre"]
+                obj["STATUT"] = item["fields"]["Statut"]
+                obj["PRODUCTEUR"] = item["fields"]["Producteur"]
+                obj["TYPE"] = item["fields"]["Type"].slice(1);
+                obj["PRODUCTEUR"] = [item["fields"]["Producteur_Telechargement"], item["fields"]["Producteur_API"], item["fields"]["Producteur_Code_Source"]].filter(value => value !== null && value !== "");
+                obj["STATUT"] = [item["fields"]["Statut_Telechargement"], item["fields"]["Statut_API"], item["fields"]["Statut_Code_Source"]].filter(value => value !== null && value !== "");
+                obj["URL"] = [item["fields"]["URL_Telechargement"], item["fields"]["URL_API"], item["fields"]["URL_Code_Source"]].filter(value => value !== null && value !== "");
+                obj["DATE ESTIMÉE"] = [item["fields"]["Date_estimee_Telechargement"], item["fields"]["Date_estimee_API"], item["fields"]["Date_estimee_Code_Source"]].filter(value => value !== null && value !== "");
+
+                return obj
+            })
         }
-        else if (props.endpoint === 'ministerial_commitments') {
-            url = theme.value.engagementApiUrl
-        }
-        else if (props.endpoint === 'suivi_ouverture') {
-            url = theme.value.ouvertureCrmApiUrl
-            url2 = theme.value.ouvertureCrmApiUrlProducers
-        }
-        const response = await fetch(url)
-        const results = await response.json()
-        lines.value = results.records.map((item) => {
-            let obj = {}
-            
-            if (props.endpoint === 'high_value_datasets') {
+        else if (props.endpoint === 'high_value_datasets') {
+            let url = theme.value.hvdApiUrl
+            let url2 = theme.value.hvdApiUrlNonDispo
+            let url3 = theme.value.ouvertureCrmApiUrlProducers
+            let response = await fetch(url)
+            let results = await response.json()
+            lines.value = results.records.map((item) => {
+                let obj = {}
                 obj["TITRE"] = item["fields"]["title"]
                 obj["THÉMATIQUE"] = item["fields"]["hvd_category_datagouv"]
-                
                 obj["TYPE"] = item["fields"]["type"].slice(1);
                 obj["ENSEMBLE DE DONNÉES"] = item["fields"]["hvd_ouverture"]
-
                 obj["MINISTÈRE DE TUTELLE"] = item["fields"]["ministry"];
                 obj["PRODUCTEUR"] = item["fields"]["organization"];
                 obj["URL DATASET"] = item["fields"]["url"];
                 obj["URL API"] = item["fields"]["api_web_datagouv"]
                 obj["TITRE API"] = item["fields"]["api_title_datagouv"].slice(0, 15) + (item["fields"]["api_title_datagouv"].length > 15 ? '…' : '')
                 obj["STATUT"] = item["fields"]["manual_status"] || item["fields"]["status"] || null
-            }
-            else if (props.endpoint === 'ministerial_commitments') {
-                obj["TITRE"] = item["fields"]["Titre"]
-                obj["STATUT"] = item["fields"]["Statut"]
-                obj["PRODUCTEUR"] = item["fields"]["Producteur"]
-                
-                obj["TYPE"] = item["fields"]["Type"].slice(1);
+                return obj
+            })
+            response = await fetch(url2)
+            results = await response.json()
+            const lines2 = ref<Array<any>>([])
+            lines2.value = results.records.filter(record => record.fields.source_demande.includes("HVD")).map((item) => {
+                let obj = {}
+                obj["TITRE"] = item["fields"]["nom_donnee"]
+                obj["THÉMATIQUE"] = item["fields"]["hvd_thematique"]
+                obj["TYPE"] = []
+                obj["ENSEMBLE DE DONNÉES"] = item["fields"]["nom_donnee"]
+                obj["MINISTÈRE DE TUTELLE"] = item["fields"]["ministere_tutelle_hvd"]
+                if(item["fields"]["producteur"]){
+                    obj["PRODUCTEUR"] = item["fields"]["producteur"][1].toString()
+                } else {
+                    obj["PRODUCTEUR"] = ""
+                }
+                obj["URL DATASET"] = ""
+                obj["URL API"] = ""
+                obj["TITRE API"] = ""
+                obj["STATUT"] = item["fields"]["statut"]
+                return obj
+            })
+            response = await fetch(url3)
+            results = await response.json()
+            let arrayProducers = []
+            results.records.map((item) => {
+                arrayProducers.push({"id": item["id"], "producer": item["fields"]["nom_producteur"]})
+            })
+            lines2.value.forEach(item => {
+                let castValue = Number(item["PRODUCTEUR"])
+                const result = arrayProducers.find(item => item.id === castValue);
+                if (!isNaN(castValue) && result) {
+                    item["PRODUCTEUR"] = result.producer.toString()
+                } else {
+                    item["PRODUCTEUR"] = ""
+                }
+                return item
+            })
 
-                obj["PRODUCTEUR"] = [item["fields"]["Producteur_Telechargement"], item["fields"]["Producteur_API"], item["fields"]["Producteur_Code_Source"]].filter(value => value !== null && value !== "");
-                obj["STATUT"] = [item["fields"]["Statut_Telechargement"], item["fields"]["Statut_API"], item["fields"]["Statut_Code_Source"]].filter(value => value !== null && value !== "");
-                obj["URL"] = [item["fields"]["URL_Telechargement"], item["fields"]["URL_API"], item["fields"]["URL_Code_Source"]].filter(value => value !== null && value !== "");
-                obj["DATE ESTIMÉE"] = [item["fields"]["Date_estimee_Telechargement"], item["fields"]["Date_estimee_API"], item["fields"]["Date_estimee_Code_Source"]].filter(value => value !== null && value !== "");
+            lines.value = lines2.value.concat(lines.value)
 
-            }
-            else if (props.endpoint === 'suivi_ouverture') {
+        }
+        else if (props.endpoint === 'suivi_ouverture') {
+            let url = theme.value.ouvertureCrmApiUrl
+            let url2 = theme.value.ouvertureCrmApiUrlProducers
+            const response = await fetch(url)
+            const results = await response.json()
+            lines.value = results.records.map((item) => {
+                let obj = {}
                 if(item["fields"]["producteur"]){
                     obj["producteur"] = item["fields"]["producteur"][1].toString()
                 } else {
@@ -195,27 +237,26 @@ const load = async () => {
                     obj["thematique"] = []
                 }
                 obj["statut"] = item["fields"]["statut"]
-            }
-            return obj
-        })
-        if (url2 != "") {
+                return obj
+            });
+
             const response2 = await fetch(url2)
             const results2 = await response2.json()
             let arrayProducers = []
             results2.records.map((item) => {
-                arrayProducers.push(item["fields"]["nom_producteur"])
+                arrayProducers.push({"id": item["id"], "producer": item["fields"]["nom_producteur"]})
             })
             lines.value.forEach(item => {
                 let castValue = Number(item["producteur"])
-                if (!isNaN(castValue) && arrayProducers[castValue]) {
-                    item["producteur"] = arrayProducers[castValue].toString()
+                const result = arrayProducers.find(item => item.id === castValue);
+                if (!isNaN(castValue) && result) {
+                    item["producteur"] = result.producer.toString()
                 } else {
                     item["producteur"] = ""
                 }
                 return item
             })
         }
-
         loading.value = 'done'
     } catch (e) {
         console.error(e)

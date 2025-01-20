@@ -6,21 +6,32 @@
             <th>Thématique</th>
             <th>Ministère de tutelle</th>
             <th>Producteur</th>
+            <th>Téléchargement</th>
             <th>API</th>
-            <th>Statut</th>
+            <th>Statut global</th>
         </template>
         <template #row="{ line: dataset }">
             <td style="max-width: 200px;" class="cell-padding">
-                <a :href="dataset['URL DATASET'] || null" target="_blank" rel="noopener external">{{ dataset['TITRE'] }}</a>
+                {{ dataset['TITRE'] }}
             </td>
             <td class="cell-padding">{{ dataset['ENSEMBLE DE DONNÉES'] }}</td>
             <td class="cell-padding">{{ dataset['THÉMATIQUE'] }}</td>
             <td class="cell-padding">{{ dataset['MINISTÈRE DE TUTELLE'] }}</td>
             <td class="cell-padding">{{ dataset['PRODUCTEUR'] }}</td>
+            <td class="cell-padding">
+                <span class="fr-badge fr-badge--sm fr-badge--no-icon" :class="dataset['URL DATASET'] ? 'fr-badge--info' : 'fr-badge--warning'">
+                    <span v-if="dataset['URL DATASET']">
+                        <a :href="dataset['URL DATASET'] || null" target="_blank" rel="noopener external">Disponible</a>
+                    </span>
+                    <span v-else>
+                        {{ "Indisponible" }}
+                    </span>
+                </span>
+            </td>
             <td style="max-width: 200px;" class="cell-padding">
                 <span class="fr-badge fr-badge--sm fr-badge--no-icon" :class="dataset['URL API'] ? 'fr-badge--info' : 'fr-badge--warning'">
                     <span v-if="dataset['URL API']">
-                        <a :href="dataset['URL API'] || null" target="_blank" rel="noopener external">{{ dataset['TITRE API'] }}</a>
+                        <a :href="dataset['URL API'] || null" target="_blank" rel="noopener external">Disponible</a>
                     </span>
                     <span v-else>
                         {{ "Indisponible" }}

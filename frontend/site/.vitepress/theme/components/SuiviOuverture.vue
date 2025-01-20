@@ -28,7 +28,9 @@
                     'fr-badge--error':  ouverture['statut'] == 'À l\'arrêt' || ouverture['statut'] == 'Abandonné',
                     'fr-badge--warning':  ouverture['statut'] == 'À relancer' || ouverture['statut'] == 'À enclencher',
                 }">
-                    <span v-if="ouverture['url'] != '' && (ouverture['statut'].includes('Déjà réalisé') || ouverture['statut'].includes('Réalisé'))"><a :href="ouverture['url']">{{ ouverture["statut"] }}</a></span>
+                    <span v-if="ouverture['url'] != '' && (ouverture['statut'].includes('Déjà réalisé') || ouverture['statut'].includes('Réalisé'))">
+                        <a :href="ouverture['url'] || null" target="_blank" rel="noopener external">{{ ouverture["statut"] }}</a>
+                    </span>
                     <span v-else>{{ ouverture['statut'] }}</span>
                 </span> 
             </td>
