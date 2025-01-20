@@ -157,7 +157,11 @@ const load = async () => {
                 let obj = {}
                 obj["TITRE"] = item["fields"]["title"]
                 obj["THÉMATIQUE"] = item["fields"]["hvd_category_datagouv"]
-                obj["TYPE"] = item["fields"]["type"].slice(1);
+                if (item["fields"]["type"] &&  item["fields"]["type"].length > 1) {
+                    obj["TYPE"] = item["fields"]["type"].slice(1);
+                } else {
+                    obj["TYPE"] = []
+                }
                 obj["ENSEMBLE DE DONNÉES"] = item["fields"]["hvd_ouverture"]
                 obj["MINISTÈRE DE TUTELLE"] = item["fields"]["ministry"];
                 obj["PRODUCTEUR"] = item["fields"]["organization"];
