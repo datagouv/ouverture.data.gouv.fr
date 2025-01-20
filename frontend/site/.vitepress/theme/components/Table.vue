@@ -128,14 +128,18 @@ const loading = ref<'loading' | 'failed' | 'done'>('loading')
 const load = async () => {
     const { theme } = useData();
     try {
-        let url =""
+        let url = ""
+        let url2 = ""
         if (props.endpoint === 'high_value_datasets') {
             url = theme.value.hvdApiUrl
         }
-        if (props.endpoint === 'ministerial_commitments') {
+        else if (props.endpoint === 'ministerial_commitments') {
             url = theme.value.engagementApiUrl
         }
-
+        else if (props.endpoint === 'suivi_ouverture') {
+            url = theme.value.ouvertureCrmApiUrl
+            url2 = theme.value.ouvertureCrmApiUrlProducers
+        }
         const response = await fetch(url)
         const results = await response.json()
         lines.value = results.records.map((item) => {
@@ -155,7 +159,7 @@ const load = async () => {
                 obj["TITRE API"] = item["fields"]["api_title_datagouv"].slice(0, 15) + (item["fields"]["api_title_datagouv"].length > 15 ? '…' : '')
                 obj["STATUT"] = item["fields"]["manual_status"] || item["fields"]["status"] || null
             }
-            if (props.endpoint === 'ministerial_commitments') {
+            else if (props.endpoint === 'ministerial_commitments') {
                 obj["TITRE"] = item["fields"]["Titre"]
                 obj["STATUT"] = item["fields"]["Statut"]
                 obj["PRODUCTEUR"] = item["fields"]["Producteur"]
@@ -168,8 +172,50 @@ const load = async () => {
                 obj["DATE ESTIMÉE"] = [item["fields"]["Date_estimee_Telechargement"], item["fields"]["Date_estimee_API"], item["fields"]["Date_estimee_Code_Source"]].filter(value => value !== null && value !== "");
 
             }
+            else if (props.endpoint === 'suivi_ouverture') {
+                if(item["fields"]["producteur"]){
+                    obj["producteur"] = item["fields"]["producteur"][1].toString()
+                } else {
+                    obj["producteur"] = ""
+                }
+                obj["TITRE"] = item["fields"]["nom_donnee"]
+                obj["url"] = item["fields"]["url"]
+                if(item["fields"]["source_demande"]){
+                    obj["source_demande"] = item["fields"]["source_demande"][1].toString()
+                } else {
+                    obj["source_demande"] = ""
+                }
+                if(item["fields"]["thematique"]){
+                    obj["thematique"] = item["fields"]["thematique"]
+                    if (obj["thematique"].length > 1){
+                        obj["thematique"].shift()
+                    }
+
+                } else {
+                    obj["thematique"] = []
+                }
+                obj["statut"] = item["fields"]["statut"]
+            }
             return obj
         })
+        if (url2 != "") {
+            const response2 = await fetch(url2)
+            const results2 = await response2.json()
+            let arrayProducers = []
+            results2.records.map((item) => {
+                arrayProducers.push(item["fields"]["nom_producteur"])
+            })
+            lines.value.forEach(item => {
+                let castValue = Number(item["producteur"])
+                if (!isNaN(castValue) && arrayProducers[castValue]) {
+                    item["producteur"] = arrayProducers[castValue].toString()
+                } else {
+                    item["producteur"] = ""
+                }
+                return item
+            })
+        }
+
         loading.value = 'done'
     } catch (e) {
         console.error(e)
