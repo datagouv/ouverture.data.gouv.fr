@@ -140,22 +140,24 @@ const load = async () => {
         const results = await response.json()
         lines.value = results.records.map((item) => {
             let obj = {}
-            obj["TITRE"] = item["fields"]["Titre"]
-            obj["STATUT"] = item["fields"]["Statut"]
             
             if (props.endpoint === 'high_value_datasets') {
-                obj["THÉMATIQUE"] = item["fields"]["Thematique"]
+                obj["TITRE"] = item["fields"]["title"]
+                obj["THÉMATIQUE"] = item["fields"]["hvd_category_datagouv"]
                 
-                obj["TYPE"] = item["fields"]["Type"].slice(1);
-                obj["ENSEMBLE DE DONNÉES"] = item["fields"]["Ensemble_de_donnees"]
+                obj["TYPE"] = item["fields"]["type"].slice(1);
+                obj["ENSEMBLE DE DONNÉES"] = item["fields"]["hvd_ouverture"]
 
-                obj["MINISTÈRE DE TUTELLE"] = [item["fields"]["Ministere_de_tutelle_Telechargement"], item["fields"]["Ministere_de_tutelle_API"]].filter(value => value !== null && value !== "");
-                obj["PRODUCTEUR"] = [item["fields"]["Producteur_Telechargement"], item["fields"]["Producteur_API"]].filter(value => value !== null && value !== "");
-                obj["STATUT"] = [item["fields"]["Statut_Telechargement"], item["fields"]["Statut_API"]].filter(value => value !== null && value !== "");
-                obj["URL"] = [item["fields"]["URL_Telechargement"], item["fields"]["URL_API"]].filter(value => value !== null && value !== "");
+                obj["MINISTÈRE DE TUTELLE"] = item["fields"]["ministry"];
+                obj["PRODUCTEUR"] = item["fields"]["organization"];
+                obj["URL DATASET"] = item["fields"]["url"];
+                obj["URL API"] = item["fields"]["api_web_datagouv"]
+                obj["TITRE API"] = item["fields"]["api_title_datagouv"].slice(0, 15) + (item["fields"]["api_title_datagouv"].length > 15 ? '…' : '')
+                obj["STATUT"] = item["fields"]["manual_status"] || item["fields"]["status"] || null
             }
             if (props.endpoint === 'ministerial_commitments') {
-                console.log(item["fields"])
+                obj["TITRE"] = item["fields"]["Titre"]
+                obj["STATUT"] = item["fields"]["Statut"]
                 obj["PRODUCTEUR"] = item["fields"]["Producteur"]
                 
                 obj["TYPE"] = item["fields"]["Type"].slice(1);

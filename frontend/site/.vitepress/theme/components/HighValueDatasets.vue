@@ -4,76 +4,40 @@
             <th>Titre</th>
             <th>Ensemble de données</th>
             <th>Thématique</th>
-            <th>Type</th>
             <th>Ministère de tutelle</th>
             <th>Producteur</th>
+            <th>API</th>
             <th>Statut</th>
         </template>
         <template #row="{ line: dataset }">
-            <td class="cell-padding">{{ dataset['TITRE'] }}</td>
+            <td style="max-width: 200px;" class="cell-padding">
+                <a :href="dataset['URL DATASET'] || null" target="_blank" rel="noopener external">{{ dataset['TITRE'] }}</a>
+            </td>
             <td class="cell-padding">{{ dataset['ENSEMBLE DE DONNÉES'] }}</td>
             <td class="cell-padding">{{ dataset['THÉMATIQUE'] }}</td>
-
-            <td :class="{
-                'cell-no-padding': dataset['TYPE'].length > 1
-            }">
-                <div v-for="(value, index) in dataset['TYPE']" :key="index" :class="{
-                    'half-cell-border': index == 0 && dataset['TYPE'].length > 1,
-                    'half-cell': true
-
-                }">
-                    <span class="fr-badge fr-badge--sm fr-badge--no-icon" :class="{
-                        'fr-badge--green-menthe': value == 'API',
-                        'fr-badge--blue-ecume': value == 'Téléchargement',
-                    }">
-                        {{ value }}
+            <td class="cell-padding">{{ dataset['MINISTÈRE DE TUTELLE'] }}</td>
+            <td class="cell-padding">{{ dataset['PRODUCTEUR'] }}</td>
+            <td style="max-width: 200px;" class="cell-padding">
+                <span class="fr-badge fr-badge--sm fr-badge--no-icon" :class="dataset['URL API'] ? 'fr-badge--info' : 'fr-badge--warning'">
+                    <span v-if="dataset['URL API']">
+                        <a :href="dataset['URL API'] || null" target="_blank" rel="noopener external">{{ dataset['TITRE API'] }}</a>
                     </span>
-                </div>
-            </td>
-            <td :class="{
-                'cell-no-padding': dataset['TYPE'].length > 1
-            }">
-                <div v-for="(value, index) in dataset['MINISTÈRE DE TUTELLE']" :key="index" :class="{
-                    'half-cell-border': index == 0 && dataset['MINISTÈRE DE TUTELLE'].length > 1,
-                    'half-cell': true
-
-                }">{{ value }}</div>
-            </td>
-            <td :class="{
-                'cell-no-padding': dataset['TYPE'].length > 1
-            }">
-                <div v-for="(value, index) in dataset['PRODUCTEUR']" :key="index" :class="{
-                    'half-cell-border': index == 0 && dataset['PRODUCTEUR'].length > 1,
-                    'half-cell': true
-
-                }">{{ value }}</div>
-            </td>
-            <td style="min-width: 200px;" :class="{
-                'cell-no-padding': dataset['TYPE'].length > 1
-            }">
-                <div v-for="(value, index) in dataset['STATUT']" :key="index" :class="{
-                    'half-cell-border': index == 0 && dataset['STATUT'].length > 1,
-                    'half-cell': true
-
-                }">
-                    <span class="fr-badge fr-badge--sm fr-badge--no-icon" :class="{
-                        'fr-badge--success': value == 'Disponible sur data.gouv.fr',
-                        'fr-badge--new': value == 'Partiellement disponible',
-                        'fr-badge--info': value == 'Disponible',
-                        'fr-badge--error': value == 'Non disponible',
-                        'fr-badge--warning': value == 'Planifié',
-                    }">
-                        <span v-if="value == 'Disponible sur data.gouv.fr' || value == 'Disponible'">
-                            <a :href="dataset['URL'][index] || null" target="_blank" rel="noopener external">{{ value }}</a>
-                        </span>
-                        <span v-else>
-                            {{ value }}
-                        </span>
+                    <span v-else>
+                        {{ "Indisponible" }}
                     </span>
-                    
-                </div>
+                </span>
             </td>
-
+            <td class="cell-padding">
+                <span class="fr-badge fr-badge--sm fr-badge--no-icon" :class="{
+                        'fr-badge--success': dataset['STATUT'] == 'Disponible sur data.gouv.fr',
+                        'fr-badge--new': dataset['STATUT'] == 'Partiellement disponible',
+                        'fr-badge--info': dataset['STATUT'] == 'Disponible',
+                        'fr-badge--error': dataset['STATUT'] == 'Non disponible',
+                        'fr-badge--warning': dataset['STATUT'] == 'Planifié',
+                    }">
+                        {{ dataset['STATUT'] }}
+                    </span>
+            </td>
         </template>
     </Table>
 </template>
@@ -83,7 +47,6 @@ import Table from './Table.vue'
 const filters = [
     { slug: 'category', key_in_api: 'ENSEMBLE DE DONNÉES', placeholder: 'Tous les ensemble de données', label: 'Ensemble de données' },
     { slug: 'theme', key_in_api: 'THÉMATIQUE', placeholder: 'Toutes les thématiques', label: 'Thématique' },
-    { slug: 'type', key_in_api: 'TYPE', placeholder: 'Tous les types de données', label: 'Type de données' },
     { slug: 'department', key_in_api: 'MINISTÈRE DE TUTELLE', placeholder: 'Tous les ministères', label: 'Ministère de tutelle' },
     { slug: 'producer', key_in_api: 'PRODUCTEUR', placeholder: 'Tous les producteurs', label: 'Producteur' },
     { slug: 'status', key_in_api: 'STATUT', placeholder: 'Tous les statuts', label: 'Statut' },
