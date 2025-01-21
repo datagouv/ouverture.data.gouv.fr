@@ -12,7 +12,7 @@ export default defineConfigWithTheme({
   outDir: "../../dist",
   title: "Ouverture data.gouv.fr",
   description: "Tableau de suivi des ouvertures de données, codes sources et API publics",
-  cleanUrls: true,
+  cleanUrls: false,
   head: [
     ['link', { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }],
     ['link', { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }],
