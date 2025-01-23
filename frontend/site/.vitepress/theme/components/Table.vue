@@ -183,12 +183,24 @@ const load = async () => {
                 
                 obj["URL DATASET"] = item["fields"]["url"];
                 obj["URL API"] = item["fields"]["api_web_datagouv"]
+
+                if (item["fields"]["manual_status_telechargement"] && item["fields"]["manual_status_telechargement"] != "") {
+                    obj["STATUT DATASET"] = item["fields"]["manual_status_telechargement"]
+                } else {                    
+                    obj["STATUT DATASET"] = item["fields"]["status_telechargement_automatique"]
+                }
+
+                if (item["fields"]["manual_status_api"] && item["fields"]["manual_status_api"] != "") {
+                    obj["STATUT API"] = item["fields"]["manual_status_api"]
+                } else {                    
+                    obj["STATUT API"] = item["fields"]["status_api_automatique"]
+                }
+
                 if (item["fields"]["api_title_datagouv"]) {
                     obj["TITRE API"] = item["fields"]["api_title_datagouv"].slice(0, 15) + (item["fields"]["api_title_datagouv"].length > 15 ? '…' : '')
                 } else {
                     obj["TITRE API"] = ""
                 }
-                obj["STATUT"] = item["fields"]["manual_status"] || item["fields"]["status"] || null
                 return obj
             })
             response = await fetch(url2)
@@ -228,8 +240,11 @@ const load = async () => {
                 }
                 obj["URL DATASET"] = ""
                 obj["URL API"] = ""
+
+                obj["STATUT DATASET"] = item["fields"]["statut"]
+                obj["STATUT API"] = item["fields"]["statut"]
+
                 obj["TITRE API"] = ""
-                obj["STATUT"] = item["fields"]["statut"]
                 return obj
             })
             response = await fetch(url3)
