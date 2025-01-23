@@ -155,16 +155,32 @@ const load = async () => {
             let results = await response.json()
             lines.value = results.records.map((item) => {
                 let obj = {}
-                obj["TITRE"] = item["fields"]["title"]
-                obj["THÉMATIQUE"] = item["fields"]["hvd_category_datagouv"]
+                if (item["fields"]["title"]) {
+                    obj["TITRE"] = item["fields"]["title"]
+                } else {
+                    obj["TITRE"] = ""
+                }
+                if (item["fields"]["hvd_category_datagouv"]) {
+                    obj["THÉMATIQUE"] = item["fields"]["hvd_category_datagouv"]
+                } else {
+                    obj["THÉMATIQUE"] = ""
+                }
                 if (item["fields"]["type"] &&  item["fields"]["type"].length > 1) {
                     obj["TYPE"] = item["fields"]["type"].slice(1);
                 } else {
                     obj["TYPE"] = []
                 }
-                obj["ENSEMBLE DE DONNÉES"] = item["fields"]["hvd_ouverture"]
-                obj["MINISTÈRE DE TUTELLE"] = item["fields"]["ministry"];
-                obj["PRODUCTEUR"] = item["fields"]["organization"];
+                if(item["fields"]["hvd_ouverture"]) {
+                    obj["ENSEMBLE DE DONNÉES"] = item["fields"]["hvd_ouverture"]
+                } else {
+                    obj["ENSEMBLE DE DONNÉES"] = ""
+                }
+                if (item["fields"]["organization"]) {
+                    obj["PRODUCTEUR"] = item["fields"]["organization"];
+                } else {
+                    obj["PRODUCTEUR"] = ""
+                }
+                
                 obj["URL DATASET"] = item["fields"]["url"];
                 obj["URL API"] = item["fields"]["api_web_datagouv"]
                 if (item["fields"]["api_title_datagouv"]) {
@@ -180,11 +196,31 @@ const load = async () => {
             const lines2 = ref<Array<any>>([])
             lines2.value = results.records.filter(record => record.fields.source_demande.includes("HVD")).map((item) => {
                 let obj = {}
-                obj["TITRE"] = item["fields"]["nom_donnee"]
-                obj["THÉMATIQUE"] = item["fields"]["hvd_thematique"]
+                
+                if (item["fields"]["nom_donnee"]) {
+                    obj["TITRE"] = item["fields"]["nom_donnee"]
+                } else {
+                    obj["TITRE"] = ""
+                }
+                if (item["fields"]["hvd_thematique"]) {
+                    obj["THÉMATIQUE"] = item["fields"]["hvd_thematique"]
+                } else {
+                    obj["THÉMATIQUE"] = ""
+                }
+                
                 obj["TYPE"] = []
-                obj["ENSEMBLE DE DONNÉES"] = item["fields"]["nom_donnee"]
-                obj["MINISTÈRE DE TUTELLE"] = item["fields"]["ministere_tutelle_hvd"]
+                if (item["fields"]["nom_donnee"]) {
+                    obj["ENSEMBLE DE DONNÉES"] = item["fields"]["nom_donnee"]
+                } else {
+                    obj["ENSEMBLE DE DONNÉES"] = ""
+                }
+                
+                if(item["fields"]["ministere_tutelle_hvd"]) {
+                    obj["MINISTÈRE DE TUTELLE"] = item["fields"]["ministere_tutelle_hvd"]
+                } else {
+                    obj["MINISTÈRE DE TUTELLE"] = ""
+                }
+                
                 if(item["fields"]["producteur"]){
                     obj["PRODUCTEUR"] = item["fields"]["producteur"][1].toString()
                 } else {
@@ -212,7 +248,7 @@ const load = async () => {
                 }
                 return item
             })
-
+            
             lines.value = lines2.value.concat(lines.value)
 
         }
