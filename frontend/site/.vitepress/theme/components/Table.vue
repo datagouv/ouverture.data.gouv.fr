@@ -167,7 +167,7 @@ const load = async () => {
                 obj["PRODUCTEUR"] = item["fields"]["organization"];
                 obj["URL DATASET"] = item["fields"]["url"];
                 obj["URL API"] = item["fields"]["api_web_datagouv"]
-                if (item["fields"]["type"]) {
+                if (item["fields"]["api_title_datagouv"]) {
                     obj["TITRE API"] = item["fields"]["api_title_datagouv"].slice(0, 15) + (item["fields"]["api_title_datagouv"].length > 15 ? '…' : '')
                 } else {
                     obj["TITRE API"] = ""
