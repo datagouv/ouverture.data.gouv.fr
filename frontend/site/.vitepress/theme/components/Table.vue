@@ -170,7 +170,7 @@ const load = async () => {
                 } else {
                     obj["TYPE"] = []
                 }
-                if(item["fields"]["hvd_ouverture"]) {
+                if(item["fields"]["hvd_name"]) {
                     obj["ENSEMBLE DE DONNÉES"] = item["fields"]["hvd_name"].filter((record => !["L", "KO"].includes(record)))
                 } else {
                     obj["ENSEMBLE DE DONNÉES"] = []
