@@ -171,9 +171,9 @@ const load = async () => {
                     obj["TYPE"] = []
                 }
                 if(item["fields"]["hvd_ouverture"]) {
-                    obj["ENSEMBLE DE DONNÉES"] = item["fields"]["hvd_ouverture"]
+                    obj["ENSEMBLE DE DONNÉES"] = item["fields"]["hvd_name"].filter((record => !["L", "KO"].includes(record)))
                 } else {
-                    obj["ENSEMBLE DE DONNÉES"] = ""
+                    obj["ENSEMBLE DE DONNÉES"] = []
                 }
                 if (item["fields"]["organization"]) {
                     obj["PRODUCTEUR"] = item["fields"]["organization"];
@@ -222,9 +222,9 @@ const load = async () => {
                 
                 obj["TYPE"] = []
                 if (item["fields"]["nom_donnee"]) {
-                    obj["ENSEMBLE DE DONNÉES"] = item["fields"]["nom_donnee"]
+                    obj["ENSEMBLE DE DONNÉES"] = [item["fields"]["nom_donnee"]]
                 } else {
-                    obj["ENSEMBLE DE DONNÉES"] = ""
+                    obj["ENSEMBLE DE DONNÉES"] = []
                 }
                 
                 if(item["fields"]["ministere_tutelle_hvd"]) {
