@@ -14,7 +14,13 @@
                 {{ dataset['TITRE'] }}
             </td>
             <td class="cell-padding">{{ dataset['ENSEMBLE DE DONNÉES'] }}</td>
-            <td class="cell-padding">{{ dataset['THÉMATIQUE'] }}</td>
+            <td class="cell-padding">
+                <span v-for="item in dataset['THÉMATIQUE']" v-bind:key="item">
+                    <span class="fr-badge fr-badge--sm fr-badge--no-icon fr-badge--new">
+                        {{ item }}
+                    </span><br />
+                </span>
+            </td>
             <td class="cell-padding">{{ dataset['MINISTÈRE DE TUTELLE'] }}</td>
             <td class="cell-padding">{{ dataset['PRODUCTEUR'] }}</td>
             <td class="cell-padding">

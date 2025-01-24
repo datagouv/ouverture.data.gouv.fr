@@ -160,10 +160,10 @@ const load = async () => {
                 } else {
                     obj["TITRE"] = ""
                 }
-                if (item["fields"]["hvd_category_datagouv"]) {
-                    obj["THÉMATIQUE"] = item["fields"]["hvd_category_datagouv"]
+                if (item["fields"]["hvd_category"]) {
+                    obj["THÉMATIQUE"] = item["fields"]["hvd_category"].filter((record => !["L", "KO"].includes(record)))
                 } else {
-                    obj["THÉMATIQUE"] = ""
+                    obj["THÉMATIQUE"] = []
                 }
                 if (item["fields"]["type"] &&  item["fields"]["type"].length > 1) {
                     obj["TYPE"] = item["fields"]["type"].slice(1);
@@ -215,9 +215,9 @@ const load = async () => {
                     obj["TITRE"] = ""
                 }
                 if (item["fields"]["hvd_thematique"]) {
-                    obj["THÉMATIQUE"] = item["fields"]["hvd_thematique"]
+                    obj["THÉMATIQUE"] = [item["fields"]["hvd_thematique"]]
                 } else {
-                    obj["THÉMATIQUE"] = ""
+                    obj["THÉMATIQUE"] = []
                 }
                 
                 obj["TYPE"] = []
