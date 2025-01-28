@@ -180,7 +180,11 @@ const load = async () => {
                 } else {
                     obj["PRODUCTEUR"] = ""
                 }
-                
+                if(item["fields"]["ministry"]) {
+                    obj["MINISTÈRE DE TUTELLE"] = item["fields"]["ministry"]
+                } else {
+                    obj["MINISTÈRE DE TUTELLE"] = ""
+                }
                 obj["URL DATASET"] = item["fields"]["url"];
                 obj["URL API"] = item["fields"]["api_web_datagouv"]
 
