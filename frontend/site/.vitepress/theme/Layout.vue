@@ -2,6 +2,7 @@
 import { useData } from "vitepress";
 import HeaderComponent from "./components/Header.vue";
 import FooterComponent from "./components/Footer.vue";
+import HeroComponent from "./components/HeroComponent.vue"; 
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const { site, frontmatter } = useData()
@@ -9,6 +10,7 @@ const { site, frontmatter } = useData()
 
 <template>
   <HeaderComponent :title="site.title" :description="site.description" />
+  <HeroComponent v-if="frontmatter.home" />
   <main class="fr-container fr-py-6w">
     <Content />
   </main>
