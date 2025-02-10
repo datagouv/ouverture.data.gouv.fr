@@ -7,42 +7,42 @@
           <div class="fr-col">
             <h3 class="fr-footer__top-cat">Données ouvertes</h3>
             <ul class="fr-footer__top-list">
-              <li><a class="fr-footer__top-link" href="#">Thématiques</a></li>
-              <li><a class="fr-footer__top-link" href="#">Données de référence</a></li>
-              <li><a class="fr-footer__top-link" href="#">Catalogue des données</a></li>
-              <li><a class="fr-footer__top-link" href="#">Suivre l'ouverture des données</a></li>
-              <li><a class="fr-footer__top-link" href="#">Portail des données européennes</a></li>
+              <li><a class="fr-footer__top-link" href="https://www.data.gouv.fr/fr/pages/thematiques-a-la-une">Thématiques</a></li>
+              <li><a class="fr-footer__top-link" href="https://www.data.gouv.fr/fr/pages/spd/reference">Données de référence</a></li>
+              <li><a class="fr-footer__top-link" href="https://www.data.gouv.fr/fr/datasets/catalogue-des-donnees-de-data-gouv-fr/">Catalogue des données</a></li>
+              <li><a class="fr-footer__top-link" href="https://ouverture.data.gouv.fr/">Suivre l'ouverture des données</a></li>
+              <li><a class="fr-footer__top-link" href="https://data.europa.eu/">Portail des données européennes</a></li>
             </ul>
           </div>
           <!-- Colonne 2 : Plateforme -->
           <div class="fr-col">
             <h3 class="fr-footer__top-cat">Plateforme</h3>
             <ul class="fr-footer__top-list">
-              <li><a class="fr-footer__top-link" href="#">Guides</a></li>
-              <li><a class="fr-footer__top-link" href="#">Feuille de route et nouveautés</a></li>
-              <li><a class="fr-footer__top-link" href="#">Nous contacter</a></li>
-              <li><a class="fr-footer__top-link" href="#">Donnez votre avis</a></li>
-              <li><a class="fr-footer__top-link" href="#">Statistiques</a></li>
+              <li><a class="fr-footer__top-link" href="https://guides.data.gouv.fr/">Guides</a></li>
+              <li><a class="fr-footer__top-link" href="https://www.data.gouv.fr/fr/pages/roadmap">Feuille de route et nouveautés</a></li>
+              <li><a class="fr-footer__top-link" href="https://support.data.gouv.fr/">Nous contacter</a></li>
+              <li><a class="fr-footer__top-link" href="https://tally.so/r/3N7kGO">Donnez votre avis</a></li>
+              <li><a class="fr-footer__top-link" href="https://www.data.gouv.fr/fr/dashboard/">Statistiques</a></li>
             </ul>
           </div>
           <!-- Colonne 3 : Ressources -->
           <div class="fr-col">
             <h3 class="fr-footer__top-cat">Ressources</h3>
             <ul class="fr-footer__top-list">
-              <li><a class="fr-footer__top-link" href="#">api.gouv.fr</a></li>
-              <li><a class="fr-footer__top-link" href="#">schema.data.gouv.fr</a></li>
-              <li><a class="fr-footer__top-link" href="#">meteo.data.gouv.fr</a></li>
-              <li><a class="fr-footer__top-link" href="#">transport.data.gouv.fr</a></li>
-              <li><a class="fr-footer__top-link" href="#">defis.data.gouv.fr</a></li>
+              <li><a class="fr-footer__top-link" href="https://api.gouv.fr/">api.gouv.fr</a></li>
+              <li><a class="fr-footer__top-link" href="https://schema.data.gouv.fr/">schema.data.gouv.fr</a></li>
+              <li><a class="fr-footer__top-link" href="https://meteo.data.gouv.fr/">meteo.data.gouv.fr</a></li>
+              <li><a class="fr-footer__top-link" href="https://transport.data.gouv.fr/">transport.data.gouv.fr</a></li>
+              <li><a class="fr-footer__top-link" href="https://defis.data.gouv.fr/">defis.data.gouv.fr</a></li>
             </ul>
           </div>
           <!-- Colonne 4 : Développement -->
           <div class="fr-col">
             <h3 class="fr-footer__top-cat">Développement</h3>
             <ul class="fr-footer__top-list">
-              <li><a class="fr-footer__top-link" href="#">API du portail</a></li>
-              <li><a class="fr-footer__top-link" href="#">Moteur open source : udata</a></li>
-              <li><a class="fr-footer__top-link" href="#">Extension du thème udata : udata-front</a></li>
+              <li><a class="fr-footer__top-link" href="https://guides.data.gouv.fr/publier-des-donnees/guide-data.gouv.fr/api/reference">API du portail</a></li>
+              <li><a class="fr-footer__top-link" href="https://github.com/opendatateam/udata/">Moteur open source : udata</a></li>
+              <li><a class="fr-footer__top-link" href="https://github.com/datagouv/udata-front/">Extension du thème udata : udata-front</a></li>
             </ul>
           </div>
         </div>
