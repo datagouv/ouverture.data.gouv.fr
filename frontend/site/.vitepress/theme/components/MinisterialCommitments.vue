@@ -52,7 +52,7 @@
                         'fr-badge--error': value == 'Non disponible',
                         'fr-badge--warning': value == 'Planifié',
                     }">
-                        <span v-if="value == 'Disponible sur data.gouv.fr' || value == 'Disponible'">
+                        <span v-if="value == 'Disponible sur data.gouv.fr' || value == 'Disponible' || value == 'Partiellement disponible'">
                             <a :href="commitment['URL'][index] || null" target="_blank" rel="noopener external">{{ value }}</a>
                         </span>
                         <span v-else>
