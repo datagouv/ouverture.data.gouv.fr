@@ -22,7 +22,7 @@
             <td class="cell-padding">
 
                 <span class="fr-badge fr-badge--sm fr-badge--no-icon" :class="{
-                    'fr-badge--success':  ouverture['statut'] == 'Ouverture réalisée' || ouverture['statut'] == 'Mise à jour réalisé',
+                    'fr-badge--success':  ouverture['statut'] == 'Ouverture réalisée' || ouverture['statut'] == 'Mise à jour réalisée',
                     'fr-badge--info':  ouverture['statut'] == 'En cours de mise à jour' || ouverture['statut'] == 'En cours d\'ouverture',
                     'fr-badge--new':  ouverture['statut'] == 'Mise à jour à demander',
                     'fr-badge--error':  ouverture['statut'] == 'À l\'arrêt',

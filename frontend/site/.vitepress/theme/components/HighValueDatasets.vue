@@ -35,7 +35,7 @@
                     'fr-badge--new': dataset['STATUT DATASET'] == 'Partiellement disponible',
                     'fr-badge--info': dataset['STATUT DATASET'] == 'Disponible',
                     'fr-badge--error': dataset['STATUT DATASET'] == 'Non disponible',
-                    'fr-badge--warning': dataset['STATUT API'] == 'Planifié' || dataset['STATUT API'] == 'En cours',
+                    'fr-badge--warning': dataset['STATUT API'] == 'Planifié' || dataset['STATUT API'] == 'En cours d\'ouverture',
                 }">
                     <span v-if="dataset['URL DATASET']">
                         <a :href="dataset['URL DATASET'] || null" target="_blank" rel="noopener external">{{ dataset['STATUT DATASET'] }}</a>
@@ -52,7 +52,7 @@
                     'fr-badge--new': dataset['STATUT API'] == 'Partiellement disponible',
                     'fr-badge--info': dataset['STATUT API'] == 'Disponible',
                     'fr-badge--error': dataset['STATUT API'] == 'Non disponible',
-                    'fr-badge--warning': dataset['STATUT API'] == 'Planifié' || dataset['STATUT API'] == 'En cours',
+                    'fr-badge--warning': dataset['STATUT API'] == 'Planifié' || dataset['STATUT API'] == 'En cours d\'ouverture',
                 }">
                     <span v-if="dataset['URL API']">
                         <a :href="dataset['URL API'] || null" target="_blank" rel="noopener external">{{ dataset['STATUT API'] }}</a>
