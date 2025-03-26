@@ -22,17 +22,17 @@
             <td class="cell-padding">
 
                 <span class="fr-badge fr-badge--sm fr-badge--no-icon" :class="{
-                    'fr-badge--success':  ouverture['statut'] == 'Déjà réalisé' || ouverture['statut'] == 'Réalisé',
-                    'fr-badge--info':  ouverture['statut'] == 'En cours' || ouverture['statut'] == 'Correction à apporter',
-                    'fr-badge--new':  ouverture['statut'] == 'MAJ à demander' || ouverture['statut'] == 'En attente de réponse',
-                    'fr-badge--error':  ouverture['statut'] == 'À l\'arrêt' || ouverture['statut'] == 'Abandonné',
-                    'fr-badge--warning':  ouverture['statut'] == 'À relancer' || ouverture['statut'] == 'À enclencher',
+                    'fr-badge--success':  ouverture['statut'] == 'Ouverture réalisée' || ouverture['statut'] == 'Mise à jour réalisée',
+                    'fr-badge--info':  ouverture['statut'] == 'En cours de mise à jour' || ouverture['statut'] == 'En cours d\'ouverture',
+                    'fr-badge--new':  ouverture['statut'] == 'Mise à jour à demander',
+                    'fr-badge--error':  ouverture['statut'] == 'À l\'arrêt',
+                    'fr-badge--warning':  ouverture['statut'] == 'Ouverture à enclencher' || ouverture['statut'] == 'Mise à jour demandée' || ouverture['statut'] == 'Ouverture demandée',
                 }">
-                    <span v-if="ouverture['url'] != '' && (ouverture['statut'].includes('Déjà réalisé') || ouverture['statut'].includes('Réalisé'))">
+                    <span v-if="ouverture['url'] != '' && (ouverture['statut'].includes('Mise à jour réalisé') || ouverture['statut'].includes('Ouverture réalisée') || ouverture['statut'].includes('Mise à jour demandée') || ouverture['statut'].includes('Mise à jour à demander')|| ouverture['statut'].includes('En cours de mise à jour'))">
                         <a :href="ouverture['url'] || null" target="_blank" rel="noopener external">{{ ouverture["statut"] }}</a>
                     </span>
                     <span v-else>{{ ouverture['statut'] }}</span>
-                </span> 
+                </span>
             </td>
 
         </template>
