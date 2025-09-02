@@ -2,7 +2,7 @@
     <Table :filters endpoint="suivi_ouverture">
         <template #thead>
             <th>Titre</th>
-            <th>Producteur</th>
+            <th>Organisation</th>
             <th>Source de la demande</th>
             <th>Thématique</th>
             <th>Statut</th>
@@ -10,7 +10,7 @@
 
         <template #row="{ line: ouverture }">
             <td class="cell-padding">{{ ouverture['TITRE'] }}</td>
-            <td class="cell-padding">{{ ouverture['producteur'] }}</td>
+            <td class="cell-padding">{{ ouverture['organisation'] }}</td>
             <td class="cell-padding">{{ ouverture['source_demande'] }}</td>
             <td class="cell-padding">
                 <div v-bind:key="item" v-for="item in ouverture['thematique']">
@@ -42,7 +42,7 @@
 import Table from './Table.vue'
 
 const filters = [
-    { slug: 'producteur', key_in_api: 'producteur', placeholder: 'Toutes les organisations', label: 'Organisations' },
+    { slug: 'organisation', key_in_api: 'organisation', placeholder: 'Toutes les organisations', label: 'Organisations' },
     { slug: 'thematique', key_in_api: 'thematique', placeholder: 'Toutes les thématiques de données', label: 'Thématique de données' },
     { slug: 'statut', key_in_api: 'statut', placeholder: 'Tous les statuts', label: 'Statut' },
 ]
