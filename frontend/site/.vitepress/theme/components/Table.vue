@@ -278,10 +278,10 @@ const load = async () => {
             const results = await response.json()
             lines.value = results.records.map((item) => {
                 let obj = {}
-                if(item["fields"]["producteur"]){
-                    obj["producteur"] = item["fields"]["producteur"][1].toString()
+                if(item["fields"]["organisation"]){
+                    obj["organisation"] = item["fields"]["organisation"][1].toString()
                 } else {
-                    obj["producteur"] = ""
+                    obj["organisation"] = ""
                 }
                 obj["TITRE"] = item["fields"]["nom_donnee"]
                 obj["url"] = item["fields"]["url"]
@@ -307,15 +307,15 @@ const load = async () => {
             const results2 = await response2.json()
             let arrayProducers = []
             results2.records.map((item) => {
-                arrayProducers.push({"id": item["id"], "producer": item["fields"]["nom_producteur"]})
+                arrayProducers.push({"id": item["id"], "producer": item["fields"]["nom_organisation"]})
             })
             lines.value.forEach(item => {
-                let castValue = Number(item["producteur"])
+                let castValue = Number(item["organisation"])
                 const result = arrayProducers.find(item => item.id === castValue);
                 if (!isNaN(castValue) && result) {
-                    item["producteur"] = result.producer.toString()
+                    item["organisation"] = result.producer.toString()
                 } else {
-                    item["producteur"] = ""
+                    item["organisation"] = ""
                 }
                 return item
             })
