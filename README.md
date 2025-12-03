@@ -21,24 +21,22 @@ The data that feeds the table on [ouverture.data.gouv.fr](https://ouverture.data
 ### Website
 
 ```
-cd frontend
-npm i
-npm run docs:dev
+pnpm i
+pnpm run docs:dev
 ```
 
 ## Build
 
-Vitepress has a build mode that generate files in `frontend/dist` to be deployed.
+Vitepress has a build mode that generate files in `dist` to be deployed.
 
 ```
-cd frontend
-npm run docs:build
+pnpm run docs:build
 ```
 
 This is the step where you can add your env variable.
 
 ```
-VUE_APP_API_URL="https://..." npm run docs:build
+VUE_APP_API_URL="https://..." pnpm run docs:build
 ```
 
 ## Deploy
