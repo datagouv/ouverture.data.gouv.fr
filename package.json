@@ -12,6 +12,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "pnpm run docs:build",
     "docs:dev": "vitepress dev site",
     "docs:build": "vitepress build site",
     "docs:preview": "vitepress preview site"
