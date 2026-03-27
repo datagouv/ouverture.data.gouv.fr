@@ -1,7 +1,7 @@
 // https://vitepress.dev/guide/custom-theme
 import Layout from './Layout.vue';
 import "@gouvfr/dsfr/dist/dsfr.min.css";
-import matomo from "@conciergerie.dev/vitepress-plugin-matomo";
+import matomo from "@datagouv/vitepress-plugin-matomo";
 
 /** @type {import("vitepress").Theme} */
 export default {
