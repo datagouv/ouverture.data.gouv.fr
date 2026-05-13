@@ -3,3 +3,6 @@ sideEffectsCache: false
 strictPeerDependencies: false
 nodeLinker: hoisted
 minimumReleaseAge: 5760
+allowBuilds:
+  esbuild: true
+  vue-demi: true
