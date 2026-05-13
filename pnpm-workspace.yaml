@@ -4,5 +4,5 @@ strictPeerDependencies: false
 nodeLinker: hoisted
 minimumReleaseAge: 5760
 allowBuilds:
-  esbuild: true
-  vue-demi: true
+  esbuild: false
+  vue-demi: false
