@@ -1,0 +1,5 @@
+engineStrict: true
+sideEffectsCache: false
+strictPeerDependencies: false
+nodeLinker: hoisted
+minimumReleaseAge: 5760
